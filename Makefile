@@ -14,12 +14,12 @@ LFLAGS= -L $(LIBFT_DIR) -lft
 
 RM= rm -rf
 
-SRCS_RAW= main
+SRCS_RAW= main lexer/lexer lexer/debug
 
 SRCS = $(addprefix $(SRC_DIR), $(SRCS_RAW:=.c))
 OBJS=$(subst .c,.o,$(SRCS))
 
-HEADERS_RAW= _42sh
+HEADERS_RAW= _42sh token lexer
 
 HEADERS=$(addprefix $(HEADER_DIR), $(HEADERS_RAW:=.h))
 
