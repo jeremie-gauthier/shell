@@ -51,5 +51,7 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
+*.swp
+.DS_Store
 .vscode/
 42sh
