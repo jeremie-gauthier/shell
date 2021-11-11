@@ -1,11 +1,16 @@
 #ifndef TOKEN_H
 #define TOKEN_H
 
+#define DEFAULT_TOKEN_LIST_CAPACITY 16
+
 enum e_token_type
 {
-	Word = 0,
+	Whitespace = 0,
+	Word,
 	Operator,
+	Number,
 	End,
+	Unknown
 };
 
 typedef struct s_token
@@ -13,11 +18,5 @@ typedef struct s_token
 	const char *value;
 	enum e_token_type type;
 } t_token;
-
-typedef struct s_lexer
-{
-	const char *input;
-	size_t idx;
-} t_lexer;
 
 #endif

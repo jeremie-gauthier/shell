@@ -2,19 +2,16 @@
 
 SRC_DIR= src/
 HEADER_DIR= includes/
-LIBFT_DIR = libft/
-LIBFT_HEADER_DIR= $(addprefix $(LIBFT_DIR), includes/)
-
-LIBFT = $(addprefix $(LIBFT_DIR), libft.a)
 
 # built-in rules
 CC= clang
-CFLAGS= -Wall -Wextra -Werror -I $(HEADER_DIR) -I $(LIBFT_HEADER_DIR)
-LFLAGS= -L $(LIBFT_DIR) -lft
+CFLAGS= -Wall -Wextra -Werror -I $(HEADER_DIR)
 
 RM= rm -rf
 
-SRCS_RAW= main lexer/lexer lexer/debug
+SRCS_RAW=	main lexer/lexer lexer/debug lexer/get_token_type\
+			lexer/tokens/parse_whitespace lexer/tokens/parse_word\
+			lexer/tokens/parse_number
 
 SRCS = $(addprefix $(SRC_DIR), $(SRCS_RAW:=.c))
 OBJS=$(subst .c,.o,$(SRCS))
@@ -29,19 +26,14 @@ NAME= 42sh
 
 all: $(NAME)
 
-$(LIBFT):
-	make -C $(LIBFT_DIR) -j4
-
 # implicitly apply CFLAGS
-$(NAME): $(LIBFT) $(OBJS) $(HEADERS) Makefile
-	$(CC) -o $(NAME) $(OBJS) $(LIBFT)
+$(NAME): $(OBJS) $(HEADERS) Makefile
+	$(CC) -o $(NAME) $(OBJS)
 
 clean:
-	make -C $(LIBFT_DIR) clean
 	$(RM) $(OBJS)
 
 fclean: clean
-	make -C $(LIBFT_DIR) fclean
 	$(RM) $(NAME)
 
 re: fclean all

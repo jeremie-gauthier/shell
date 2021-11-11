@@ -7,16 +7,22 @@ static const char *get_token_value(const t_token token)
 	return token.value;
 }
 
-static const char *get_token_type(const t_token token)
+const char *token_type_to_str(const enum e_token_type type)
 {
-	switch (token.type)
+	switch (type)
 	{
-	case Word:
-		return "Word";
-	case Operator:
-		return "Operator";
-	default:
-		return "unknown";
+		case Whitespace:
+			return "Whitespace";
+		case Word:
+			return "Word";
+		case Operator:
+			return "Operator";
+		case Number:
+			return "Number";
+		case End:
+			return "End";
+		default:
+			return "Unknown";
 	}
 }
 
@@ -25,8 +31,8 @@ void print_tokens(const t_token *tokens)
 	while (tokens->type != End)
 	{
 		printf(
-			"Token { %s (%s) }\n",
-			get_token_value(*tokens), get_token_type(*tokens));
+			"Token { [%s] (%s) }\n",
+			get_token_value(*tokens), token_type_to_str(tokens->type));
 		tokens++;
 	}
 }
