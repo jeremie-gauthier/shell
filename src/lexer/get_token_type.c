@@ -11,12 +11,10 @@ enum e_token_type get_token_type(char c)
 {
 	if (isspace(c))
 		return Whitespace;
-	if (isalpha(c))
-		return Word;
 	if (is_operator(c))
 		return Operator;
-	if (isdigit(c))
-		return Number;
+	if (isgraph(c))
+		return Word;
 	if (is_eof(c))
 		return End;
 	return Unknown;

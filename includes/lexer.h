@@ -28,7 +28,6 @@ enum e_token_type get_token_type(char c);
  */
 t_token whitespace(t_lexer *const lexer);
 t_token word(t_lexer *const lexer);
-t_token number(t_lexer *const lexer);
 t_token unknown(t_lexer *const lexer);
 t_token operator(t_lexer *const lexer);
 
@@ -36,7 +35,6 @@ static t_token(*RULES[NB_DISTINCT_TOKENS]) (t_lexer *const lexer) = {
 	[Whitespace] = whitespace,
 	[Word] = word,
 	[Operator] = operator,
-	[Number] = number,
 	[Unknown] = unknown,
 };
 

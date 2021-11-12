@@ -7,7 +7,8 @@ t_token word(t_lexer *const lexer)
 {
 	size_t idx = lexer->input_idx;
 
-	while (lexer->input[idx] && isalnum(lexer->input[idx]))
+	while (lexer->input[idx] && isgraph(lexer->input[idx])
+		&& !strchr(OPERATORS, lexer->input[idx]))
 		idx++;
 
 	const size_t size = idx - lexer->input_idx;
