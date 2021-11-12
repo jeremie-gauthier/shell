@@ -14,6 +14,13 @@ int main(int argc, char **argv)
 		printf("Error: lexer failed\n");
 		return EXIT_FAILURE;
 	}
+
+	if (input_lexer.has_error)
+	{
+		fprintf(stderr, "42sh: grammar error near `%c'\n", input_lexer.input[input_lexer.input_idx]);
+		free_lexer((t_lexer *)&input_lexer);
+		return EXIT_FAILURE;
+	}
 	print_tokens(input_lexer.tokens);
 	free_lexer((t_lexer *)&input_lexer);
 	return EXIT_SUCCESS;

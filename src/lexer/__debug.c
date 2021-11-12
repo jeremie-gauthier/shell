@@ -7,23 +7,22 @@ static const char *get_token_value(const t_token token)
 	return token.value;
 }
 
+static const char *TOKEN_TYPE_STR[NB_DISTINCT_TOKENS] = {
+	[Whitespace] = "Whitespace",
+	[Word] = "Word",
+	[Operator] = "Operator",
+	[Redirection] = "Redirection",
+	[Pipe] = "Pipe",
+	[Separator] = "Separator",
+	[Logical] = "Logical",
+	[Number] = "Number",
+	[End] = "End",
+	[Unknown] = "Unknown",
+};
+
 const char *token_type_to_str(const enum e_token_type type)
 {
-	switch (type)
-	{
-		case Whitespace:
-			return "Whitespace";
-		case Word:
-			return "Word";
-		case Operator:
-			return "Operator";
-		case Number:
-			return "Number";
-		case End:
-			return "End";
-		default:
-			return "Unknown";
-	}
+	return TOKEN_TYPE_STR[type];
 }
 
 void print_tokens(const t_token *tokens)

@@ -9,6 +9,8 @@
 static bool insert_token(t_lexer *lexer, t_token new_token);
 static t_lexer empty_lexer(void);
 
+// super site explicatif shell
+// https://www.editions-eni.fr/open/mediabook.aspx?idR=0fd2388cfaf62898f0b49ac943604029
 t_lexer lexer(const char *str)
 {
 	t_lexer lexer = {
@@ -17,6 +19,7 @@ t_lexer lexer(const char *str)
 		.tokens = malloc(sizeof(t_token) * DEFAULT_TOKEN_LIST_CAPACITY),
 		.tokens_len = 0,
 		.tokens_cap = DEFAULT_TOKEN_LIST_CAPACITY,
+		.has_error = false,
 	};
 
 	if (lexer.tokens == NULL)
@@ -24,26 +27,19 @@ t_lexer lexer(const char *str)
 
 	while (lexer.input[lexer.input_idx])
 	{
-		t_token new_token;
 		const enum e_token_type token_type = get_token_type(lexer.input[lexer.input_idx]);
+		t_token new_token = RULES[token_type](&lexer);
 
-		switch (token_type)
+		if (new_token.type == Unknown)
 		{
-			case Whitespace:
-				parse_whitespace(&lexer);
-				continue;
-			case Word:
-				new_token = parse_word(&lexer);
-				break;
-			case Number:
-				new_token = parse_number(&lexer);
-				break;
-			default:
-				lexer.input_idx++;
-				continue;
+			lexer.has_error = true;
+			return lexer;
 		}
 
-		if (new_token.value && !insert_token(&lexer, new_token))
+		if (new_token.value == NULL)
+			continue;
+
+		if (!insert_token(&lexer, new_token))
 		{
 			free_lexer(&lexer);
 			return empty_lexer();

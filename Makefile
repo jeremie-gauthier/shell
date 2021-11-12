@@ -9,9 +9,9 @@ CFLAGS= -Wall -Wextra -Werror -I $(HEADER_DIR)
 
 RM= rm -rf
 
-SRCS_RAW=	main lexer/lexer lexer/debug lexer/get_token_type\
-			lexer/tokens/parse_whitespace lexer/tokens/parse_word\
-			lexer/tokens/parse_number
+SRCS_RAW=	main lexer/lexer lexer/__debug lexer/get_token_type\
+			lexer/rules/whitespace lexer/rules/word\
+			lexer/rules/number lexer/rules/unknown lexer/rules/operator
 
 SRCS = $(addprefix $(SRC_DIR), $(SRCS_RAW:=.c))
 OBJS=$(subst .c,.o,$(SRCS))
