@@ -11,7 +11,7 @@ RM= rm -rf
 
 SRCS_RAW=	main lexer/lexer lexer/__debug lexer/get_token_type\
 			lexer/rules/whitespace lexer/rules/word\
-			lexer/rules/number lexer/rules/unknown lexer/rules/operator
+			lexer/rules/unknown lexer/rules/operator
 
 SRCS = $(addprefix $(SRC_DIR), $(SRCS_RAW:=.c))
 OBJS=$(subst .c,.o,$(SRCS))

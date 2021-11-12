@@ -13,7 +13,6 @@ enum e_token_type
 	Pipe, // is a specific operator
 	Separator, // is a specific operator
 	Logical, // is a specific operator
-	Number,
 	Unknown,
 	End,
 };
