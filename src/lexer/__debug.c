@@ -38,4 +38,5 @@ void print_tokens(const t_token *tokens)
 		print_token(*tokens);
 		tokens++;
 	}
+	print_token(*tokens);
 }
