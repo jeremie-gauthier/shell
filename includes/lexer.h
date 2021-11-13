@@ -42,6 +42,7 @@ static t_token(*RULES[NB_DISTINCT_TOKENS]) (t_lexer *const lexer) = {
  ** DEBUG
  */
 void print_tokens(const t_token *tokens);
+void print_token(const t_token token);
 const char *token_type_to_str(const enum e_token_type type);
 
 #endif
