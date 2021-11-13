@@ -14,7 +14,7 @@ enum e_token_type get_token_type(char c)
 	if (is_operator(c))
 		return Operator;
 	if (isgraph(c))
-		return Word;
+		return Command;
 	if (is_eof(c))
 		return End;
 	return Unknown;

@@ -38,7 +38,7 @@ Where `e_token_type` equals:
 enum e_token_type
 {
 	Whitespace = 0,
-	Word,
+	Command,
 	Operator, // generic operator type for lexer
 	Redirection, // is a specific operator
 	Pipe, // is a specific operator

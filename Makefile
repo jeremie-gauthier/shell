@@ -10,7 +10,7 @@ CFLAGS= -Wall -Wextra -Werror -I $(HEADER_DIR)
 RM= rm -rf
 
 SRCS_RAW=	main lexer/lexer lexer/__debug lexer/get_token_type\
-			lexer/rules/whitespace lexer/rules/word\
+			lexer/rules/whitespace lexer/rules/command\
 			lexer/rules/unknown lexer/rules/operator\
 			btree/btree_create_node btree/btree_apply_prefix\
 			btree/__debug
