@@ -37,21 +37,21 @@ t_btree *expr(t_parser *parser)
 		// printf("\tnode = %s\n", ((t_token *)node->data)->value);
 		// printf("\twill add current token = %s\n", ((t_token *)node->data)->value);
 		tmp = node;
-		node = BTREE_CREATE_ONE(&current_token);
+		node = BTREE_CREATE_ONE(current_token);
 		// node = btree_create_node((const void *)&current_token, node, NULL);
 		node->left = tmp;
 		t_btree *factor_node = factor(parser);
 		node->right = factor_node;
 		// printf("CURRENT_TOKEN(6) = [%s (%s)]\n", get_current_token(parser).value, token_type_to_str(get_current_token(parser).type));
-		printf("\tfactor_node         = |%s|\n", ((t_token *)factor_node->data)->value);
-		printf("\tfactor_node         = |%p|\n", ((t_token *)factor_node->data));
-		printf("\tfactor_node in node = |%s|\n", ((t_token *)node->right->data)->value);
-		printf("\tfactor_node in node = |%p|\n", ((t_token *)node->right->data));
+		printf("\tfactor_node         = |%s|\n", factor_node->token.value);
+		printf("\tfactor_node         = |%p|\n", &factor_node->token);
+		printf("\tfactor_node in node = |%s|\n", node->right->token.value);
+		printf("\tfactor_node in node = |%p|\n", &node->right->token);
 		// printf("\tnode = %s\n", ((t_token *)node->data)->value);
 		current_token = get_current_token(parser);
 	}
 	printf("No more operator type\n");
-	printf("\tnode = %s (%s)\n", ((t_token *)node->data)->value, token_type_to_str(((t_token *)node->data)->type));
+	printf("\tnode = %s (%s)\n", node->token.value, token_type_to_str(node->token.type));
 	// printf("\tnode = %s (%s)\n", ((t_token *)node->left->data)->value, token_type_to_str(((t_token *)node->left->data)->type));
 	return node;
 }

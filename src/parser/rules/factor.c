@@ -16,8 +16,8 @@ t_btree *factor(t_parser *parser)
 
 	if (eat(parser, Command))
 	{
-		t_btree *node = BTREE_CREATE_ONE(&current_token);
-		printf("\tfactor node: %s\n", ((t_token *)node->data)->value);
+		t_btree *node = BTREE_CREATE_ONE(current_token);
+		printf("\tfactor node: %s\n", node->token.value);
 		return node;
 	}
 	return NULL;

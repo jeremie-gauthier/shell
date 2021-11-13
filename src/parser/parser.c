@@ -11,7 +11,7 @@ const t_btree *parse(const t_lexer *const lexer)
 	printf("Building AST...\n");
 	const t_btree *root = expr(&parser);
 	printf("AST built.\n");
-	printf("\tnode = %s\n", ((t_token *)root->data)->value);
+	printf("\tnode = %s\n", root->token.value);
 	const t_token current_token = get_current_token(&parser);
 	printf("Last token is %s expected End", token_type_to_str(current_token.type));
 	if (current_token.type != End)
