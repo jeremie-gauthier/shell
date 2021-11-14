@@ -10,14 +10,17 @@ Rules (described in regex style):
 
 ```txt
 factor: COMMAND
+<!-- A factor is a command -->
 
-expr: factor (OPERATOR factor*)*
+expr: factor (OPERATOR factor?)*
+<!-- An expr is a factor, optionally followed by an OPERATOR which is optionally followed by another factor. -->
+<!-- The whole optional part is repeated 0 to N times. -->
 ```
 
 ## Definition
 
 ```c
-const t_btree const *parser(const *const lexer);
+const t_btree *parse(const t_lexer *const lexer);
 ```
 
 Where `t_btree` equals:
@@ -26,6 +29,6 @@ Where `t_btree` equals:
 typedef struct s_btree {
 	struct s_btree *left;
 	struct s_btree *right;
-	void *data;
+	t_token token;
 } t_btree;
 ```

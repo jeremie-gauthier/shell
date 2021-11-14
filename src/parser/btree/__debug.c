@@ -1,6 +1,5 @@
 #include <stdio.h>
-#include "btree.h"
-#include "lexer.h"
+#include "parser.h"
 
 void print_btree(t_btree *root)
 {

@@ -8,7 +8,7 @@
 int main(int argc, char **argv)
 {
 	(void)argc;
-	printf("Hello world!\n");
+	printf("__LEXER__\n");
 	const t_lexer input_lexer = lexer(argv[1]);
 	if (!input_lexer.tokens)
 	{
@@ -24,17 +24,7 @@ int main(int argc, char **argv)
 	}
 	print_tokens(input_lexer.tokens);
 
-	// t_btree *ast = btree_create_node(
-	// 	&input_lexer.tokens[0],
-	// 	NULL,
-	// 	NULL
-	// );
-	// printf("\tnode = %s\n", ((t_token *)ast->data)->value);
-	// ast = btree_create_node(&input_lexer.tokens[1], ast, NULL);
-
-	// printf("\tnode = %s\n", ((t_token *)ast->data)->value);
-	// printf("\tnode = %s\n", ((t_token *)ast->left->data)->value);
-
+	printf("\n__PARSER__\n");
 	const t_btree *ast = parse(&input_lexer);
 	print_btree((t_btree *)ast);
 

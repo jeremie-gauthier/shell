@@ -12,14 +12,14 @@ RM= rm -rf
 SRCS_RAW=	main lexer/lexer lexer/__debug lexer/get_token_type\
 			lexer/rules/whitespace lexer/rules/command\
 			lexer/rules/unknown lexer/rules/operator\
-			btree/btree_create_node btree/btree_apply_prefix\
-			btree/btree_free btree/__debug parser/parser\
+			parser/btree/btree_create_node parser/btree/btree_apply_prefix\
+			parser/btree/btree_free parser/btree/__debug parser/parser\
 			parser/rules/expr parser/rules/factor
 
 SRCS= $(addprefix $(SRC_DIR), $(SRCS_RAW:=.c))
 OBJS=$(subst .c,.o,$(SRCS))
 
-HEADERS_RAW= _42sh token lexer btree parser
+HEADERS_RAW= _42sh token lexer parser
 
 HEADERS=$(addprefix $(HEADER_DIR), $(HEADERS_RAW:=.h))
 
