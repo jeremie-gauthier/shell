@@ -6,6 +6,7 @@ CuSuite *LexerRulesOperatorGetSuite();
 CuSuite *LexerRulesUnknownGetSuite();
 CuSuite *LexerRulesWhitespaceGetSuite();
 CuSuite *LexerGetTokenType();
+CuSuite *Lexer();
 
 void RunAllTests(void)
 {
@@ -17,6 +18,7 @@ void RunAllTests(void)
 	CuSuiteAddSuite(suite, LexerRulesUnknownGetSuite());
 	CuSuiteAddSuite(suite, LexerRulesWhitespaceGetSuite());
 	CuSuiteAddSuite(suite, LexerGetTokenType());
+	CuSuiteAddSuite(suite, Lexer());
 
 	CuSuiteRun(suite);
 	CuSuiteSummary(suite, output);
