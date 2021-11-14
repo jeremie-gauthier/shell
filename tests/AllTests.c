@@ -2,6 +2,10 @@
 #include "CuTest.h"
 
 CuSuite *LexerRulesCommandGetSuite();
+CuSuite *LexerRulesOperatorGetSuite();
+CuSuite *LexerRulesUnknownGetSuite();
+CuSuite *LexerRulesWhitespaceGetSuite();
+CuSuite *LexerGetTokenType();
 
 void RunAllTests(void)
 {
@@ -9,6 +13,10 @@ void RunAllTests(void)
 	CuSuite *suite = CuSuiteNew();
 
 	CuSuiteAddSuite(suite, LexerRulesCommandGetSuite());
+	CuSuiteAddSuite(suite, LexerRulesOperatorGetSuite());
+	CuSuiteAddSuite(suite, LexerRulesUnknownGetSuite());
+	CuSuiteAddSuite(suite, LexerRulesWhitespaceGetSuite());
+	CuSuiteAddSuite(suite, LexerGetTokenType());
 
 	CuSuiteRun(suite);
 	CuSuiteSummary(suite, output);
