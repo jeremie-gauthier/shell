@@ -24,11 +24,9 @@ HEADERS_RAW= _42sh token lexer parser
 HEADERS=$(addprefix $(HEADER_DIR), $(HEADERS_RAW:=.h))
 
 TESTS_DIR= tests/
-TESTS_RAW=	AllTests CuTest lexer_rules_word
+TESTS_RAW=	AllTests CuTest lexer_rules_command
 TESTS= $(addprefix $(TESTS_DIR), $(TESTS_RAW:=.c)) $(filter-out src/main.c, $(SRCS))
 TESTS_OBJS=$(subst .c,.o,$(TESTS))
-# TESTS_OBJS:=
-# TESTS_OBJS:= $(filter-out main.o, $(OBJS))
 
 NAME= 42sh
 

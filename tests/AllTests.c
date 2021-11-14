@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include "CuTest.h"
 
-CuSuite *LexerRulesWordGetSuite();
+CuSuite *LexerRulesCommandGetSuite();
 
 void RunAllTests(void)
 {
 	CuString *output = CuStringNew();
 	CuSuite *suite = CuSuiteNew();
 
-	CuSuiteAddSuite(suite, LexerRulesWordGetSuite());
+	CuSuiteAddSuite(suite, LexerRulesCommandGetSuite());
 
 	CuSuiteRun(suite);
 	CuSuiteSummary(suite, output);
@@ -19,4 +19,5 @@ void RunAllTests(void)
 int main(void)
 {
 	RunAllTests();
+	return 0;
 }
