@@ -3,11 +3,12 @@
 #include <stdlib.h>
 #include "token.h"
 #include "lexer.h"
+#include "parser.h"
 
 int main(int argc, char **argv)
 {
 	(void)argc;
-	printf("Hello world!\n");
+	printf("__LEXER__\n");
 	const t_lexer input_lexer = lexer(argv[1]);
 	if (!input_lexer.tokens)
 	{
@@ -22,6 +23,11 @@ int main(int argc, char **argv)
 		return EXIT_FAILURE;
 	}
 	print_tokens(input_lexer.tokens);
+
+	printf("\n__PARSER__\n");
+	const t_btree *ast = parse(&input_lexer);
+	print_btree((t_btree *)ast);
+
 	free_lexer((t_lexer *)&input_lexer);
 	return EXIT_SUCCESS;
 }
