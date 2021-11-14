@@ -55,4 +55,5 @@ dkms.conf
 .DS_Store
 .vscode/
 42sh
+42sh_test
 .editorconfig
