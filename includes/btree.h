@@ -11,5 +11,6 @@ typedef struct s_btree {
 
 t_btree *btree_create_node(const void *data, const t_btree *left, const t_btree *right);
 void btree_apply_prefix(t_btree *btree, void (*fn)(void *));
+void btree_free(t_btree *btree);
 
 #endif

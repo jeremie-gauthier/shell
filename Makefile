@@ -13,12 +13,13 @@ SRCS_RAW=	main lexer/lexer lexer/__debug lexer/get_token_type\
 			lexer/rules/whitespace lexer/rules/command\
 			lexer/rules/unknown lexer/rules/operator\
 			btree/btree_create_node btree/btree_apply_prefix\
-			btree/__debug
+			btree/btree_free btree/__debug parser/parser\
+			parser/rules/expr parser/rules/factor
 
 SRCS= $(addprefix $(SRC_DIR), $(SRCS_RAW:=.c))
 OBJS=$(subst .c,.o,$(SRCS))
 
-HEADERS_RAW= _42sh token lexer btree
+HEADERS_RAW= _42sh token lexer btree parser
 
 HEADERS=$(addprefix $(HEADER_DIR), $(HEADERS_RAW:=.h))
 
@@ -42,6 +43,9 @@ $(NAME): $(OBJS) $(HEADERS) Makefile
 test: $(OBJS) $(HEADERS) $(TESTS_OBJS) Makefile
 	@echo $(TESTS_OBJS)
 	$(CC) -o $(NAME)_test $(TESTS_OBJS)
+
+debug: $(NAME)
+	$(CC) -g -fsanitize=address -o $(NAME) $(OBJS)
 
 clean:
 	$(RM) $(OBJS) $(TESTS_OBJS)
