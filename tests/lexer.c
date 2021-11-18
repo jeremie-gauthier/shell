@@ -72,7 +72,7 @@ static void TestLexer_EmptyString(CuTest *tc)
 	free_lexer((t_lexer *)&input_lexer);
 }
 
-CuSuite *Lexer()
+CuSuite *LexerGetSuite()
 {
 	CuSuite *suite = CuSuiteNew();
 	SUITE_ADD_TEST(suite, TestLexer);

@@ -37,7 +37,7 @@ static void TestLexerGetTokenType_End(CuTest *tc)
 	CuAssertTrue(tc, get_token_type('\0') == End);
 }
 
-CuSuite *LexerGetTokenType()
+CuSuite *LexerGetTokenTypeGetSuite()
 {
 	CuSuite *suite = CuSuiteNew();
 	SUITE_ADD_TEST(suite, TestLexerGetTokenType_Whitespace);

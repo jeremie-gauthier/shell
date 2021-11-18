@@ -5,8 +5,12 @@ CuSuite *LexerRulesCommandGetSuite();
 CuSuite *LexerRulesOperatorGetSuite();
 CuSuite *LexerRulesUnknownGetSuite();
 CuSuite *LexerRulesWhitespaceGetSuite();
-CuSuite *LexerGetTokenType();
-CuSuite *Lexer();
+CuSuite *LexerGetTokenTypeGetSuite();
+CuSuite *LexerGetSuite();
+
+CuSuite *ParserEatGetSuite();
+CuSuite *ParserGetCurrentTokenGetSuite();
+CuSuite *ParserGetSuite();
 
 void RunAllTests(void)
 {
@@ -17,8 +21,12 @@ void RunAllTests(void)
 	CuSuiteAddSuite(suite, LexerRulesOperatorGetSuite());
 	CuSuiteAddSuite(suite, LexerRulesUnknownGetSuite());
 	CuSuiteAddSuite(suite, LexerRulesWhitespaceGetSuite());
-	CuSuiteAddSuite(suite, LexerGetTokenType());
-	CuSuiteAddSuite(suite, Lexer());
+	CuSuiteAddSuite(suite, LexerGetTokenTypeGetSuite());
+	CuSuiteAddSuite(suite, LexerGetSuite());
+
+	CuSuiteAddSuite(suite, ParserEatGetSuite());
+	CuSuiteAddSuite(suite, ParserGetCurrentTokenGetSuite());
+	CuSuiteAddSuite(suite, ParserGetSuite());
 
 	CuSuiteRun(suite);
 	CuSuiteSummary(suite, output);

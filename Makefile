@@ -26,7 +26,7 @@ HEADERS=$(addprefix $(HEADER_DIR), $(HEADERS_RAW:=.h))
 TESTS_DIR= tests/
 TESTS_RAW=	AllTests CuTest lexer_rules_command lexer_rules_operator\
 			lexer_rules_unknown lexer_rules_whitespace lexer_get_token_type\
-			lexer
+			lexer parser_eat parser_get_current_token parser
 
 TESTS= $(addprefix $(TESTS_DIR), $(TESTS_RAW:=.c)) $(filter-out src/main.c, $(SRCS))
 TESTS_OBJS=$(subst .c,.o,$(TESTS))
