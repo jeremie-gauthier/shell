@@ -47,8 +47,8 @@ static void TestParser_Eat(CuTest *tc)
 	CuAssertIntEquals(tc, eat_result, true);
 	CuAssertIntEquals(tc, expected_current_tok, dummy_parser.current_token);
 
-	// always returns End when it has reaches it
-	eat_result = eat((t_parser *const)&dummy_parser, End);
+	// always returns Unknown after End
+	eat_result = eat((t_parser *const)&dummy_parser, Unknown);
 
 	CuAssertIntEquals(tc, eat_result, true);
 	CuAssertIntEquals(tc, expected_current_tok, dummy_parser.current_token);
