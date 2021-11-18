@@ -4,9 +4,12 @@
 #include "token.h"
 #include "lexer.h"
 #include "parser.h"
+#include "shell.h"
 
 int main(int argc, char **argv)
 {
+	shell();
+
 	(void)argc;
 	printf("__LEXER__\n");
 	const t_lexer input_lexer = lexer(argv[1]);
