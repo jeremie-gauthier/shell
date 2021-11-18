@@ -1,2 +1,2 @@
-# 42sh
-Recoding a complete shell in C
+# shell
+Recoding a POSIX Shell in C & Rust
