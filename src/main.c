@@ -26,6 +26,12 @@ int main(int argc, char **argv)
 
 	printf("\n__PARSER__\n");
 	const t_btree *ast = parse(&input_lexer);
+	if (!ast)
+	{
+		printf("Error: parser failed\n");
+		return EXIT_FAILURE;
+	}
+
 	print_btree((t_btree *)ast);
 
 	free_lexer((t_lexer *)&input_lexer);

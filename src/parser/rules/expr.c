@@ -17,7 +17,7 @@ t_btree *expr(t_parser *parser)
 	{
 		if (!eat(parser, current_token.type))
 		{
-			// free btree
+			btree_free((t_btree *)node);
 			return NULL;
 		}
 		node = btree_create_node(current_token, node, factor(parser));

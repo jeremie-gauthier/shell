@@ -10,7 +10,7 @@ const t_btree *parse(const t_lexer *const lexer)
 
 	if (current_token.type != End)
 	{
-		// free btree
+		btree_free((t_btree *)root);
 		return NULL;
 	}
 	return root;
@@ -18,12 +18,15 @@ const t_btree *parse(const t_lexer *const lexer)
 
 t_token get_current_token(const t_parser *const parser)
 {
-	return parser->lexer->tokens[parser->current_token];
+	if (parser->current_token < parser->lexer->tokens_len)
+		return parser->lexer->tokens[parser->current_token];
+	return (t_token) { .type = Unknown, .value = NULL };
 }
 
 static void advance(t_parser *const parser)
 {
-	parser->current_token++;
+	if (parser->current_token < parser->lexer->tokens_len)
+		parser->current_token++;
 }
 
 bool eat(t_parser *const parser, const enum e_token_type type)

@@ -22,7 +22,8 @@ enum e_token_type get_token_type(char c)
 
 static bool is_operator(const char c)
 {
-	return strchr(OPERATORS, c) != NULL;
+	const char *operator = strchr(OPERATORS, c);
+	return operator != NULL && *operator != '\0';
 }
 
 static bool is_eof(const char c)
