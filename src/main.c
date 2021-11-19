@@ -5,11 +5,17 @@
 #include "lexer.h"
 #include "parser.h"
 #include "shell.h"
+#include "lexer_rs.h"
+
+#include <stdio.h>
 
 int main(int argc, char **argv)
 {
 	(void)argc;
 	(void)argv;
+
+	const char *str = hello_rust();
+	printf("Rust has smthg to say: %s\n", str);
 
 	shell();
 

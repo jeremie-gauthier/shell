@@ -54,6 +54,9 @@ dkms.conf
 *.swp
 .DS_Store
 .vscode/
-42sh
-42sh_test
+shell
+shell_test
 .editorconfig
+
+target/
+Cargo.lock

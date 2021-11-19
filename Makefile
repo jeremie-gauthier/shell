@@ -6,9 +6,13 @@ HEADER_DIR= includes/
 # READLINE_DIR=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/editline
 # EXTERNAL_DIR=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/
 
+LEXER_RS_DIR=$(SRC_DIR)lexer_rs/
+LEXER_RS_LIB=$(LEXER_RS_DIR)target/debug/liblexer_rs.a
+LEXER_RS_LIB_RELEASE=$(LEXER_RS_DIR)target/release/liblexer_rs.a
+
 # built-in rules
 CC= clang
-CFLAGS= -Wall -Wextra -Werror -I $(HEADER_DIR) #-I$(EXTERNAL_DIR) -I$(READLINE_DIR)
+CFLAGS= -Wall -Wextra -Werror -Isrc -I$(HEADER_DIR) -I$(LEXER_RS_DIR)
 
 RM= rm -rf
 
@@ -35,7 +39,7 @@ TESTS_RAW=	AllTests CuTest lexer_rules_command lexer_rules_operator\
 TESTS= $(addprefix $(TESTS_DIR), $(TESTS_RAW:=.c)) $(filter-out src/main.c, $(SRCS))
 TESTS_OBJS=$(subst .c,.o,$(TESTS))
 
-NAME= 42sh
+NAME= shell
 
 .PHONY: all LIBFT clean fclean re
 
@@ -43,7 +47,15 @@ all: $(NAME)
 
 # implicitly apply CFLAGS
 $(NAME): $(OBJS) $(HEADERS) Makefile
-	$(CC) -ledit -o $(NAME) $(OBJS)
+	@make -C $(LEXER_RS_DIR)
+	$(CC) -ledit $(LEXER_RS_LIB) -o $(NAME) $(OBJS)
+
+release: $(OBJS) $(HEADERS) Makefile
+	@make -C $(LEXER_RS_DIR) release
+	$(CC) -O3 -ledit $(LEXER_RS_LIB_RELEASE) -o $(NAME) $(OBJS)
+
+LEXER_LIB:
+	@make -C $(LEXER_RS_DIR)
 
 test: $(OBJS) $(HEADERS) $(TESTS_OBJS) Makefile
 	@echo $(TESTS_OBJS)
@@ -53,9 +65,10 @@ debug: $(NAME)
 	$(CC) -g -fsanitize=address -o $(NAME) $(OBJS)
 
 clean:
+	@make -C $(LEXER_RS_DIR) clean
 	$(RM) $(OBJS) $(TESTS_OBJS)
 
 fclean: clean
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(NAME)_test
 
 re: fclean all
