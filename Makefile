@@ -3,16 +3,14 @@
 SRC_DIR= src/
 HEADER_DIR= includes/
 
-# READLINE_DIR=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/editline
-# EXTERNAL_DIR=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/
-
-LEXER_RS_DIR=$(SRC_DIR)lexer_rs/
-LEXER_RS_LIB=$(LEXER_RS_DIR)target/debug/liblexer_rs.a
-LEXER_RS_LIB_RELEASE=$(LEXER_RS_DIR)target/release/liblexer_rs.a
+LIB_RS_DIR=lib/
+LIB_RS_NAME=libshellmod_rs
+LIB_RS=$(addprefix $(LIB_RS_DIR), target/debug/$(LIB_RS_NAME).a)
+LIB_RS_RELEASE=$(addprefix $(LIB_RS_DIR), target/release/$(LIB_RS_NAME).a)
 
 # built-in rules
 CC= clang
-CFLAGS= -Wall -Wextra -Werror -Isrc -I$(HEADER_DIR) -I$(LEXER_RS_DIR)
+CFLAGS= -Wall -Wextra -Werror -I$(HEADER_DIR)
 
 RM= rm -rf
 
@@ -27,7 +25,7 @@ SRCS_RAW=	main lexer/lexer lexer/__debug lexer/get_token_type\
 SRCS= $(addprefix $(SRC_DIR), $(SRCS_RAW:=.c))
 OBJS=$(subst .c,.o,$(SRCS))
 
-HEADERS_RAW= _42sh token lexer parser shell interpreter
+HEADERS_RAW= _42sh token lexer parser shell interpreter shellmod_rs
 
 HEADERS=$(addprefix $(HEADER_DIR), $(HEADERS_RAW:=.h))
 
@@ -47,15 +45,12 @@ all: $(NAME)
 
 # implicitly apply CFLAGS
 $(NAME): $(OBJS) $(HEADERS) Makefile
-	@make -C $(LEXER_RS_DIR)
-	$(CC) -ledit $(LEXER_RS_LIB) -o $(NAME) $(OBJS)
+	@make -C $(LIB_RS_DIR)
+	$(CC) -ledit $(LIB_RS) -o $(NAME) $(OBJS)
 
 release: $(OBJS) $(HEADERS) Makefile
-	@make -C $(LEXER_RS_DIR) release
-	$(CC) -O3 -ledit $(LEXER_RS_LIB_RELEASE) -o $(NAME) $(OBJS)
-
-LEXER_LIB:
-	@make -C $(LEXER_RS_DIR)
+	@make -C $(LIB_RS_DIR) release
+	$(CC) -O3 -ledit $(LIB_RS_RELEASE) -o $(NAME) $(OBJS)
 
 test: $(OBJS) $(HEADERS) $(TESTS_OBJS) Makefile
 	@echo $(TESTS_OBJS)
@@ -65,7 +60,7 @@ debug: $(NAME)
 	$(CC) -g -fsanitize=address -o $(NAME) $(OBJS)
 
 clean:
-	@make -C $(LEXER_RS_DIR) clean
+	@make -C $(LIB_RS_DIR) clean
 	$(RM) $(OBJS) $(TESTS_OBJS)
 
 fclean: clean

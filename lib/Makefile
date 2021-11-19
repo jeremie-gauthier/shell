@@ -1,6 +1,6 @@
 CARGO_BIN ?= $(shell which cargo)
 
-NAME=liblexer_rs
+NAME=shellmod_rs
 
 .PHONY: all clean re
 

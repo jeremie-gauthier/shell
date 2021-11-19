@@ -5,7 +5,7 @@
 #include "lexer.h"
 #include "parser.h"
 #include "shell.h"
-#include "lexer_rs.h"
+#include "shellmod_rs.h"
 
 #include <stdio.h>
 
