@@ -6,8 +6,6 @@ static char *command_generator(const char *const text, const int state)
 {
 	static int list_index, len;
 
-	HIST_ENTRY *history;
-
 	/* If this is a new word to complete, initialize now.  This includes
 	   saving the length of TEXT for efficiency, and initializing the index
 	   variable to 0. */
@@ -18,13 +16,14 @@ static char *command_generator(const char *const text, const int state)
 	}
 
 	/* Return the next name which partially matches from the command list. */
-	while ((history = history_get(list_index + 1)))
-	{
-		list_index++;
+	// HIST_ENTRY *history;
+	// while ((history = history_get(list_index + 1)))
+	// {
+	// 	list_index++;
 
-		if (strncmp(history->line, text, len) == 0)
-			return strdup(history->line);
-	}
+	// 	if (strncmp(history->line, text, len) == 0)
+	// 		return strdup(history->line);
+	// }
 
 	/* If no names matched, then return NULL. */
 	return NULL;

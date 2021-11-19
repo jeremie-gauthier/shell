@@ -8,7 +8,6 @@ static void initialize_readline()
 {
 	using_history();
 	rl_bind_key('\t', rl_complete);
-	rl_completer_quote_characters = "\"'";
 	rl_attempted_completion_function = (CPPFunction *)command_completion;
 }
 
@@ -29,7 +28,6 @@ int shell(void)
 	{
 		const char *line_read = rl_gets();
 		interpreter(line_read);
-		// printf("%s\n", line_read);
 	}
 	return 0;
 }
