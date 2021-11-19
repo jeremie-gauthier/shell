@@ -1,7 +1,8 @@
 #include <stddef.h>
 #include <editline/readline.h>
-#include <stdio.h>
+// #include <stdio.h>
 #include "shell.h"
+#include "interpreter.h"
 
 static void initialize_readline()
 {
@@ -27,7 +28,8 @@ int shell(void)
 	while (1)
 	{
 		const char *line_read = rl_gets();
-		printf("%s\n", line_read);
+		interpreter(line_read);
+		// printf("%s\n", line_read);
 	}
 	return 0;
 }

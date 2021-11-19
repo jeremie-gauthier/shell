@@ -17,12 +17,13 @@ SRCS_RAW=	main lexer/lexer lexer/__debug lexer/get_token_type\
 			lexer/rules/unknown lexer/rules/operator\
 			parser/btree/btree_create_node parser/btree/btree_apply_prefix\
 			parser/btree/btree_free parser/btree/__debug parser/parser\
-			parser/rules/expr parser/rules/factor shell/shell shell/completion
+			parser/rules/expr parser/rules/factor shell/shell shell/completion\
+			interpreter/interpreter
 
 SRCS= $(addprefix $(SRC_DIR), $(SRCS_RAW:=.c))
 OBJS=$(subst .c,.o,$(SRCS))
 
-HEADERS_RAW= _42sh token lexer parser shell
+HEADERS_RAW= _42sh token lexer parser shell interpreter
 
 HEADERS=$(addprefix $(HEADER_DIR), $(HEADERS_RAW:=.h))
 
