@@ -5,8 +5,7 @@ HEADER_DIR= includes/
 
 LIB_RS_DIR=lib/
 LIB_RS_NAME=libshellmod_rs
-LIB_RS=$(addprefix $(LIB_RS_DIR), target/debug/$(LIB_RS_NAME).a)
-LIB_RS_RELEASE=$(addprefix $(LIB_RS_DIR), target/release/$(LIB_RS_NAME).a)
+LIB_RS=$(addprefix $(LIB_RS_DIR), $(LIB_RS_NAME).a)
 
 # built-in rules
 CC= clang
@@ -15,7 +14,7 @@ CFLAGS= -Wall -Wextra -Werror -I$(HEADER_DIR)
 RM= rm -rf
 
 SRCS_RAW=	main lexer/lexer lexer/__debug lexer/get_token_type\
-			lexer/rules/whitespace lexer/rules/command\
+			lexer/rules/command\
 			lexer/rules/unknown lexer/rules/operator\
 			parser/btree/btree_create_node parser/btree/btree_apply_prefix\
 			parser/btree/btree_free parser/btree/__debug parser/parser\
@@ -44,13 +43,13 @@ NAME= shell
 all: $(NAME)
 
 # implicitly apply CFLAGS
-$(NAME): $(OBJS) $(HEADERS) Makefile
+$(NAME): $(LIB_RS) $(OBJS) $(HEADERS) Makefile
 	@make -C $(LIB_RS_DIR)
 	$(CC) -ledit $(LIB_RS) -o $(NAME) $(OBJS)
 
-release: $(OBJS) $(HEADERS) Makefile
+release: $(LIB_RS) $(OBJS) $(HEADERS) Makefile
 	@make -C $(LIB_RS_DIR) release
-	$(CC) -O3 -ledit $(LIB_RS_RELEASE) -o $(NAME) $(OBJS)
+	$(CC) -O3 -ledit $(LIB_RS) -o $(NAME) $(OBJS)
 
 test: $(OBJS) $(HEADERS) $(TESTS_OBJS) Makefile
 	@echo $(TESTS_OBJS)

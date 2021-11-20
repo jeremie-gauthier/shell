@@ -14,9 +14,6 @@ int main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 
-	const char *str = hello_rust();
-	printf("Rust has smthg to say: %s\n", str);
-
 	shell();
 
 	// printf("__LEXER__\n");

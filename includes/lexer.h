@@ -18,6 +18,8 @@ typedef struct s_lexer
 	bool has_error;
 } t_lexer;
 
+#include "shellmod_rs.h"
+
 t_lexer lexer(const char *str);
 void free_lexer(t_lexer *lexer);
 
@@ -26,7 +28,7 @@ enum e_token_type get_token_type(char c);
 /*
  ** RULES
  */
-t_token whitespace(t_lexer *const lexer);
+ // t_token whitespace(t_lexer *const lexer);
 t_token command(t_lexer *const lexer);
 t_token unknown(t_lexer *const lexer);
 t_token operator(t_lexer *const lexer);
