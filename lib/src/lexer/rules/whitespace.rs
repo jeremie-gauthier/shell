@@ -1,7 +1,7 @@
 use std::ffi::CStr;
 use std::ptr;
 
-use crate::token::{Lexer, Token, TokenType};
+use crate::{Lexer, Token, TokenType};
 
 #[no_mangle]
 pub extern "C" fn whitespace(lexer: *mut Lexer) -> Token {
