@@ -29,7 +29,8 @@ int shell(void)
 	{
 		const char *line_read = rl_gets();
 		const t_btree *node = parser(line_read);
-		printf("read node from C: %s\n", node->token.value);
+		if (node)
+			printf("read node from C: %s\n", node->token.value);
 		// interpreter(line_read);
 	}
 	return 0;
