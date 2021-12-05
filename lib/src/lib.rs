@@ -12,12 +12,20 @@ pub extern "C" fn hello_rust() -> *const u8 {
 
 pub fn c_str_to_rs(input: *const c_char) -> String {
     let c_str = unsafe {
-        assert!(!input.is_null());
-        CStr::from_ptr(input)
+        if !input.is_null() {
+            Some(CStr::from_ptr(input))
+        } else {
+            None
+        }
     };
 
-    let r_str = c_str.to_str().unwrap_or_default();
-    r_str.to_string()
+    match c_str {
+        Some(c_string) => {
+            let r_str = c_string.to_str().unwrap_or_default();
+            r_str.to_string()
+        }
+        None => String::default(),
+    }
 }
 
 #[repr(C)]
