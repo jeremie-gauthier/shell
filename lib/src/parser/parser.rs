@@ -14,7 +14,10 @@ pub extern "C" fn parser(input: *const c_char) -> *const BTNode {
     }
 
     match parser.unwrap().parse_input() {
-        Ok(ast) => Box::into_raw(Box::new(ast)),
+        Ok(ast) => {
+            println!("{:?}", ast);
+            Box::into_raw(Box::new(ast))
+        }
         Err(err) => {
             eprintln!("Parser error: {}", err);
             ptr::null()

@@ -31,8 +31,6 @@ impl Parser {
 
     pub fn parse_input(mut self) -> Result<BTNode, ParserError> {
         self.current_token = self.lexer.get_next_token()?;
-        let token = self.current_token.clone();
-        println!("current_token: {:?}", token);
         self.expr()
     }
 }

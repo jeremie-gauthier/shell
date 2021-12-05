@@ -27,7 +27,6 @@ impl Lexer {
 
     pub fn get_next_token(&mut self) -> Result<Token, ParserError> {
         while let Some(c) = self.input.chars().nth(self.current_pos) {
-            println!("{}", c);
             match c {
                 _ if c.is_ascii_whitespace() => self.advance(),
                 _ if c.is_ascii_alphanumeric() => {

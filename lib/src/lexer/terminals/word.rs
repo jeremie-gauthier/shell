@@ -14,7 +14,6 @@ impl TerminalWord for Lexer {
             .skip(self.current_pos)
             .take_while(char::is_ascii_graphic)
             .collect();
-        println!("token_value: {}", token_value);
         self.advance_by(token_value.len());
         Ok(Token::new(Some(token_value), TokenType::Word))
     }
