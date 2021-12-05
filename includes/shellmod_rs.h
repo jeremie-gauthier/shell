@@ -5,7 +5,6 @@
 #include "lexer.h"
 #include "parser.h"
 
-const char *hello_rust(void);
 const t_btree *parser(const char *const c_char);
 
 #endif

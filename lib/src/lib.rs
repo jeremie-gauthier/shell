@@ -5,11 +5,6 @@ use std::{fmt, ptr};
 pub mod lexer;
 pub mod parser;
 
-#[no_mangle]
-pub extern "C" fn hello_rust() -> *const u8 {
-    "Hello, world!\0".as_ptr()
-}
-
 pub fn c_str_to_rs(input: *const c_char) -> String {
     let c_str = unsafe {
         if !input.is_null() {
