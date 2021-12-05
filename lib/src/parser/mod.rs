@@ -1,39 +1,38 @@
-use crate::Token;
-use crate::lexer::Lexer;
-
+pub mod error;
 pub mod parser;
 pub mod rules;
 
-#[repr(C)]
-pub struct BTNode {
-    left: Option<Box<BTNode>>,
-    right: Option<Box<BTNode>>,
-    token: Token,
-}
-
-impl BTNode {
-	pub fn new(token: Token, left: Option<BTNode>, right: Option<BTNode>) -> Self {
-		BTNode {
-			token,
-			left: match left {
-				Some(left_node) => Some(Box::new(left_node)),
-				None => None
-			},
-			right: match right {
-				Some(right_node) => Some(Box::new(right_node)),
-				None => None
-			}
-		}
-	}
-}
+use crate::lexer::Lexer;
+use crate::parser::error::ParserError;
+use crate::parser::rules::RuleExpr;
+use crate::{BTNode, Token, TokenType};
 
 pub struct Parser {
-	lexer: Lexer,
-	current_token: Token,
+    lexer: Lexer,
+    current_token: Token,
 }
 
 impl Parser {
-	pub fn new(lexer: Lexer) -> Self {
-		Parser { lexer, current_token: lexer.get_next_token() }
-	}
+    pub fn new(lexer: Lexer) -> Result<Self, ParserError> {
+        Ok(Parser {
+            lexer,
+            current_token: Token::default(),
+        })
+    }
+
+    fn eat(&mut self, token_type: TokenType) -> Result<(), ParserError> {
+        if self.current_token.e_token_type == token_type {
+            self.current_token = self.lexer.get_next_token()?;
+            Ok(())
+        } else {
+            Err(ParserError::UnexpectedToken)
+        }
+    }
+
+    pub fn parse_input(mut self) -> Result<BTNode, ParserError> {
+        self.current_token = self.lexer.get_next_token()?;
+        let token = self.current_token.clone();
+        println!("current_token: {:?}", token);
+        self.expr()
+    }
 }

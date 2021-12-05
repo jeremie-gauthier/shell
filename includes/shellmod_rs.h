@@ -3,8 +3,9 @@
 
 #include "token.h"
 #include "lexer.h"
+#include "parser.h"
 
 const char *hello_rust(void);
-t_token whitespace(t_lexer *const lexer);
+const t_btree *parser(const char *const c_char);
 
 #endif

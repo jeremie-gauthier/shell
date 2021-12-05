@@ -1,6 +1,13 @@
-use crate::parser::{ BTNode };
-use crate::parser::rules::{ cmd };
+use crate::parser::rules::RuleCmd;
+use crate::parser::{BTNode, Parser, ParserError};
 
-pub fn expr() -> BTNode {
-	let node = cmd();
+pub trait RuleExpr {
+    fn expr(&mut self) -> Result<BTNode, ParserError>;
+}
+
+impl RuleExpr for Parser {
+    fn expr(&mut self) -> Result<BTNode, ParserError> {
+        let node = self.cmd()?;
+        Ok(node)
+    }
 }

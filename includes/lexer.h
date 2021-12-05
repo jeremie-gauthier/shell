@@ -18,8 +18,6 @@ typedef struct s_lexer
 	bool has_error;
 } t_lexer;
 
-#include "shellmod_rs.h"
-
 t_lexer lexer(const char *str);
 void free_lexer(t_lexer *lexer);
 
@@ -34,8 +32,8 @@ t_token unknown(t_lexer *const lexer);
 t_token operator(t_lexer *const lexer);
 
 static t_token(*RULES[NB_DISTINCT_TOKENS]) (t_lexer *const lexer) = {
-	[Whitespace] = whitespace,
-	[Command] = command,
+	// [Whitespace] = whitespace,
+	// [Command] = command,
 	[Operator] = operator,
 	[Unknown] = unknown,
 };

@@ -1,25 +1,28 @@
-use crate::parser::rules::{expr, cmd, arg};
-use crate::parser::BTNode;
-use crate::{Token, TokenType};
+use crate::lexer::Lexer;
+use crate::parser::Parser;
+use crate::{c_str_to_rs, BTNode};
 use libc::c_char;
-use std::ffi::{CStr};
-
-fn c_str_to_rs(input: *const c_char) -> String {
-    let c_str = unsafe {
-        assert!(!input.is_null());
-        CStr::from_ptr(input)
-    };
-
-    let r_str = c_str.to_str().unwrap_or_default();
-    r_str.to_string()
-}
+use std::ptr;
 
 #[no_mangle]
 pub extern "C" fn parser(input: *const c_char) -> *const BTNode {
     let r_str = c_str_to_rs(input);
+    let lexer = Lexer::new(r_str);
+    let parser = Parser::new(lexer);
+    if parser.is_err() {
+        return ptr::null();
+    }
 
-	// pas sur que ca fonctionne
-	let end_token = Token::new(None, TokenType::End);
-	let btree = Box::new(BTNode::new(end_token, None, None));
-	Box::into_raw(btree)
+    match parser.unwrap().parse_input() {
+        Ok(ast) => Box::into_raw(Box::new(ast)),
+        Err(err) => {
+            eprintln!("Parser error: {}", err);
+            ptr::null()
+        }
+    }
+
+    // // pas sur que ca fonctionne
+    // let end_token = Token::new(None, TokenType::End);
+    // let btree = Box::new(BTNode::new(end_token, None, None));
+    // Box::into_raw(btree)
 }

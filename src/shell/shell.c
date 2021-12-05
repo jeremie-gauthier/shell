@@ -1,8 +1,9 @@
 #include <stddef.h>
 #include <editline/readline.h>
-// #include <stdio.h>
+#include <stdio.h>
 #include "shell.h"
 #include "interpreter.h"
+#include "shellmod_rs.h"
 
 static void initialize_readline()
 {
@@ -27,7 +28,9 @@ int shell(void)
 	while (1)
 	{
 		const char *line_read = rl_gets();
-		interpreter(line_read);
+		const t_btree *node = parser(line_read);
+		printf("read node from C: %s\n", node->token.value);
+		// interpreter(line_read);
 	}
 	return 0;
 }

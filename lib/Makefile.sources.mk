@@ -1,13 +1,18 @@
 ROOT=	lib.rs
 
 LEXER=	mod.rs\
-		lexer.rs\
-		rules/mod.rs\
-		rules/whitespace.rs
+		terminals/mod.rs\
+		terminals/word.rs
 
 LEXER:=	$(addprefix lexer/, $(LEXER))
 
-PARSER=	mod.rs
+PARSER=	mod.rs\
+		error.rs\
+		parser.rs\
+		rules/mod.rs\
+		rules/arg.rs\
+		rules/cmd.rs\
+		rules/expr.rs
 
 PARSER:=$(addprefix parser/, $(PARSER))
 

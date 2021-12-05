@@ -1,30 +1,44 @@
+pub mod terminals;
+
+use crate::lexer::terminals::TerminalWord;
+use crate::parser::error::ParserError;
 use crate::{Token, TokenType};
-use std::iter::Peekable;
-use std::str::Chars;
 
-pub mod rules;
-
-pub struct Lexer<'a> {
-    input: Peekable<Chars<'a>>,
+pub struct Lexer {
+    input: String,
+    current_pos: usize,
 }
 
-impl<'a> Lexer<'a> {
-	pub fn new(input: String) -> Self {
-		Lexer {
-			input: input.chars().peekable(),
-		}
-	}
+impl Lexer {
+    pub fn new(input: String) -> Self {
+        Lexer {
+            input,
+            current_pos: 0,
+        }
+    }
 
-	pub fn advance(&mut self) {
-		self.input.next();
-	}
+    fn advance(&mut self) {
+        self.current_pos += 1
+    }
 
-	pub fn get_next_token(self) -> Token {
-		while self.input.peek().is_some() {
+    fn advance_by(&mut self, len: usize) {
+        self.current_pos += len;
+    }
 
-			self.advance();
-		}
+    pub fn get_next_token(&mut self) -> Result<Token, ParserError> {
+        while let Some(c) = self.input.chars().nth(self.current_pos) {
+            println!("{}", c);
+            match c {
+                _ if c.is_ascii_whitespace() => self.advance(),
+                _ if c.is_ascii_alphanumeric() => {
+                    return self.word();
+                }
+                _ => {
+                    return Err(ParserError::UnexpectedToken);
+                }
+            };
+        }
 
-		Token::new(None, TokenType::End)
-	}
+        Ok(Token::new(None, TokenType::End))
+    }
 }
