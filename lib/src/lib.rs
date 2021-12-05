@@ -78,11 +78,22 @@ impl Token {
 }
 
 #[repr(C)]
-#[derive(Debug)]
+// Do not change the order of attributes as it would break the
+//  C memory representation
 pub struct BTNode {
     left: Option<Box<BTNode>>,
     right: Option<Box<BTNode>>,
     token: Token,
+}
+
+impl fmt::Debug for BTNode {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        f.debug_struct("BTNode")
+            .field("token", &self.token)
+            .field("left", &self.left)
+            .field("right", &self.right)
+            .finish()
+    }
 }
 
 impl BTNode {
