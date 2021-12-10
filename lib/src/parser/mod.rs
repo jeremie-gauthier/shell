@@ -13,11 +13,11 @@ pub struct Parser {
 }
 
 impl Parser {
-    pub fn new(lexer: Lexer) -> Result<Self, ParserError> {
-        Ok(Parser {
+    pub fn new(lexer: Lexer) -> Self {
+        Parser {
             lexer,
             current_token: Token::default(),
-        })
+        }
     }
 
     fn eat(&mut self, token_type: TokenType) -> Result<(), ParserError> {

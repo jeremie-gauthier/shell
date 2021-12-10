@@ -1,6 +1,6 @@
-pub mod terminals;
+mod terminals;
+use terminals::{is_operator, TerminalOperator, TerminalWord};
 
-use crate::lexer::terminals::TerminalWord;
 use crate::parser::error::ParserError;
 use crate::{Token, TokenType};
 
@@ -32,6 +32,7 @@ impl Lexer {
                 _ if c.is_ascii_alphanumeric() => {
                     return self.word();
                 }
+                _ if is_operator(c) => return self.operator(),
                 _ => {
                     return Err(ParserError::UnexpectedToken);
                 }

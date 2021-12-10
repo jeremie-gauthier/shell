@@ -10,7 +10,7 @@ impl RuleCmd for Parser {
     fn cmd(&mut self) -> Result<BTNode, ParserError> {
         let mut node = self.arg()?;
 
-		if self.current_token.e_token_type == TokenType::Word {
+    	if self.current_token.e_token_type == TokenType::Word {
             let next_arg = self.cmd()?;
             node.right = Some(Box::new(next_arg));
         }

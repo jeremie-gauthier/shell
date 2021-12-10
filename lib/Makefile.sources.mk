@@ -2,7 +2,8 @@ ROOT=	lib.rs
 
 LEXER=	mod.rs\
 		terminals/mod.rs\
-		terminals/word.rs
+		terminals/word.rs\
+		terminals/operator.rs
 
 LEXER:=	$(addprefix lexer/, $(LEXER))
 
