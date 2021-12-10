@@ -28,7 +28,7 @@ pub fn c_str_to_rs(input: *const c_char) -> String {
 }
 
 #[repr(C)]
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub enum TokenType {
     Whitespace = 0, // space
     Word,           // alnum
