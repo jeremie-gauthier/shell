@@ -1,3 +1,7 @@
+use crate::lexer::Lexer;
+use crate::parser::error::ParserError;
+use crate::parser::Parser;
+use std::error::Error;
 use std::ffi::{CStr, CString};
 use std::os::raw::c_char;
 use std::{fmt, ptr};
@@ -112,5 +116,23 @@ impl BTNode {
                 None => None,
             },
         }
+    }
+}
+
+impl fmt::Display for BTNode {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "{:?}", self.token)
+    }
+}
+
+impl Error for BTNode {}
+
+impl TryFrom<String> for BTNode {
+    type Error = ParserError;
+
+    fn try_from(input: String) -> Result<BTNode, ParserError> {
+        let lexer = Lexer::new(input);
+        let parser = Parser::new(lexer);
+        parser.parse_input()
     }
 }
