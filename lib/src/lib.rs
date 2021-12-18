@@ -48,6 +48,14 @@ pub struct Token {
     pub e_token_type: TokenType,
 }
 
+impl PartialEq for Token {
+    fn eq(&self, other: &Self) -> bool {
+		let value = c_str_to_rs(self.value);
+		let rhs_value = c_str_to_rs(other.value);
+        value == rhs_value && self.e_token_type == other.e_token_type
+    }
+}
+
 impl fmt::Debug for Token {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         f.debug_struct("Token")
@@ -87,6 +95,7 @@ impl Token {
 #[repr(C)]
 // Do not change the order of attributes as it would break the
 //  C memory representation
+#[derive(PartialEq)]
 pub struct BTNode {
     left: Option<Box<BTNode>>,
     right: Option<Box<BTNode>>,
@@ -134,5 +143,21 @@ impl TryFrom<String> for BTNode {
         let lexer = Lexer::new(input);
         let parser = Parser::new(lexer);
         parser.parse_input()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_ast_from_string() {
+		let tested = BTNode::try_from(String::from("Hello world"));
+
+		let hello_token = Token::new(Some(String::from("Hello")), TokenType::Word);
+		let world_token = Token::new(Some(String::from("world")), TokenType::Word);
+		let expected_ast = BTNode::new(hello_token, None, Some(BTNode::new(world_token, None, None)));
+		
+        assert_eq!(tested, Ok(expected_ast));
     }
 }
