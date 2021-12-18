@@ -1,2 +1,2 @@
 # shell
-Recoding a POSIX Shell in C & Rust
+Recoding a POSIX Shell in Rust
