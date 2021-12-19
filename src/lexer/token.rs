@@ -27,10 +27,7 @@ impl Token {
 	pub fn new(value: Option<String>, token_type: TokenType) -> Self {
 		match value {
 			Some(value) => Token { value, token_type },
-			None => Token {
-				value: String::default(),
-				token_type,
-			},
+			None => Token::default(),
 		}
 	}
 }

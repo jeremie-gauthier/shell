@@ -1,7 +1,7 @@
 mod terminals;
 mod token;
 
-use crate::parser::error::ParserError;
+use crate::parser::ParserError;
 use terminals::{is_operator, TerminalOperator, TerminalWord};
 pub use token::{Token, TokenType};
 

@@ -1,5 +1,5 @@
 use crate::lexer::{Lexer, Token, TokenType};
-use crate::parser::error::ParserError;
+use crate::parser::ParserError;
 
 const OPERATORS: &'static str = "<>&|";
 pub fn is_operator(c: char) -> bool {

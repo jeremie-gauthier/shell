@@ -1,7 +1,8 @@
-pub mod ast;
-pub mod lexer;
-pub mod parser;
+mod ast;
+mod lexer;
+mod parser;
 
+use parser::parser;
 use rustyline::error::ReadlineError;
 use rustyline::Editor;
 
@@ -13,7 +14,7 @@ fn main() {
 		match readline {
 			Ok(line) => {
 				println!("Line: {}", line);
-				if let Some(ast) = parser::parser::parser(line) {
+				if let Some(ast) = parser(line) {
 					println!("{:?}", ast);
 				}
 			}

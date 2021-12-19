@@ -1,7 +1,6 @@
 use crate::ast::Node;
 use crate::lexer::Lexer;
-use crate::parser::error::ParserError;
-use crate::parser::Parser;
+use crate::parser::{Parser, ParserError};
 
 pub type AST = Node;
 

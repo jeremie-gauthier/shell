@@ -1,5 +1,5 @@
 use crate::lexer::{Lexer, Token, TokenType};
-use crate::parser::error::ParserError;
+use crate::parser::ParserError;
 
 pub trait TerminalWord {
 	fn word(&mut self) -> Result<Token, ParserError>;
