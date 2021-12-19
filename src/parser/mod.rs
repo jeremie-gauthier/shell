@@ -3,10 +3,9 @@ pub mod parser;
 pub mod rules;
 
 use crate::ast::Node;
-use crate::lexer::Lexer;
+use crate::lexer::{Lexer, Token, TokenType};
 use crate::parser::error::ParserError;
 use crate::parser::rules::RuleExpr;
-use crate::{Token, TokenType};
 
 pub struct Parser {
 	lexer: Lexer,

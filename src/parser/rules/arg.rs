@@ -1,6 +1,6 @@
 use crate::ast::Node;
+use crate::lexer::TokenType;
 use crate::parser::{Parser, ParserError};
-use crate::TokenType;
 
 pub trait RuleArg {
 	fn arg(&mut self) -> Result<Node, ParserError>;

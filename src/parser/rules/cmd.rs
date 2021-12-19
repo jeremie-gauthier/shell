@@ -1,7 +1,7 @@
 use crate::ast::Node;
+use crate::lexer::TokenType;
 use crate::parser::rules::RuleArg;
 use crate::parser::{Parser, ParserError};
-use crate::TokenType;
 
 pub trait RuleCmd {
 	fn cmd(&mut self) -> Result<Node, ParserError>;

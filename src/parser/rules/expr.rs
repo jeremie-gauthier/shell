@@ -1,7 +1,7 @@
 use crate::ast::Node;
+use crate::lexer::TokenType;
 use crate::parser::rules::RuleCmd;
 use crate::parser::{Parser, ParserError};
-use crate::TokenType;
 
 const OPERATORS: [TokenType; 3] = [TokenType::Pipe, TokenType::Redirection, TokenType::Logical];
 

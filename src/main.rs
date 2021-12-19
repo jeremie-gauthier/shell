@@ -1,9 +1,7 @@
 pub mod ast;
 pub mod lexer;
 pub mod parser;
-pub mod token;
 
-use crate::token::{Token, TokenType};
 use rustyline::error::ReadlineError;
 use rustyline::Editor;
 

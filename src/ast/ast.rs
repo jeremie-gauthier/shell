@@ -1,7 +1,6 @@
-use crate::lexer::Lexer;
+use crate::lexer::{Lexer, Token};
 use crate::parser::error::ParserError;
 use crate::parser::Parser;
-use crate::token::Token;
 
 #[derive(Debug, PartialEq)]
 pub struct Node {
@@ -39,7 +38,7 @@ impl TryFrom<String> for Node {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::token::TokenType;
+	use crate::lexer::TokenType;
 
 	#[test]
 	fn test_ast_from_string() {
