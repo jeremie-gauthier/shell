@@ -1,8 +1,6 @@
-use crate::ast::Node;
+use crate::ast::AST;
 
-type AST = Node;
-
-pub fn parser(input: String) -> Option<Node> {
+pub fn parser(input: String) -> Option<AST> {
 	match AST::try_from(input) {
 		Ok(ast) => Some(ast),
 		Err(err) => {

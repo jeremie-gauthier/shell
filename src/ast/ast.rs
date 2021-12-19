@@ -1,34 +1,14 @@
-use crate::lexer::{Lexer, Token};
+use crate::ast::Node;
+use crate::lexer::Lexer;
 use crate::parser::error::ParserError;
 use crate::parser::Parser;
 
-#[derive(Debug, PartialEq)]
-pub struct Node {
-	token: Token,
-	pub left: Option<Box<Node>>,
-	pub right: Option<Box<Node>>,
-}
+pub type AST = Node;
 
-impl Node {
-	pub fn new(token: Token, left: Option<Node>, right: Option<Node>) -> Self {
-		Node {
-			token,
-			left: match left {
-				Some(left_node) => Some(Box::new(left_node)),
-				None => None,
-			},
-			right: match right {
-				Some(right_node) => Some(Box::new(right_node)),
-				None => None,
-			},
-		}
-	}
-}
-
-impl TryFrom<String> for Node {
+impl TryFrom<String> for AST {
 	type Error = ParserError;
 
-	fn try_from(input: String) -> Result<Node, ParserError> {
+	fn try_from(input: String) -> Result<AST, ParserError> {
 		let lexer = Lexer::new(input);
 		let parser = Parser::new(lexer);
 		parser.parse_input()
@@ -38,11 +18,11 @@ impl TryFrom<String> for Node {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::lexer::TokenType;
+	use crate::lexer::{Token, TokenType};
 
 	#[test]
 	fn test_ast_from_string() {
-		let tested = Node::try_from(String::from("Hello world"));
+		let tested = AST::try_from(String::from("Hello world"));
 
 		let hello_token = Token::new(Some(String::from("Hello")), TokenType::Word);
 		let world_token = Token::new(Some(String::from("world")), TokenType::Word);

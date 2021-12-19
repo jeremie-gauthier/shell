@@ -1,3 +1,5 @@
-pub mod ast;
+mod ast;
+mod node;
 
-pub use ast::Node;
+pub use ast::AST;
+pub use node::Node;
