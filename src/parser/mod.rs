@@ -1,5 +1,4 @@
 mod error;
-mod parser;
 mod rules;
 
 use crate::ast::Node;
@@ -7,7 +6,6 @@ use crate::lexer::{Lexer, Token, TokenType};
 use rules::RuleExpr;
 
 pub use error::ParserError;
-pub use parser::parser;
 
 pub struct Parser {
 	lexer: Lexer,

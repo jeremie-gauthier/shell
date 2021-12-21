@@ -1,8 +1,8 @@
 use crate::lexer::Token;
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub struct Node {
-	token: Token,
+	pub token: Token,
 	pub left: Option<Box<Node>>,
 	pub right: Option<Box<Node>>,
 }
