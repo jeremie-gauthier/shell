@@ -1,7 +1,8 @@
 #[derive(Clone, Copy, Debug, PartialEq, PartialOrd)]
 pub enum TokenType {
     Word = 0,    // alnum
-    Logical,     // && ||
+    LogicalAnd,  // &&
+    LogicalOr,   // ||
     Redirection, // < << > >> &>
     Pipe,        // |
     Separator,   // ;

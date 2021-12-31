@@ -1,19 +1,24 @@
+use std::io;
 use std::iter::Peekable;
 use std::process::Command;
 
 use crate::ast::AST;
-use crate::lexer::{Token, TokenType};
+use crate::lexer::TokenType;
 use crate::parser::ParserError;
 
 #[derive(Debug)]
 pub enum InterpreterError {
     ParserError(ParserError),
-    RuntimeError,
+    RuntimeError(io::Error),
 }
 
 impl InterpreterError {
     fn from_parse(err: ParserError) -> InterpreterError {
         InterpreterError::ParserError(err)
+    }
+
+    fn from_exec(err: io::Error) -> InterpreterError {
+        InterpreterError::RuntimeError(err)
     }
 }
 
@@ -40,70 +45,19 @@ impl From<&mut Peekable<AST>> for ShellCommand {
     }
 }
 
-// impl From<&mut Peekable<AST>> for Command {
-//     fn from(ast: &mut Peekable<AST>) -> Self {
-//         let mut input_cmd = ast.take_while(|token| token.token_type == TokenType::Word);
-//         println!("{:?}", input_cmd);
-//         let bin = input_cmd.next().unwrap().value;
-//         let command = input_cmd.fold(Command::new(bin), |mut shell_cmd, token| {
-//             shell_cmd.arg(token.value);
-//             shell_cmd
-//         });
-//         ShellCommand { command }
-//     }
-// }
-
-// struct Interpreter {
-//     ast: AST,
-//     command: Option<Command>,
-// }
-
-// impl Interpreter {
-//     pub fn new(input: String) -> Result<Self, InterpreterError> {
-//         let ast = AST::try_from(input).map_err(InterpreterError::from_parse)?;
-//         Ok(Interpreter { ast, command: None })
-//     }
-
-//     fn get_command(mut self) {
-//         let mut input_cmd = self
-//             .ast
-//             .take_while(|token| token.token_type == TokenType::Word);
-//         let bin = input_cmd.next().unwrap().value;
-//         let command = input_cmd.fold(Command::new(bin), |mut shell_cmd, token| {
-//             shell_cmd.arg(token.value);
-//             shell_cmd
-//         });
-//         self.command = Some(command);
-//     }
-
-//     pub fn eval(mut self) -> Result<(), InterpreterError> {
-//         let mut peekable = self.ast.peekable();
-//         while let Some(token) = peekable.peek() {
-//             match token.token_type {
-//                 TokenType::Word => self.get_command(),
-//                 _ => (),
-//             }
-//         }
-//         Ok(())
-//     }
-// }
-
 #[derive(Debug)]
 enum InterpreterObjects {
     Command(Command),
     TokenType(TokenType),
 }
 
-type Stack = Vec<InterpreterObjects>;
-
-impl From<AST> for Stack {
+impl From<AST> for Vec<InterpreterObjects> {
     fn from(ast: AST) -> Self {
         let mut ast_peekable = ast.peekable();
         let mut stack = Vec::new();
         let mut operators: Vec<TokenType> = Vec::new();
 
         while let Some(token) = ast_peekable.peek() {
-            println!("BUILDING (token):: {:?}", token);
             match token.token_type {
                 TokenType::Word => {
                     let command = ShellCommand::from(&mut ast_peekable).command;
@@ -124,10 +78,9 @@ impl From<AST> for Stack {
                     ast_peekable.next();
                 }
             };
-            println!("BUILDING (stack):: {:?}", stack);
         }
-        for operator in operators {
-            stack.push(InterpreterObjects::TokenType(operator));
+        while !operators.is_empty() {
+            stack.push(InterpreterObjects::TokenType(operators.pop().unwrap()));
         }
         stack
     }
@@ -138,39 +91,48 @@ impl From<AST> for Stack {
 
 //  il faut en faire une struct !
 pub fn interpreter(input: String) -> Result<(), InterpreterError> {
-    // let mut interpreter = Interpreter::new(input)?;
-    // interpreter.eval()
-
     let ast = AST::try_from(input).map_err(InterpreterError::from_parse)?;
-    let stack = Stack::from(ast);
+    let stack = Vec::from(ast);
     println!("{:?}", stack);
-    // println!("{:?}", ast);
-    // let mut child_cmd: Option<ShellCommand> = None;
-    // let mut can_run_next_cmd = true;
 
-    // while let Some(token) = ast.peek() {
-    //     println!("{:?}", token);
+    let mut op1 = None;
+    let mut op2 = None;
+    let mut last_cmd_status;
 
-    //     match token.token_type {
-    //         TokenType::Word => child_cmd = Some(ShellCommand::from(&mut ast)),
-    //         _ => {
-    //             let result = child_cmd.unwrap().command.status();
-    //             match token.token_type {
-    //                 TokenType::Logical => {
-    //                     if token.value == "&&" {
-    //                         can_run_next_cmd = result.unwrap().success();
-    //                     } else if token.value == "||" {
-    //                         can_run_next_cmd = !result.unwrap().success();
-    //                     }
-    //                 }
-    //                 _ => (),
-    //             }
-
-    //             ast.next();
-    //         }
-    //     };
-    // }
-
+    for token in stack {
+        match token {
+            InterpreterObjects::Command(command) => {
+                if let None = op1 {
+                    op1 = Some(command);
+                } else if let None = op2 {
+                    op2 = Some(command);
+                } else {
+                    return Err(InterpreterError::ParserError(ParserError::UnexpectedToken));
+                }
+            }
+            InterpreterObjects::TokenType(token_type) => match token_type {
+                TokenType::LogicalAnd => {
+                    last_cmd_status = op1.unwrap().status().map_err(InterpreterError::from_exec)?;
+                    op1 = None;
+                    if last_cmd_status.success() {
+                        last_cmd_status =
+                            op2.unwrap().status().map_err(InterpreterError::from_exec)?;
+                    }
+                    op2 = None;
+                }
+                TokenType::LogicalOr => {
+                    last_cmd_status = op1.unwrap().status().map_err(InterpreterError::from_exec)?;
+                    op1 = None;
+                    if !last_cmd_status.success() {
+                        last_cmd_status =
+                            op2.unwrap().status().map_err(InterpreterError::from_exec)?;
+                    }
+                    op2 = None;
+                }
+                _ => (),
+            },
+        }
+    }
     // let result = child_cmd.unwrap().command.status();
     // println!("{:?}", result.unwrap());
 

@@ -59,7 +59,7 @@ mod tests {
 
         let touch_token = Token::new(Some(String::from("touch")), TokenType::Word);
         let marvel_token = Token::new(Some(String::from("marvel")), TokenType::Word);
-        let logical_and_token = Token::new(Some(String::from("&&")), TokenType::Logical);
+        let logical_and_token = Token::new(Some(String::from("&&")), TokenType::LogicalAnd);
         let echo_token = Token::new(Some(String::from("echo")), TokenType::Word);
         let iron_man_token = Token::new(Some(String::from("IronMan")), TokenType::Word);
         let redirection_token = Token::new(Some(String::from(">>")), TokenType::Redirection);
@@ -85,7 +85,7 @@ mod tests {
 
         let touch_token = Token::new(Some(String::from("touch")), TokenType::Word);
         let marvel_token = Token::new(Some(String::from("marvel")), TokenType::Word);
-        let logical_and_token = Token::new(Some(String::from("&&")), TokenType::Logical);
+        let logical_and_token = Token::new(Some(String::from("&&")), TokenType::LogicalAnd);
         let echo_token = Token::new(Some(String::from("echo")), TokenType::Word);
         let iron_man_token = Token::new(Some(String::from("IronMan")), TokenType::Word);
         let redirection_token = Token::new(Some(String::from(">>")), TokenType::Redirection);
