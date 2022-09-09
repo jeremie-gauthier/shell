@@ -6,15 +6,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int main(int argc, char **argv)
+int testing_with_leaks(const char *input)
 {
-	(void)argc;
-	(void)argv;
-
-	// shell();
-
 	printf("__LEXER__\n");
-	const t_lexer input_lexer = lexer(argv[1]);
+	const t_lexer input_lexer = lexer(input);
 	if (!input_lexer.tokens)
 	{
 		printf("Error: lexer failed\n");
@@ -39,6 +34,21 @@ int main(int argc, char **argv)
 
 	print_btree((t_btree *)ast);
 
+	btree_free((t_btree *)ast);
 	free_lexer((t_lexer *)&input_lexer);
+	return EXIT_SUCCESS;
+}
+
+int main(int argc, char **argv)
+{
+	(void)argc;
+	(void)argv;
+
+	// shell();
+	testing_with_leaks(argv[1]);
+
+	while (1)
+	{
+	}
 	return EXIT_SUCCESS;
 }
