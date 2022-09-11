@@ -10,5 +10,5 @@ TESTS_SOURCES=	AllTests.c\
 				parser_get_current_token.c\
 				parser.c
 
-TESTS_SOURCES=	$(addprefix tests/, $(TESTS_SOURCES))
+TESTS_SOURCES:=	$(addprefix tests/, $(TESTS_SOURCES))
 TESTS_OBJS=	$(subst .c,.o,$(TESTS_SOURCES))

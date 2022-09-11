@@ -1,5 +1,7 @@
 # https://stackoverflow.com/questions/2481269/how-to-make-a-simple-c-makefile
 
+include Makefile.headers.mk
+include Makefile.tests.mk
 include Makefile.lib.mk
 include Makefile.sources.mk
 

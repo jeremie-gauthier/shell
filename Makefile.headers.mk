@@ -7,4 +7,4 @@ HEADERS=	_42sh.h\
 			lib_io.h\
 			lib_str.h
 
-HEADERS=	$(addprefix includes/, $(HEADERS))
+HEADERS:=	$(addprefix includes/, $(HEADERS))
