@@ -2,8 +2,9 @@
 #include "lib_mem.h"
 #include "lib_str.h"
 #include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/uio.h>
+#include <unistd.h>
 
 static char *get_line_from_cache(t_gnl *const restrict gnl)
 {
