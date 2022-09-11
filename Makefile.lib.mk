@@ -20,7 +20,10 @@ LIB_STR:= $(addprefix str/, ${LIB_STR})
 
 LIB_MEM=ft_memcpy.c\
 		ft_memset.c\
-		ft_bzero.c
+		ft_bzero.c\
+		ft_memsize.c\
+		ft_memdel.c\
+		ft_realloc.c
 LIB_MEM:= $(addprefix mem/, ${LIB_MEM})
 
 LIB_SOURCES= $(addprefix lib/, ${LIB_IO} ${LIB_STR} ${LIB_MEM})

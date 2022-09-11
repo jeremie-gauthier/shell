@@ -1,4 +1,5 @@
 #include "lib_mem.h"
+#include <stdio.h>
 
 void *ft_memset(void *str, const int c, size_t n)
 {
@@ -6,6 +7,9 @@ void *ft_memset(void *str, const int c, size_t n)
 
 	p = (byte *)str;
 	while (n-- > 0)
+	{
+		// printf("Copying... %zu\n", n);
 		*p++ = c;
+	}
 	return str;
 }
