@@ -15,18 +15,20 @@ static void fill_line_from_cache(t_gnl *const restrict gnl, char **line)
 		*line = ft_strndup(gnl->cache, line_size);
 		if (nl[1] == '\0')
 		{
-			ft_bzero(gnl->cache, gnl->bytes_alloc);
+			gnl->cache[0] = '\0';
+			// ft_bzero(gnl->cache, gnl->bytes_alloc);
 			gnl->len = 0;
 			return;
 		}
 		ft_strcpy(gnl->cache, &nl[1]);
-		ft_bzero(&gnl->cache[line_size], gnl->bytes_alloc - gnl->len);
+		// ft_bzero(&gnl->cache[line_size], gnl->bytes_alloc - gnl->len);
 		// printf("in alloc %zu  len %zu  cache [%s] line_size %zu\n", gnl->bytes_alloc, gnl->len, gnl->cache, line_size);
 		gnl->len -= line_size;
 		return;
 	}
 	*line = ft_strdup(gnl->cache);
-	ft_bzero(gnl->cache, gnl->bytes_alloc);
+	// ft_bzero(gnl->cache, gnl->bytes_alloc);
+	gnl->cache[0] = '\0';
 	gnl->len = 0;
 	return;
 }
