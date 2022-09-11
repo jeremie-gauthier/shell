@@ -1,5 +1,6 @@
-LIB_IO= get_next_line.c\
-		can_readf.c
+LIB_IO= can_readf.c\
+		get_next_line.c\
+		get_next_line_utils.c
 LIB_IO:= $(addprefix io/, ${LIB_IO})
 
 LIB_STR=ft_strchr.c\

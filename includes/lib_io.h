@@ -14,7 +14,9 @@ typedef struct s_gnl
 	size_t len;
 } t_gnl;
 
-char *get_next_line(const int fd, const bool release_memory);
 bool can_readf(const int fd);
+char *get_next_line(const int fd, const bool release_memory);
+char *readline(const int fd);
+char *free_readline_cache();
 
 #endif
