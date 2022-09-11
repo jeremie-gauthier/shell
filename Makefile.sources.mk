@@ -1,6 +1,5 @@
 ROOT=	main.c
 
-
 LEXER=	lexer.c\
 		get_token_type.c\
 		rules/command.c\

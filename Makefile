@@ -1,5 +1,6 @@
 # https://stackoverflow.com/questions/2481269/how-to-make-a-simple-c-makefile
 
+include Makefile.lib.mk
 include Makefile.sources.mk
 
 HEADER_DIR= includes/
@@ -12,17 +13,13 @@ RM= rm -rf
 
 NAME= 42sh
 
-.PHONY: all LIBFT clean fclean re
+.PHONY: all test debug clean fclean re
 
 all: $(NAME)
 
 # implicitly apply CFLAGS
-$(NAME): $(OBJS_DEBUG) $(HEADERS) Makefile
-	$(CC) -o $(NAME) $(OBJS_DEBUG)
-
-release: $(OBJS) $(HEADERS) Makefile
-	@make -C $(LIB_RS_DIR) release
-	$(CC) -O3 -o $(NAME) $(OBJS)
+$(NAME): $(LIB_OBJS) $(OBJS_DEBUG) $(HEADERS) Makefile
+	$(CC) -o $(NAME) $(LIB_OBJS) $(OBJS_DEBUG)
 
 test: $(OBJS) $(HEADERS) $(TESTS_OBJS) Makefile
 	@echo $(TESTS_OBJS)

@@ -4,6 +4,7 @@ HEADERS=	_42sh.h\
 			parser.h\
 			shell.h\
 			interpreter.h\
-			shellmod_rs.h
+			lib_io.h\
+			lib_str.h
 
 HEADERS=	$(addprefix includes/, $(HEADERS))
