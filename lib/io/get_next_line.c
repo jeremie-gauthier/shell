@@ -38,7 +38,6 @@ static int read_fd(const int fd, char **const cache)
 	}
 	while (!ft_strchr(buf, '\n') && ret == BUFFER_SIZE)
 	{
-		// printf("cache [%s]\n", *cache);
 		ret = read(fd, buf, BUFFER_SIZE);
 		buf[ret] = '\0';
 		if (ret == 0)
@@ -47,7 +46,6 @@ static int read_fd(const int fd, char **const cache)
 		if (!(*cache = ft_strjoin(*cache, buf)))
 			return (-1);
 		ft_strdel(&cache_ptr);
-		ft_bzero(buf, ret); // for clean log during debug, but not necessary
 	}
 	return 0;
 }
@@ -65,9 +63,7 @@ char *get_next_line(const int fd)
 	if (!cache)
 		return NULL;
 	cache_ptr = cache;
-	// printf("cache before [%s]\n", cache);
 	cache = fill_line_from_cache(cache, &line);
-	// printf("cache after [%s]\n", cache);
 	ft_strdel(&cache_ptr);
 	return line;
 }
