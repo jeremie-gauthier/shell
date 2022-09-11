@@ -1,21 +1,6 @@
 # Parser
 
-The parser module is responsible to build an AST from a token list.
-
-## Grammar
-
-Tokens from enum `e_token_type` are our terminals, which are written in uppercase below for readability.
-
-Rules (described in regex style):
-
-```txt
-factor: COMMAND
-<!-- A factor is a command -->
-
-expr: factor (OPERATOR factor?)*
-<!-- An expr is a factor, optionally followed by an OPERATOR which is optionally followed by another factor. -->
-<!-- The whole optional part is repeated 0 to N times. -->
-```
+The parser uses the first components of the tokens produced by the lexical analyzer to create an abstract syntax tree (AST) representation that depicts the grammatical structure of the token stream.
 
 ## Definition
 

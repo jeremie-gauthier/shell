@@ -1,6 +1,29 @@
 # Lexer
 
-The lexer module is responsible to split a string into recognizable tokens.
+The **lexical analyzer** (lexer) reads the stream of characters making up the source program and groups the characters into meaningful sequences called **lexemes**.
+For each lexeme, the lexical analyzer produces as output a **token** of the form below that it passes on to the subsequent phase, [syntax analysis](../parser/README.md).
+
+## Shell grammar
+
+### Terminals
+
+```txt
+WORD: 		string of alphanumeric chars
+PIPE: 		|
+SEPARATOR: 	;
+LOGICAL_OR:	||
+LOGICAL_AND:	&&
+REDIRECTION: <<, <, >, >>, &> (get the name of each and create separate tokens)
+```
+
+### Rules
+
+_arg_: WORD
+_cmd_: _arg_<sup>+</sup>
+_expr_: _cmd_ ( _operator_<sup>+</sup> _cmd_<sup>?</sup> )<sup>\*</sup>
+_operator_: _redirection_ | PIPE | _logical_ | SEPARATOR
+_redirection_: < | << | > | >> | &>
+_logical_: LOGICAL_OR | LOGICAL_AND
 
 ## Definition
 
@@ -38,7 +61,7 @@ Where `e_token_type` equals:
 enum e_token_type
 {
 	Whitespace = 0,
-	Command,
+	Word,
 	Operator, // generic operator type for lexer
 	Redirection, // is a specific operator
 	Pipe, // is a specific operator
@@ -48,4 +71,5 @@ enum e_token_type
 	Unknown,
 	... // and more
 	End, // <= Terminates by End, as End is used in a #define to know how many types are defined
-};```
+};
+```
