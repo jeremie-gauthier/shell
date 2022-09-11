@@ -5,6 +5,8 @@
 #include <sys/types.h>
 #include <unistd.h>
 
+#define GNL_BUFFER_SIZE 256
+
 typedef struct s_gnl
 {
 	char *cache;
@@ -12,7 +14,7 @@ typedef struct s_gnl
 	size_t len;
 } t_gnl;
 
-char *get_next_line(const int fd);
+char *get_next_line(const int fd, const bool release_memory);
 bool can_readf(const int fd);
 
 #endif
