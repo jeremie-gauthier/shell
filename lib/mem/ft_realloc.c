@@ -12,7 +12,7 @@ void *ft_realloc(void *src, const size_t size)
 		ft_memdel(&src);
 		return NULL;
 	}
-	if (!(dst = malloc(size + 1)))
+	if (!(dst = malloc(sizeof(*src) * (size + 1))))
 		return NULL;
 	if (src)
 	{
