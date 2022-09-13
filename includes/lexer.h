@@ -1,9 +1,9 @@
 #ifndef LEXER_H
 #define LEXER_H
 
-#include <stddef.h>
-#include <stdbool.h>
 #include "token.h"
+#include <stdbool.h>
+#include <stddef.h>
 
 #define WHITESPACES " \t\n\r\v\f"
 #define OPERATORS "<>&|;"
@@ -26,14 +26,14 @@ enum e_token_type get_token_type(char c);
 /*
  ** RULES
  */
-t_token whitespace(t_lexer *const lexer);
-t_token command(t_lexer *const lexer);
-t_token unknown(t_lexer *const lexer);
-t_token operator(t_lexer *const lexer);
+t_token whitespace(t_lexer *const restrict lexer);
+t_token word(t_lexer *const restrict lexer);
+t_token unknown(t_lexer *const restrict lexer);
+t_token operator(t_lexer *const restrict lexer);
 
-static t_token(*RULES[NB_DISTINCT_TOKENS]) (t_lexer *const lexer) = {
+static t_token (*RULES[NB_DISTINCT_TOKENS])(t_lexer *const lexer) = {
 	[Whitespace] = whitespace,
-	[Command] = command,
+	[Word] = word,
 	[Operator] = operator,
 	[Unknown] = unknown,
 };

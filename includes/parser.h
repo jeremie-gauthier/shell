@@ -1,15 +1,16 @@
 #ifndef PARSER_H
 #define PARSER_H
 
-#include "token.h"
 #include "lexer.h"
+#include "token.h"
 
 #define BTREE_CREATE_ONE(token) btree_create_node(token, NULL, NULL)
 
 /*
  ** BINARY TREE
  */
-typedef struct s_btree {
+typedef struct s_btree
+{
 	struct s_btree *left;
 	struct s_btree *right;
 	t_token token;
@@ -22,7 +23,8 @@ void btree_free(t_btree *btree);
 /*
  ** PARSER
  */
-typedef struct s_parser {
+typedef struct s_parser
+{
 	const t_lexer *const lexer;
 	size_t current_token;
 } t_parser;

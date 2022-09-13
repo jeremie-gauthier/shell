@@ -1,32 +1,28 @@
-#include <stddef.h>
-#include <stdbool.h>
-#include <ctype.h>
-#include <string.h>
 #include "lexer.h"
+#include "lib_char.h"
+#include <stdbool.h>
+#include <stddef.h>
 
-static bool is_operator(const char c);
-static bool is_eof(const char c);
+static inline bool is_operator(const char c)
+{
+	const char *operator= ft_strchr(OPERATORS, c);
+	return operator!= NULL && * operator!= '\0';
+}
+
+static inline bool is_eof(const char c)
+{
+	return c == '\0';
+}
 
 enum e_token_type get_token_type(char c)
 {
-	if (isspace(c))
+	if (ft_isspace(c))
 		return Whitespace;
 	if (is_operator(c))
 		return Operator;
-	if (isgraph(c))
-		return Command;
+	if (ft_isgraph(c))
+		return Word;
 	if (is_eof(c))
 		return End;
 	return Unknown;
-}
-
-static bool is_operator(const char c)
-{
-	const char *operator = strchr(OPERATORS, c);
-	return operator != NULL && *operator != '\0';
-}
-
-static bool is_eof(const char c)
-{
-	return c == '\0';
 }

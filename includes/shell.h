@@ -1,7 +1,18 @@
 #ifndef SHELL_H
 #define SHELL_H
 
-int shell(void);
-char **command_completion(const char *const text, const int start);
+enum e_shell_status
+{
+	STOPPED = 0,
+	RUNNING
+};
+
+typedef struct shell
+{
+	enum e_shell_status status;
+} t_shell;
+
+t_shell create_shell(void);
+int run_shell(t_shell shell);
 
 #endif
