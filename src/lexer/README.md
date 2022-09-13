@@ -3,6 +3,8 @@
 The **lexical analyzer** (lexer) reads the stream of characters making up the source program and groups the characters into meaningful sequences called **lexemes**.
 For each lexeme, the lexical analyzer produces as output a **token** of the form below that it passes on to the subsequent phase, [syntax analysis](../parser/README.md).
 
+For a good lexer tutorial, follow this guide: https://ruslanspivak.com/lsbasi-part1/
+
 ## Shell grammar
 
 ### Terminals
