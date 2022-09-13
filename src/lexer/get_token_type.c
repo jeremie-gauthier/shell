@@ -1,13 +1,8 @@
 #include "lexer.h"
 #include "lib_char.h"
+#include "lib_str.h"
 #include <stdbool.h>
 #include <stddef.h>
-
-static inline bool is_operator(const char c)
-{
-	const char *operator= ft_strchr(OPERATORS, c);
-	return operator!= NULL && * operator!= '\0';
-}
 
 static inline bool is_eof(const char c)
 {
