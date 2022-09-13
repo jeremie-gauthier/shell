@@ -2,8 +2,8 @@ ROOT=	main.c
 
 LEXER=	lexer.c\
 		get_token_type.c\
-		rules/word.c\
-		rules/unknown.c
+		terminals/word.c\
+		terminals/unknown.c
 
 LEXER:=	$(addprefix lexer/, $(LEXER))
 

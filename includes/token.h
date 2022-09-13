@@ -6,13 +6,7 @@
 
 enum e_token_type
 {
-	Whitespace = 0,
-	Word,
-	Operator,	 // generic operator type for lexer
-	Redirection, // is a specific operator
-	Pipe,		 // is a specific operator
-	Separator,	 // is a specific operator
-	Logical,	 // is a specific operator
+	Word = 0,
 	Unknown,
 	End,
 };

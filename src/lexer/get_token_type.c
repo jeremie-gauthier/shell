@@ -16,10 +16,6 @@ static inline bool is_eof(const char c)
 
 enum e_token_type get_token_type(char c)
 {
-	if (ft_isspace(c))
-		return Whitespace;
-	if (is_operator(c))
-		return Operator;
 	if (ft_isgraph(c))
 		return Word;
 	if (is_eof(c))
