@@ -6,7 +6,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int testing_with_leaks(const char *input)
+#include "lib_str.h"
+#include <string.h>
+
+int testing_lexer_with_leaks(const char *input)
 {
 	printf("__LEXER__\n");
 	const t_lexer input_lexer = lexer(input);
@@ -44,11 +47,19 @@ int main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 
-	// shell();
-	testing_with_leaks(argv[1]);
+	t_shell shell;
 
-	while (1)
-	{
-	}
+	shell = create_shell();
+	run_shell(shell);
+	// testing_lexer_with_leaks(argv[1]);
+
+	// char *ret = ft_strslice(NULL, 2, 0);
+
+	// str = ft_strstr("Le lion est mort ce soir", argv[1]);
+	// printf(">>%s", ret);
+
+	// while (1)
+	// {
+	// }
 	return EXIT_SUCCESS;
 }
