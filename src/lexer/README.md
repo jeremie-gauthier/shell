@@ -30,7 +30,7 @@ _logical_: LOGICAL_OR | LOGICAL_AND
 ## Definition
 
 ```c
-t_lexer lexer(const char *str);
+t_lexer create_lexer(const char *const restrict str);
 ```
 
 Where `t_lexer` equals:
@@ -62,16 +62,8 @@ Where `e_token_type` equals:
 ```c
 enum e_token_type
 {
-	Whitespace = 0,
-	Word,
-	Operator, // generic operator type for lexer
-	Redirection, // is a specific operator
-	Pipe, // is a specific operator
-	Separator, // is a specific operator
-	Logical, // is a specific operator
-	Number,
+	Word = 0,
 	Unknown,
-	... // and more
 	End, // <= Terminates by End, as End is used in a #define to know how many types are defined
 };
 ```
