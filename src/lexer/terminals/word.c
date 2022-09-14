@@ -3,16 +3,12 @@
 #include "lib_str.h"
 #include "token.h"
 
-t_token word(t_lexer *const restrict lexer)
+const char *word(t_lexer *const restrict lexer)
 {
-	size_t idx = lexer->input_idx;
+	const size_t start_idx = lexer->pos;
 
-	while (lexer->input[idx] && ft_isgraph(lexer->input[idx]))
-		idx++;
+	while (lexer->current_char && ft_isgraph(lexer->current_char))
+		advance_lexer(lexer);
 
-	const size_t size = idx - lexer->input_idx;
-	const char *value = ft_strndup(&lexer->input[lexer->input_idx], size);
-
-	lexer->input_idx = idx;
-	return (t_token){.type = Word, .value = value};
+	return ft_strndup(&lexer->input[start_idx], lexer->pos - start_idx);
 }

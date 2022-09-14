@@ -3,6 +3,6 @@
 
 t_token unknown(t_lexer *const restrict lexer)
 {
-	lexer->input_idx++;
+	advance_lexer(lexer);
 	return (t_token){.type = Unknown, .value = NULL};
 }

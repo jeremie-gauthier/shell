@@ -11,29 +11,23 @@
 typedef struct s_lexer
 {
 	const char *input;
-	t_token *tokens;
-	size_t tokens_len;
-	size_t tokens_cap;
-	size_t input_idx;
-	bool has_error;
+	size_t pos;
+	char current_char;
 } t_lexer;
 
-t_lexer lexer(const char *str);
-void free_lexer(t_lexer *lexer);
+t_lexer create_lexer(const char *const restrict str);
+t_token get_next_token(t_lexer *const restrict lexer);
+void advance_lexer(t_lexer *const restrict lexer);
 
 enum e_token_type get_token_type(char c);
 
 /*
- ** RULES
+ ** TERMINALS
  */
-t_token word(t_lexer *const restrict lexer);
-t_token unknown(t_lexer *const restrict lexer);
-t_token operator(t_lexer *const restrict lexer);
 
-static t_token (*RULES[NB_DISTINCT_TOKENS])(t_lexer *const lexer) = {
-	[Word] = word,
-	[Unknown] = unknown,
-};
+void skip_whitespace(t_lexer *const restrict lexer);
+const char *word(t_lexer *const restrict lexer);
+t_token unknown(t_lexer *const restrict lexer);
 
 /*
  ** DEBUG
