@@ -11,7 +11,6 @@ int ft_strcmp(const char *s1, const char *s2);
 int ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t ft_strlen(const char *s);
 char *ft_strnew(const size_t size);
-char *ft_strslice(const char *restrict s, const size_t start, const size_t len);
 void ft_strdel(char **const restrict as);
 char *ft_strdup(const char *const restrict s);
 char *ft_strndup(const char *const restrict src, size_t n);

@@ -9,7 +9,6 @@ LIB_STR=ft_strchr.c\
 		ft_strncmp.c\
 		ft_strlen.c\
 		ft_strnew.c\
-		ft_strslice.c\
 		ft_strdup.c\
 		ft_strndup.c\
 		ft_strdel.c\
