@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-static inline bool is_eof(const char c)
+static bool is_eof(const char c)
 {
 	return c == '\0';
 }
