@@ -1,14 +1,14 @@
+#include "lexer.h"
+#include "CuTest.h"
+#include "token.h"
 #include <stddef.h>
 #include <stdlib.h>
 #include <string.h>
-#include "CuTest.h"
-#include "token.h"
-#include "lexer.h"
 
 static void TestLexer(CuTest *tc)
 {
 	const char *input = "cd directory && touch file && echo 'Awesome shell' > file; echo hello | >&1";
-	const t_lexer input_lexer = lexer(input);
+	const t_lexer input_lexer = create_lexer(input);
 	const size_t TOKENS_LEN = 13;
 	const t_token expected_tokens[TOKENS_LEN] = {
 		{.type = Command, .value = "cd directory "},
@@ -23,8 +23,7 @@ static void TestLexer(CuTest *tc)
 		{.type = Pipe, .value = "|"},
 		{.type = Redirection, .value = ">&"},
 		{.type = Command, .value = "1"},
-		{.type = End, .value = NULL}
-	};
+		{.type = End, .value = NULL}};
 	const t_lexer expected = {
 		.input = input,
 		.input_idx = strlen(input),
@@ -48,10 +47,9 @@ static void TestLexer(CuTest *tc)
 static void TestLexer_EmptyString(CuTest *tc)
 {
 	const char *input = "";
-	const t_lexer input_lexer = lexer(input);
+	const t_lexer input_lexer = create_lexer(input);
 	const t_token expected_tokens[1] = {
-		{.type = End, .value = NULL}
-	};
+		{.type = End, .value = NULL}};
 	const t_lexer expected = {
 		.input = input,
 		.input_idx = strlen(input),

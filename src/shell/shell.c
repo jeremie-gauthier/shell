@@ -22,7 +22,7 @@ void display_prompt()
 
 int run_shell(t_shell shell)
 {
-	char *input;
+	char *input = NULL;
 
 	shell.status = RUNNING;
 	display_prompt();
@@ -30,10 +30,13 @@ int run_shell(t_shell shell)
 	while (shell.status == RUNNING && (input = readline(0)))
 	{
 		printf("received: %s\n", input);
-		const t_lexer input_lexer = lexer(input);
-		print_tokens(input_lexer.tokens);
-		const t_btree *ast = parse(&input_lexer);
-		print_btree((t_btree *)ast);
+		const t_lexer lexer = create_lexer(input);
+		const t_parser parser = create_parser(lexer);
+		print_token(parser.current_token);
+		return 1;
+		// print_tokens(lexer.tokens);
+		// const t_btree *ast = parse(&lexer);
+		// print_btree((t_btree *)ast);
 
 		ft_strdel(&input);
 		if (shell.status == RUNNING)
