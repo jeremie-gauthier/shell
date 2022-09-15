@@ -1,5 +1,6 @@
 #include "parser.h"
 #include "lexer.h"
+#include "token.h"
 #include <stdbool.h>
 
 t_parser create_parser(const t_lexer lexer)
@@ -26,4 +27,9 @@ bool eat(t_parser *const restrict parser, const enum e_token_type token_type)
 		return true;
 	}
 	return false;
+}
+
+t_ast *parse(t_parser *const restrict parser)
+{
+	return parse_cmd(parser);
 }

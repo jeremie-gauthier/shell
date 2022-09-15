@@ -18,7 +18,15 @@ PARSER=	parser.c\
 
 PARSER:=	$(addprefix parser/, $(PARSER))
 
-PARSER_DEBUG:= $(PARSER) parser/btree/__debug.c
+PARSER_DEBUG:= $(PARSER)
+
+
+AST=ast_create_node.c\
+	ast_apply_prefix.c\
+	ast_free.c
+AST:=	$(addprefix ast/, $(AST))
+
+AST_DEBUG:= $(AST) ast/__debug.c
 
 
 _SHELL=	shell.c
@@ -31,9 +39,9 @@ INTERPRETER=	interpreter.c
 INTERPRETER:=	$(addprefix interpreter/, $(INTERPRETER))
 
 
-SOURCES=	$(addprefix src/, $(ROOT) $(LEXER) $(PARSER) $(_SHELL) $(INTERPRETER))
+SOURCES=	$(addprefix src/, $(ROOT) $(LEXER) $(PARSER) $(_SHELL) $(INTERPRETER) $(AST))
 OBJS=	$(subst .c,.o,$(SOURCES))
 
 
-SOURCES_DEBUG=	$(addprefix src/, $(ROOT) $(LEXER_DEBUG) $(PARSER_DEBUG) $(_SHELL) $(INTERPRETER))
+SOURCES_DEBUG=	$(addprefix src/, $(ROOT) $(LEXER_DEBUG) $(PARSER_DEBUG) $(_SHELL) $(INTERPRETER) $(AST_DEBUG))
 OBJS_DEBUG=	$(subst .c,.o,$(SOURCES_DEBUG))
