@@ -29,10 +29,4 @@ void skip_whitespace(t_lexer *const restrict lexer);
 const char *word(t_lexer *const restrict lexer);
 t_token unknown(t_lexer *const restrict lexer);
 
-/*
- ** DEBUG
- */
-void print_token(const t_token token);
-const char *token_type_to_str(const enum e_token_type type);
-
 #endif

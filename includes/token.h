@@ -17,4 +17,10 @@ typedef struct s_token
 	enum e_token_type type;
 } t_token;
 
+/*
+ ** DEBUG
+ */
+void print_token(const t_token token);
+const char *token_type_to_str(const enum e_token_type type);
+
 #endif

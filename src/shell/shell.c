@@ -1,8 +1,10 @@
 #include "shell.h"
 #include "interpreter.h"
+#include "lexer.h"
 #include "lib_io.h"
 #include "lib_str.h"
 #include "parser.h"
+#include "token.h"
 #include <stddef.h>
 #include <stdio.h>
 
@@ -31,12 +33,11 @@ int run_shell(t_shell shell)
 	{
 		printf("received: %s\n", input);
 		const t_lexer lexer = create_lexer(input);
-		const t_parser parser = create_parser(lexer);
-		print_token(parser.current_token);
-		return 1;
-		// print_tokens(lexer.tokens);
-		// const t_btree *ast = parse(&lexer);
-		// print_btree((t_btree *)ast);
+		t_parser parser = create_parser(lexer);
+
+		t_ast *ast = parse(&parser);
+		print_ast(ast);
+		// print_token(parser.current_token);
 
 		ft_strdel(&input);
 		if (shell.status == RUNNING)

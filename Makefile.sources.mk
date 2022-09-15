@@ -12,9 +12,8 @@ LEXER_DEBUG:=	$(LEXER) lexer/__debug.c
 
 
 PARSER=	parser.c\
-		btree/btree_create_node.c\
-		btree/btree_apply_prefix.c\
-		btree/btree_free.c
+		rules/cmd.c\
+		rules/expr.c
 
 PARSER:=	$(addprefix parser/, $(PARSER))
 
