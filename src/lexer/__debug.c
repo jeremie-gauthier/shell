@@ -24,13 +24,3 @@ void print_token(const t_token token)
 		"Token { [%s] (%s) }\n",
 		get_token_value(token), token_type_to_str(token.type));
 }
-
-void print_tokens(const t_token *tokens)
-{
-	while (tokens->type != End)
-	{
-		print_token(*tokens);
-		tokens++;
-	}
-	print_token(*tokens);
-}
