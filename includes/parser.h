@@ -32,6 +32,7 @@ typedef struct s_parser
 } t_parser;
 
 t_parser create_parser(const t_lexer lexer);
+bool eat(t_parser *const restrict parser, const enum e_token_type token_type);
 
 /*
  ** RULES
