@@ -30,12 +30,9 @@ Where `t_lexer` equals:
 ```c
 typedef struct s_lexer
 {
-	const char *input; // the user input
-	t_token *tokens; // the list of tokens formed by parsing the input
-	size_t tokens_len; // the tokens list length
-	size_t tokens_cap; // the tokens list memory capacity
-	size_t input_idx; // the current parsing index for the input
-	bool has_error; // if the lexer ended prematurily due to some kind of error
+	const char *input; // input from the user
+	size_t pos; // current position in the input
+	char current_char; // current char in the input
 } t_lexer;
 ```
 
