@@ -10,12 +10,7 @@ For a good lexer tutorial, follow this guide: https://ruslanspivak.com/lsbasi-pa
 ### Terminals
 
 ```txt
-WORD: 		string of alphanumeric chars
-PIPE: 		|
-SEPARATOR: 	;
-LOGICAL_OR:	||
-LOGICAL_AND:	&&
-REDIRECTION: <<, <, >, >>, &> (get the name of each and create separate tokens)
+WORD:	string of graphical chars
 ```
 
 ### Rules
@@ -23,9 +18,6 @@ REDIRECTION: <<, <, >, >>, &> (get the name of each and create separate tokens)
 _arg_: WORD
 _cmd_: _arg_<sup>+</sup>
 _expr_: _cmd_ ( _operator_<sup>+</sup> _cmd_<sup>?</sup> )<sup>\*</sup>
-_operator_: _redirection_ | PIPE | _logical_ | SEPARATOR
-_redirection_: < | << | > | >> | &>
-_logical_: LOGICAL_OR | LOGICAL_AND
 
 ## Definition
 
