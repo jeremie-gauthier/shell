@@ -1,5 +1,5 @@
-#include <stddef.h>
 #include "token.h"
+#include <stddef.h>
 #include <stdio.h>
 
 static const char *get_token_value(const t_token token)
@@ -8,15 +8,9 @@ static const char *get_token_value(const t_token token)
 }
 
 static const char *TOKEN_TYPE_STR[NB_DISTINCT_TOKENS] = {
-	[Whitespace] = "Whitespace",
-	[Command] = "Command",
-	[Operator] = "Operator",
-	[Redirection] = "Redirection",
-	[Pipe] = "Pipe",
-	[Separator] = "Separator",
-	[Logical] = "Logical",
-	[End] = "End",
+	[Word] = "Word",
 	[Unknown] = "Unknown",
+	[End] = "End",
 };
 
 const char *token_type_to_str(const enum e_token_type type)
@@ -29,14 +23,4 @@ void print_token(const t_token token)
 	printf(
 		"Token { [%s] (%s) }\n",
 		get_token_value(token), token_type_to_str(token.type));
-}
-
-void print_tokens(const t_token *tokens)
-{
-	while (tokens->type != End)
-	{
-		print_token(*tokens);
-		tokens++;
-	}
-	print_token(*tokens);
 }

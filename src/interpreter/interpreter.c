@@ -1,39 +1,33 @@
-#include <stddef.h>
-#include <stdio.h>
+#include "interpreter.h"
+#include "ast.h"
+#include "lib_mem.h"
+#include "parser.h"
+#include "process.h"
 #include <stdbool.h>
 #include <stdlib.h>
-#include "token.h"
-#include "lexer.h"
-#include "parser.h"
 
-bool interpreter(const char *const input)
+static bool visit(t_shell *shell, t_ast *node)
 {
-	printf("__LEXER__\n");
-	const t_lexer input_lexer = lexer(input);
-	if (!input_lexer.tokens)
+	bool ret = true;
+
+	if (node->token.type == Word)
 	{
-		printf("Error: lexer failed\n");
-		return false;
+		const t_cmd cmd = word_visitor(node);
+		ret = run_process(shell, cmd);
+		ft_memdel((void **)&cmd.argv);
+		return ret;
 	}
+	return ret;
+}
 
-	if (input_lexer.has_error)
-	{
-		fprintf(stderr, "42sh: grammar error near `%c'\n", input_lexer.input[input_lexer.input_idx]);
-		free_lexer((t_lexer *)&input_lexer);
-		return false;
-	}
-	print_tokens(input_lexer.tokens);
+bool interpreter(t_shell *shell, t_parser *parser)
+{
+	bool ret = true;
 
-	printf("\n__PARSER__\n");
-	const t_btree *ast = parse(&input_lexer);
-	if (!ast)
-	{
-		printf("Error: parser failed\n");
-		return false;
-	}
+	t_ast *ast = parse(parser);
+	// print_ast(ast);
 
-	print_btree((t_btree *)ast);
-
-	free_lexer((t_lexer *)&input_lexer);
-	return true;
+	ret = visit(shell, ast);
+	ast_free(ast);
+	return ret;
 }

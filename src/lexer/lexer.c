@@ -1,97 +1,48 @@
-#include <stddef.h>
-#include <stdbool.h>
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include "lexer.h"
+#include "lib_char.h"
 #include "token.h"
+#include <stdio.h>
 
-static bool insert_token(t_lexer *lexer, t_token new_token);
-static t_lexer empty_lexer(void);
-
-// super site explicatif shell
-// https://www.editions-eni.fr/open/mediabook.aspx?idR=0fd2388cfaf62898f0b49ac943604029
-t_lexer lexer(const char *str)
+t_lexer create_lexer(const char *const restrict str)
 {
 	t_lexer lexer = {
 		.input = str,
-		.input_idx = 0,
-		.tokens = malloc(sizeof(t_token) * DEFAULT_TOKEN_LIST_CAPACITY),
-		.tokens_len = 0,
-		.tokens_cap = DEFAULT_TOKEN_LIST_CAPACITY,
-		.has_error = false,
+		.pos = 0,
+		.current_char = str[0],
 	};
 
-	if (lexer.tokens == NULL)
-		return empty_lexer();
+	return lexer;
+}
 
-	while (lexer.input[lexer.input_idx])
+/*
+ *	This function is responsible for breaking a sentence
+ *	apart into tokens. One token at a time.
+ */
+t_token get_next_token(t_lexer *const restrict lexer)
+{
+	while (lexer->current_char)
 	{
-		const enum e_token_type token_type = get_token_type(lexer.input[lexer.input_idx]);
-		t_token new_token = RULES[token_type](&lexer);
-
-		if (new_token.type == Unknown)
+		if (ft_isspace(lexer->current_char))
 		{
-			lexer.has_error = true;
-			return lexer;
-		}
-
-		if (new_token.value == NULL)
+			skip_whitespace(lexer);
 			continue;
-
-		if (!insert_token(&lexer, new_token))
-		{
-			free_lexer(&lexer);
-			return empty_lexer();
 		}
+
+		if (ft_isgraph(lexer->current_char))
+			return (t_token){.type = Word, .value = word(lexer)};
+
+		printf("Lexer error, token not recognized\n");
+		return (t_token){.type = Unknown, .value = NULL};
 	}
 
-	t_token eof_token = {
-		.type = End,
-		.value = NULL,
-	};
-
-	if (!insert_token(&lexer, eof_token))
-	{
-		free_lexer(&lexer);
-		return empty_lexer();
-	}
-
-	return lexer;
+	return (t_token){.type = End, .value = NULL};
 }
 
-
-void free_lexer(t_lexer *lexer)
+/*
+ * Advance the pos pointer and set the current_char variable.
+ */
+void advance_lexer(t_lexer *const restrict lexer)
 {
-	while (lexer->tokens_len--)
-		free((void *)lexer->tokens[lexer->tokens_len].value);
-	free((void *)lexer->tokens);
-	lexer->tokens_cap = 0;
-	lexer->input_idx = 0;
-}
-
-static bool insert_token(t_lexer *lexer, t_token new_token)
-{
-	if (lexer->tokens_len == lexer->tokens_cap)
-	{
-		lexer->tokens_cap *= 2;
-		lexer->tokens = (t_token *)realloc(lexer->tokens,
-			sizeof(t_token) * lexer->tokens_cap);
-		if (lexer->tokens == NULL)
-			return false;
-	}
-	lexer->tokens[lexer->tokens_len++] = new_token;
-	return true;
-}
-
-static t_lexer empty_lexer(void)
-{
-	t_lexer lexer = {
-		.input = NULL,
-		.input_idx = 0,
-		.tokens = NULL,
-		.tokens_len = 0,
-		.tokens_cap = 0,
-	};
-	return lexer;
+	lexer->pos += 1;
+	lexer->current_char = lexer->input[lexer->pos];
 }

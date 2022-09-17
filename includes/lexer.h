@@ -1,9 +1,9 @@
 #ifndef LEXER_H
 #define LEXER_H
 
-#include <stddef.h>
-#include <stdbool.h>
 #include "token.h"
+#include <stdbool.h>
+#include <stddef.h>
 
 #define WHITESPACES " \t\n\r\v\f"
 #define OPERATORS "<>&|;"
@@ -11,38 +11,22 @@
 typedef struct s_lexer
 {
 	const char *input;
-	t_token *tokens;
-	size_t tokens_len;
-	size_t tokens_cap;
-	size_t input_idx;
-	bool has_error;
+	size_t pos;
+	char current_char;
 } t_lexer;
 
-t_lexer lexer(const char *str);
-void free_lexer(t_lexer *lexer);
+t_lexer create_lexer(const char *const restrict str);
+t_token get_next_token(t_lexer *const restrict lexer);
+void advance_lexer(t_lexer *const restrict lexer);
 
 enum e_token_type get_token_type(char c);
 
 /*
- ** RULES
+ ** TERMINALS
  */
-t_token whitespace(t_lexer *const lexer);
-t_token command(t_lexer *const lexer);
-t_token unknown(t_lexer *const lexer);
-t_token operator(t_lexer *const lexer);
 
-static t_token(*RULES[NB_DISTINCT_TOKENS]) (t_lexer *const lexer) = {
-	[Whitespace] = whitespace,
-	[Command] = command,
-	[Operator] = operator,
-	[Unknown] = unknown,
-};
-
-/*
- ** DEBUG
- */
-void print_tokens(const t_token *tokens);
-void print_token(const t_token token);
-const char *token_type_to_str(const enum e_token_type type);
+void skip_whitespace(t_lexer *const restrict lexer);
+const char *word(t_lexer *const restrict lexer);
+t_token unknown(t_lexer *const restrict lexer);
 
 #endif
