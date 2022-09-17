@@ -26,9 +26,9 @@ $(NAME): $(LIB_OBJS) $(OBJS_DEBUG) $(HEADERS) Makefile
 leaks: $(NAME)
 	export MallocStackLogging=1; leaks --atExit -- ./42sh; unset MallocStackLogging
 
-test: $(OBJS) $(HEADERS) $(TESTS_OBJS) Makefile
+test: $(OBJS) $(HEADERS) $(LIB_OBJS) $(TESTS_OBJS) Makefile
 	@echo $(TESTS_OBJS)
-	$(CC) -o $(NAME)_test $(TESTS_OBJS)
+	$(CC) -o $(NAME)_test $(LIB_OBJS) $(TESTS_OBJS)
 
 debug: $(NAME)
 	$(CC) -g -fsanitize=address -o $(NAME) $(OBJS_DEBUG)
