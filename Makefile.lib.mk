@@ -35,5 +35,20 @@ LIB_CHAR:= $(addprefix char/, ${LIB_CHAR})
 LIB_ARR=	ft_print_arr.c
 LIB_ARR:= $(addprefix arr/, ${LIB_ARR})
 
-LIB_SOURCES= $(addprefix lib/, ${LIB_IO} ${LIB_STR} ${LIB_MEM} ${LIB_CHAR} $(LIB_ARR))
+LIB_HT=	ht_create_item.c\
+		ht_create.c\
+		ht_free.c\
+		ht_get.c\
+		ht_hash.c\
+		ht_set.c\
+		ht_linked_list.c\
+		ht_delete.c
+LIB_HT:= $(addprefix ht/, ${LIB_HT})
+
+LIB_HT_DEBUG= $(LIB_HT) ht/__debug.c
+
+LIB_SOURCES= $(addprefix lib/, ${LIB_IO} ${LIB_STR} ${LIB_MEM} ${LIB_CHAR} $(LIB_ARR) $(LIB_HT))
 LIB_OBJS= $(subst .c,.o,$(LIB_SOURCES))
+
+LIB_SOURCES_DEBUG= $(addprefix lib/, ${LIB_IO} ${LIB_STR} ${LIB_MEM} ${LIB_CHAR} $(LIB_ARR) $(LIB_HT_DEBUG))
+LIB_OBJS_DEBUG= $(subst .c,.o,$(LIB_SOURCES_DEBUG))
