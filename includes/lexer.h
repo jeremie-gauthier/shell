@@ -15,7 +15,7 @@ typedef struct s_lexer
 	char current_char;
 } t_lexer;
 
-t_lexer create_lexer(const char *const restrict str);
+t_lexer lexer_create(const char *const restrict str);
 t_token get_next_token(t_lexer *const restrict lexer);
 void advance_lexer(t_lexer *const restrict lexer);
 

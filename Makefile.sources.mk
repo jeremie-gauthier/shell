@@ -1,6 +1,7 @@
 ROOT=	main.c
 
-LEXER=	lexer.c\
+LEXER=	lexer_create.c\
+		lexer_utils.c\
 		terminals/word.c\
 		terminals/unknown.c\
 		terminals/whitespace.c

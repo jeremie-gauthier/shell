@@ -22,7 +22,7 @@ int sh_run(t_shell shell)
 	while (shell.status == RUNNING && (input = readline(0)))
 	{
 		printf("received: %s\n", input);
-		const t_lexer lexer = create_lexer(input);
+		const t_lexer lexer = lexer_create(input);
 		t_parser parser = parser_create(lexer);
 		interpreter(&shell, &parser);
 

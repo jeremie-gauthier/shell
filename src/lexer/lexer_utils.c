@@ -3,17 +3,6 @@
 #include "token.h"
 #include <stdio.h>
 
-t_lexer create_lexer(const char *const restrict str)
-{
-	t_lexer lexer = {
-		.input = str,
-		.pos = 0,
-		.current_char = str[0],
-	};
-
-	return lexer;
-}
-
 /*
  *	This function is responsible for breaking a sentence
  *	apart into tokens. One token at a time.
