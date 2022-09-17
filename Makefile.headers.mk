@@ -8,6 +8,7 @@ HEADERS=	token.h\
 			lib_mem.h\
 			lib_char.h\
 			ast.h\
-			process.h
+			process.h\
+			lib_ht.h
 
 HEADERS:=	$(addprefix includes/, $(HEADERS))

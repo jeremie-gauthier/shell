@@ -20,8 +20,8 @@ NAME= 42sh
 all: $(NAME)
 
 # implicitly apply CFLAGS
-$(NAME): $(LIB_OBJS) $(OBJS_DEBUG) $(HEADERS) Makefile
-	$(CC) -o $(NAME) $(LIB_OBJS) $(OBJS_DEBUG)
+$(NAME): $(LIB_OBJS_DEBUG) $(OBJS_DEBUG) $(HEADERS) Makefile
+	$(CC) -o $(NAME) $(LIB_OBJS_DEBUG) $(OBJS_DEBUG)
 
 leaks: $(NAME)
 	export MallocStackLogging=1; leaks --atExit -- ./42sh; unset MallocStackLogging
