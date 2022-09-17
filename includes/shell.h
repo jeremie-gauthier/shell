@@ -10,6 +10,7 @@ enum e_shell_status
 typedef struct shell
 {
 	enum e_shell_status status;
+	char **env;
 } t_shell;
 
 t_shell create_shell(void);

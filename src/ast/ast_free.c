@@ -1,4 +1,6 @@
 #include "ast.h"
+#include "lib_mem.h"
+#include "lib_str.h"
 #include <stddef.h>
 #include <stdlib.h>
 
@@ -9,6 +11,7 @@ void ast_free(t_ast *ast)
 
 	ast_free(ast->left);
 	ast_free(ast->right);
-	free(ast);
+	ft_strdel((char **)&ast->token.value);
+	ft_memdel((void **)&ast);
 	ast = NULL;
 }

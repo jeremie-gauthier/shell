@@ -13,6 +13,7 @@ t_shell create_shell()
 	t_shell shell;
 
 	shell.status = STOPPED;
+	shell.env = NULL;
 	return shell;
 }
 
@@ -34,18 +35,12 @@ int run_shell(t_shell shell)
 		printf("received: %s\n", input);
 		const t_lexer lexer = create_lexer(input);
 		t_parser parser = create_parser(lexer);
-
-		t_ast *ast = parse(&parser);
-		print_ast(ast);
-		// print_token(parser.current_token);
+		interpreter(&shell, &parser);
 
 		ft_strdel(&input);
 		if (shell.status == RUNNING)
 			display_prompt();
 	}
-	if (input && input[0] == 0)
-		printf("\n");
-	ft_strdel(&input);
 	free_readline_cache();
 	return 0;
 }

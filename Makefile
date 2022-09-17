@@ -15,13 +15,16 @@ RM= rm -rf
 
 NAME= 42sh
 
-.PHONY: all test debug clean fclean re
+.PHONY: all test debug clean fclean re leaks
 
 all: $(NAME)
 
 # implicitly apply CFLAGS
 $(NAME): $(LIB_OBJS) $(OBJS_DEBUG) $(HEADERS) Makefile
 	$(CC) -o $(NAME) $(LIB_OBJS) $(OBJS_DEBUG)
+
+leaks: $(NAME)
+	export MallocStackLogging=1; leaks --atExit -- ./42sh; unset MallocStackLogging
 
 test: $(OBJS) $(HEADERS) $(TESTS_OBJS) Makefile
 	@echo $(TESTS_OBJS)

@@ -32,6 +32,7 @@ t_token get_next_token(t_lexer *const restrict lexer)
 			return (t_token){.type = Word, .value = word(lexer)};
 
 		printf("Lexer error, token not recognized\n");
+		return (t_token){.type = Unknown, .value = NULL};
 	}
 
 	return (t_token){.type = End, .value = NULL};
