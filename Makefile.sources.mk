@@ -39,9 +39,15 @@ INTERPRETER=interpreter.c\
 INTERPRETER:=	$(addprefix interpreter/, $(INTERPRETER))
 
 
-SOURCES=	$(addprefix src/, $(ROOT) $(LEXER) $(PARSER) $(_SHELL) $(INTERPRETER) $(AST))
+PROCESS=process.c\
+			command.c
+
+PROCESS:=	$(addprefix process/, $(PROCESS))
+
+
+SOURCES=	$(addprefix src/, $(ROOT) $(LEXER) $(PARSER) $(_SHELL) $(INTERPRETER) $(AST) $(PROCESS))
 OBJS=	$(subst .c,.o,$(SOURCES))
 
 
-SOURCES_DEBUG=	$(addprefix src/, $(ROOT) $(LEXER_DEBUG) $(PARSER_DEBUG) $(_SHELL) $(INTERPRETER) $(AST_DEBUG))
+SOURCES_DEBUG=	$(addprefix src/, $(ROOT) $(LEXER_DEBUG) $(PARSER_DEBUG) $(_SHELL) $(INTERPRETER) $(AST_DEBUG) $(PROCESS))
 OBJS_DEBUG=	$(subst .c,.o,$(SOURCES_DEBUG))

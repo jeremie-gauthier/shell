@@ -1,22 +1,33 @@
 #include "interpreter.h"
 #include "ast.h"
+#include "lib_mem.h"
 #include "parser.h"
+#include "process.h"
 #include <stdbool.h>
+#include <stdlib.h>
 
-#include <stdio.h>
-
-static void visit(t_ast *node)
+static bool visit(t_shell *shell, t_ast *node)
 {
+	bool ret = true;
+
 	if (node->token.type == Word)
-		return word_visitor(node);
+	{
+		const t_cmd cmd = word_visitor(node);
+		ret = run_process(shell, cmd);
+		ft_memdel((void **)&cmd.argv);
+		return ret;
+	}
+	return ret;
 }
 
-bool interpreter(t_parser *parser)
+bool interpreter(t_shell *shell, t_parser *parser)
 {
-	printf("__INTERPRETER__\n");
+	bool ret = true;
+
 	t_ast *ast = parse(parser);
-	print_ast(ast);
-	visit(ast);
+	// print_ast(ast);
+
+	ret = visit(shell, ast);
 	ast_free(ast);
-	return true;
+	return ret;
 }

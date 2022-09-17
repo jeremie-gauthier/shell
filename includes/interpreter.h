@@ -3,14 +3,16 @@
 
 #include "ast.h"
 #include "parser.h"
+#include "process.h"
+#include "shell.h"
 #include <stdbool.h>
 
-bool interpreter(t_parser *parser);
+bool interpreter(t_shell *shell, t_parser *parser);
 
 /*
  * * VISITORS
  */
 
-void word_visitor(t_ast *node);
+t_cmd word_visitor(t_ast *node);
 
 #endif
