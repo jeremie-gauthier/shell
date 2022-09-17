@@ -1,6 +1,8 @@
 #ifndef SHELL_H
 #define SHELL_H
 
+#include "lib_ht.h"
+
 enum e_shell_status
 {
 	STOPPED = 0,
@@ -9,11 +11,13 @@ enum e_shell_status
 
 typedef struct shell
 {
-	enum e_shell_status status;
 	char **env;
+	t_ht *cache;
+	enum e_shell_status status;
 } t_shell;
 
-t_shell create_shell(char **env);
-int run_shell(t_shell shell);
+t_shell sh_create(char **env);
+int sh_run(t_shell shell);
+void sh_free(t_shell shell);
 
 #endif

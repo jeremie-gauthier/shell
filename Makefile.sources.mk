@@ -27,7 +27,9 @@ AST:=	$(addprefix ast/, $(AST))
 AST_DEBUG:= $(AST) ast/__debug.c
 
 
-_SHELL=	shell.c
+_SHELL=	sh_create.c\
+		sh_run.c\
+		sh_free.c
 
 _SHELL:=	$(addprefix shell/, $(_SHELL))
 

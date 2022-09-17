@@ -1,29 +1,18 @@
-#include "shell.h"
 #include "interpreter.h"
 #include "lexer.h"
 #include "lib_io.h"
 #include "lib_str.h"
 #include "parser.h"
-#include "token.h"
-#include <stddef.h>
+#include "shell.h"
 #include <stdio.h>
 
-t_shell create_shell(char **env)
-{
-	t_shell shell;
-
-	shell.status = STOPPED;
-	shell.env = env;
-	return shell;
-}
-
-void display_prompt()
+static void display_prompt()
 {
 	printf("$> ");
 	fflush(stdout);
 }
 
-int run_shell(t_shell shell)
+int sh_run(t_shell shell)
 {
 	char *input = NULL;
 
