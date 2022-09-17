@@ -13,7 +13,7 @@ typedef struct shell
 	char **env;
 } t_shell;
 
-t_shell create_shell(void);
+t_shell create_shell(char **env);
 int run_shell(t_shell shell);
 
 #endif

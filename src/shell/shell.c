@@ -8,12 +8,12 @@
 #include <stddef.h>
 #include <stdio.h>
 
-t_shell create_shell()
+t_shell create_shell(char **env)
 {
 	t_shell shell;
 
 	shell.status = STOPPED;
-	shell.env = NULL;
+	shell.env = env;
 	return shell;
 }
 

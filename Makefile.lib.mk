@@ -32,5 +32,8 @@ LIB_CHAR=	ft_isspace.c\
 			ft_isalnum.c
 LIB_CHAR:= $(addprefix char/, ${LIB_CHAR})
 
-LIB_SOURCES= $(addprefix lib/, ${LIB_IO} ${LIB_STR} ${LIB_MEM} ${LIB_CHAR})
+LIB_ARR=	ft_print_arr.c
+LIB_ARR:= $(addprefix arr/, ${LIB_ARR})
+
+LIB_SOURCES= $(addprefix lib/, ${LIB_IO} ${LIB_STR} ${LIB_MEM} ${LIB_CHAR} $(LIB_ARR))
 LIB_OBJS= $(subst .c,.o,$(LIB_SOURCES))
