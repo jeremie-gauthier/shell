@@ -34,9 +34,8 @@ int run_shell(t_shell shell)
 		printf("received: %s\n", input);
 		const t_lexer lexer = create_lexer(input);
 		t_parser parser = create_parser(lexer);
+		interpreter(&parser);
 
-		t_ast *ast = parse(&parser);
-		print_ast(ast);
 		// print_token(parser.current_token);
 
 		ft_strdel(&input);

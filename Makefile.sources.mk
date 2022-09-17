@@ -33,7 +33,8 @@ _SHELL=	shell.c
 _SHELL:=	$(addprefix shell/, $(_SHELL))
 
 
-INTERPRETER=	interpreter.c
+INTERPRETER=interpreter.c\
+			visitors/word_visitor.c
 
 INTERPRETER:=	$(addprefix interpreter/, $(INTERPRETER))
 
