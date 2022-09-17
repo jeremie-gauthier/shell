@@ -24,7 +24,7 @@ bool interpreter(t_shell *shell, t_parser *parser)
 {
 	bool ret = true;
 
-	t_ast *ast = parse(parser);
+	t_ast *ast = parser_run(parser);
 	// print_ast(ast);
 
 	ret = visit(shell, ast);

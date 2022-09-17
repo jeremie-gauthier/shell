@@ -10,7 +10,9 @@ LEXER:=	$(addprefix lexer/, $(LEXER))
 LEXER_DEBUG:=	$(LEXER) lexer/__debug.c
 
 
-PARSER=	parser.c\
+PARSER=	parser_create.c\
+		parser_eat.c\
+		parser_run.c\
 		rules/cmd.c\
 		rules/expr.c
 

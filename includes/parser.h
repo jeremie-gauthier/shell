@@ -15,9 +15,9 @@ typedef struct s_parser
 	t_token current_token;
 } t_parser;
 
-t_parser create_parser(const t_lexer lexer);
+t_parser parser_create(const t_lexer lexer);
+t_ast *parser_run(t_parser *const restrict parser);
 bool eat(t_parser *const restrict parser, const enum e_token_type token_type);
-t_ast *parse(t_parser *const restrict parser);
 
 /*
  ** RULES

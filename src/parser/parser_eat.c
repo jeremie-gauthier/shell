@@ -1,18 +1,7 @@
-#include "parser.h"
 #include "lexer.h"
+#include "parser.h"
 #include "token.h"
 #include <stdbool.h>
-
-t_parser create_parser(const t_lexer lexer)
-{
-	t_token token = get_next_token((t_lexer *)&lexer);
-	t_parser parser = {
-		.lexer = lexer,
-		.current_token = token,
-	};
-
-	return parser;
-}
 
 /*
  * Compare the current token type with the passed token
@@ -27,9 +16,4 @@ bool eat(t_parser *const restrict parser, const enum e_token_type token_type)
 		return true;
 	}
 	return false;
-}
-
-t_ast *parse(t_parser *const restrict parser)
-{
-	return parse_cmd(parser);
 }
