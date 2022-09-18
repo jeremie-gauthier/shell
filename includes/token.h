@@ -6,7 +6,9 @@
 enum e_token_type
 {
 	Word = 0,
-
+	BuiltInCommand,
+	PathCommand,
+	File,
 	Unknown,
 	End,
 };

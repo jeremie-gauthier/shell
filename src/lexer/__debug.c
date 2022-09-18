@@ -9,6 +9,9 @@ static const char *get_token_value(const t_token token)
 
 static const char *TOKEN_TYPE_STR[NB_DISTINCT_TOKENS] = {
 	[Word] = "Word",
+	[BuiltInCommand] = "BuiltInCommand",
+	[PathCommand] = "PathCommand",
+	[File] = "File",
 	[Unknown] = "Unknown",
 	[End] = "End",
 };

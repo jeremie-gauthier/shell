@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lib_mem.h"
+#include "lib_arr.h"
 #include "lib_str.h"
 #include <stdbool.h>
 #include <stdlib.h>
@@ -44,17 +44,6 @@ static size_t count_words(char const *str, char c)
 	return words;
 }
 
-static void ft_strsplit_free(char **arr, size_t size)
-{
-	size_t i = 0;
-	while (i < size)
-	{
-		ft_strdel(&arr[i]);
-		i++;
-	}
-	ft_memdel((void **)arr);
-}
-
 char **ft_strsplit(char const *str, char c)
 {
 	if (!str)
@@ -72,7 +61,7 @@ char **ft_strsplit(char const *str, char c)
 			str++;
 		if (!(arr[i] = ft_strcdup(str, c)))
 		{
-			ft_strsplit_free((void *)arr, i);
+			ft_arr_free((void *)arr, i);
 			return NULL;
 		}
 		while (*str && *str != c)
