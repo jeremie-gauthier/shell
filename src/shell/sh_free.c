@@ -3,5 +3,6 @@
 
 void sh_free(t_shell shell)
 {
-	ht_free(shell.cache);
+	ht_free(shell.cache.cmd);
+	ht_free(shell.cache.global);
 }

@@ -3,18 +3,27 @@
 #include "shell.h"
 #include <stdlib.h>
 
+static void init_cache(t_cache *cache)
+{
+	if (!(cache->global = ht_create()))
+		exit(EXIT_FAILURE);
+	if (!(cache->cmd = ht_create()))
+	{
+		ht_free(cache->global);
+		exit(EXIT_FAILURE);
+	}
+}
+
 t_shell sh_create(char **env)
 {
 	t_shell shell;
-
-	shell.status = STOPPED;
-	shell.env = env;
-	if (!(shell.cache = ht_create()))
-		exit(EXIT_FAILURE);
-	if (!(load_env_to_cache(shell.cache, env)))
+	init_cache(&shell.cache);
+	if (!(load_env_to_cache(shell.cache.global, env)))
 	{
-		ht_free(shell.cache);
+		sh_free(shell);
 		exit(EXIT_FAILURE);
 	}
+	shell.status = STOPPED;
+	shell.env = env;
 	return shell;
 }
