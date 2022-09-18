@@ -31,7 +31,7 @@ test: $(OBJS) $(HEADERS) $(LIB_OBJS) $(TESTS_OBJS) Makefile
 	$(CC) -o $(NAME)_test $(LIB_OBJS) $(TESTS_OBJS)
 
 debug: $(NAME)
-	$(CC) -g -fsanitize=address -o $(NAME) $(OBJS_DEBUG)
+	$(CC) -g -fsanitize=address -o $(NAME) $(LIB_OBJS_DEBUG) $(OBJS_DEBUG)
 
 clean:
 	$(RM) $(OBJS) $(TESTS_OBJS)
