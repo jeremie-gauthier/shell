@@ -54,6 +54,7 @@ char *find_command(t_shell *shell, const t_cmd command)
 			path = get_cmd_from_path(env_path, (char *)command.path);
 			ht_set(shell->cache.cmd, (char *)command.path, path);
 			ft_strdel(&path);
+			path = ht_get(shell->cache.cmd, (char *)command.path);
 		}
 		return path;
 	}

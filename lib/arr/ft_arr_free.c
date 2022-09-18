@@ -9,5 +9,5 @@ void ft_arr_free(char **arr, size_t size)
 		ft_strdel(&arr[i]);
 		i++;
 	}
-	ft_memdel((void **)arr);
+	ft_memdel((void **)&arr);
 }
