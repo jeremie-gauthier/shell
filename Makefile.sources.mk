@@ -11,6 +11,12 @@ LEXER:=	$(addprefix lexer/, $(LEXER))
 LEXER_DEBUG:=	$(LEXER) lexer/__debug.c
 
 
+ENV=	env_get.c\
+		env_load.c
+
+ENV:=	$(addprefix env/, $(ENV))
+
+
 PARSER=	parser_create.c\
 		parser_eat.c\
 		parser_run.c\
@@ -49,9 +55,9 @@ PROCESS=process.c\
 PROCESS:=	$(addprefix process/, $(PROCESS))
 
 
-SOURCES=	$(addprefix src/, $(ROOT) $(LEXER) $(PARSER) $(_SHELL) $(INTERPRETER) $(AST) $(PROCESS))
+SOURCES=	$(addprefix src/, $(ROOT) $(LEXER) $(PARSER) $(_SHELL) $(INTERPRETER) $(AST) $(PROCESS) $(ENV))
 OBJS=	$(subst .c,.o,$(SOURCES))
 
 
-SOURCES_DEBUG=	$(addprefix src/, $(ROOT) $(LEXER_DEBUG) $(PARSER_DEBUG) $(_SHELL) $(INTERPRETER) $(AST_DEBUG) $(PROCESS))
+SOURCES_DEBUG=	$(addprefix src/, $(ROOT) $(LEXER_DEBUG) $(PARSER_DEBUG) $(_SHELL) $(INTERPRETER) $(AST_DEBUG) $(PROCESS) $(ENV))
 OBJS_DEBUG=	$(subst .c,.o,$(SOURCES_DEBUG))

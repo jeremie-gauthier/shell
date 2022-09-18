@@ -11,6 +11,9 @@ int main(int argc, char **argv, char **env)
 	t_shell shell;
 
 	shell = sh_create(env);
+	// print_search(shell.cache, "PATH");
+	// print_table(shell.cache);
+
 	sh_run(shell);
 	sh_free(shell);
 	return EXIT_SUCCESS;

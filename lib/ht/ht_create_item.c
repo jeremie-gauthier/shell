@@ -1,5 +1,4 @@
 #include "lib_ht.h"
-#include "lib_str.h"
 #include <stdlib.h>
 
 t_ht_item *ht_create_item(char *key, char *value)
@@ -8,7 +7,7 @@ t_ht_item *ht_create_item(char *key, char *value)
 	if (!item)
 		return NULL;
 
-	item->key = ft_strdup(key);
-	item->value = ft_strdup(value);
+	item->key = key;
+	item->value = value;
 	return item;
 }
