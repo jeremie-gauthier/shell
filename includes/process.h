@@ -6,6 +6,8 @@
 #include <stdbool.h>
 #include <stddef.h>
 
+#define CHILD_PROCESS 0
+
 /*
  * Store basic informations about the command to run.
  */

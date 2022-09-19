@@ -19,7 +19,7 @@ bool run_process(t_shell *const shell, const t_cmd command)
 	const char *path = find_command(shell, command);
 	if ((pid = fork()) < 0)
 		return false;
-	if (pid == 0)
+	if (pid == CHILD_PROCESS)
 	{
 		if (execve(path, command.argv, shell->env) < 0)
 			return false;
