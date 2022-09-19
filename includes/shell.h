@@ -9,10 +9,16 @@ enum e_shell_status
 	RUNNING
 };
 
-typedef struct shell
+typedef struct s_cache
 {
-	char **env;
-	t_ht *cache;
+	t_ht *cmd;
+	t_ht *global;
+} t_cache;
+
+typedef struct s_shell
+{
+	char *const *env;
+	t_cache cache;
 	enum e_shell_status status;
 } t_shell;
 

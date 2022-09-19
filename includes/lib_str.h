@@ -16,8 +16,8 @@ char *ft_strdup(const char *const restrict s);
 char *ft_strndup(const char *const restrict src, size_t n);
 char *ft_strcpy(char *const dst, const char *restrict src);
 char *ft_strncpy(char *const dest, const char *restrict src, size_t n);
-char *ft_strjoin(char const *const restrict s1, char const *const restrict s2);
+char *ft_strjoin(const char *const restrict s1, const char *const restrict s2, const char *const restrict junction);
 void ft_strclr(char *s);
-size_t ft_strspn(const char *const restrict str, const char *const restrict accept);
+char **ft_strsplit(char const *str, char c);
 
 #endif

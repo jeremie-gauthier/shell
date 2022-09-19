@@ -1,12 +1,14 @@
 #ifndef TOKEN_H
 #define TOKEN_H
 
-#define DEFAULT_TOKEN_LIST_CAPACITY 16
 #define NB_DISTINCT_TOKENS End + 1
 
 enum e_token_type
 {
 	Word = 0,
+	BuiltInCommand,
+	PathCommand,
+	File,
 	Unknown,
 	End,
 };

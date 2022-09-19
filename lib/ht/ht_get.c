@@ -3,7 +3,7 @@
 #include <stddef.h>
 #include <stdio.h>
 
-char *ht_get(t_ht *table, char *key)
+const char *ht_get(const t_ht *table, const char *key)
 {
 	const size_t idx = ht_hash(key);
 	const t_ht_item *item = table->items[idx];

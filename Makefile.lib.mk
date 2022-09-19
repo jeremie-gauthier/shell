@@ -16,7 +16,7 @@ LIB_STR=ft_strchr.c\
 		ft_strcpy.c\
 		ft_strncpy.c\
 		ft_strjoin.c\
-		ft_strspn.c
+		ft_strsplit.c
 LIB_STR:= $(addprefix str/, ${LIB_STR})
 
 LIB_MEM=ft_memcpy.c\
@@ -32,7 +32,9 @@ LIB_CHAR=	ft_isspace.c\
 			ft_isalnum.c
 LIB_CHAR:= $(addprefix char/, ${LIB_CHAR})
 
-LIB_ARR=	ft_print_arr.c
+LIB_ARR=	ft_print_arr.c\
+			ft_arr_free.c\
+			ft_arr_len.c
 LIB_ARR:= $(addprefix arr/, ${LIB_ARR})
 
 LIB_HT=	ht_create_item.c\

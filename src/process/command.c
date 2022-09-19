@@ -1,11 +1,79 @@
+#include "lib_arr.h"
+#include "lib_ht.h"
+#include "lib_str.h"
 #include "process.h"
+#include "token.h"
+#include <stdbool.h>
 #include <stddef.h>
+#include <unistd.h>
 
-t_cmd create_command(const char *path, char *const *argv, const size_t argc)
+#include <stdio.h>
+t_cmd create_command(const char *path, char *const *argv, const size_t argc, enum e_token_type type)
 {
 	return (t_cmd){
 		.path = path,
 		.argv = argv,
 		.argc = argc,
+		.type = type,
 	};
+}
+
+static int can_access_file(const char *const path)
+{
+	return access(path, F_OK | X_OK) == 0;
+}
+
+static char *get_cmd_from_path(const char *const env_path, const char *const cmd)
+{
+	char **paths = ft_strsplit(env_path, ':');
+	size_t paths_len = ft_arr_len(paths);
+
+	char *valid_path = NULL;
+	size_t i = 0;
+	while (paths[i] && !valid_path)
+	{
+		char *path = ft_strjoin(paths[i], cmd, "/");
+		if (can_access_file(path))
+		{
+			valid_path = path;
+			break;
+		}
+		ft_strdel(&path);
+		i++;
+	}
+	ft_arr_free(paths, paths_len);
+	return valid_path;
+}
+
+const char *find_command(t_shell *const shell, const t_cmd command)
+{
+	// TODO: check command type
+	if (command.type == PathCommand)
+	{
+		const char *path = ht_get(shell->cache.cmd, command.path);
+		if (!path)
+		{
+			const char *env_path = ht_get(shell->cache.global, "PATH");
+			if (!(path = get_cmd_from_path(env_path, command.path)))
+				return NULL;
+			const char *valid_path = ht_set(shell->cache.cmd, command.path, path);
+			ft_strdel((char **)&path);
+			return valid_path;
+		}
+		return path;
+	}
+
+	if (command.type == File && can_access_file(command.path))
+		return command.path;
+
+	return NULL;
+}
+
+bool run_command(t_shell *const shell, const t_cmd command)
+{
+	const char *const path = find_command(shell, command);
+	if (!path)
+		return false;
+
+	return run_process(path, command.argv, shell->env);
 }

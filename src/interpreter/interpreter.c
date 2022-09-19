@@ -6,21 +6,21 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-static bool visit(t_shell *shell, t_ast *node)
+static bool visit(t_shell *const shell, t_ast *node)
 {
 	bool ret = true;
 
 	if (node->token.type == Word)
 	{
 		const t_cmd cmd = word_visitor(node);
-		ret = run_process(shell, cmd);
+		ret = run_command(shell, cmd);
 		ft_memdel((void **)&cmd.argv);
 		return ret;
 	}
 	return ret;
 }
 
-bool interpreter(t_shell *shell, t_parser *parser)
+bool interpreter(t_shell *const shell, t_parser *parser)
 {
 	bool ret = true;
 
