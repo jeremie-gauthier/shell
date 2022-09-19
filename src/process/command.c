@@ -3,6 +3,7 @@
 #include "lib_str.h"
 #include "process.h"
 #include "token.h"
+#include <stdbool.h>
 #include <stddef.h>
 #include <unistd.h>
 
@@ -17,6 +18,11 @@ t_cmd create_command(const char *path, char *const *argv, const size_t argc, enu
 	};
 }
 
+static int can_access_file(const char *const path)
+{
+	return access(path, F_OK | X_OK) == 0;
+}
+
 static char *get_cmd_from_path(const char *const env_path, const char *const cmd)
 {
 	char **paths = ft_strsplit(env_path, ':');
@@ -28,7 +34,7 @@ static char *get_cmd_from_path(const char *const env_path, const char *const cmd
 	{
 		char *pre_path = ft_strjoin(paths[i], "/");
 		char *path = ft_strjoin(pre_path, cmd);
-		if (access(path, F_OK | X_OK) == 0)
+		if (can_access_file(path))
 		{
 			valid_path = path;
 			ft_strdel(&pre_path);
@@ -51,7 +57,8 @@ const char *find_command(t_shell *const shell, const t_cmd command)
 		if (!path)
 		{
 			const char *env_path = ht_get(shell->cache.global, "PATH");
-			path = get_cmd_from_path(env_path, command.path);
+			if (!(path = get_cmd_from_path(env_path, command.path)))
+				return NULL;
 			const char *valid_path = ht_set(shell->cache.cmd, command.path, path);
 			ft_strdel((char **)&path);
 			return valid_path;
@@ -59,6 +66,17 @@ const char *find_command(t_shell *const shell, const t_cmd command)
 		return path;
 	}
 
-	// If cmd is a file
-	return command.path;
+	if (command.type == File && can_access_file(command.path))
+		return command.path;
+
+	return NULL;
+}
+
+bool run_command(t_shell *const shell, const t_cmd command)
+{
+	const char *const path = find_command(shell, command);
+	if (!path)
+		return false;
+
+	return run_process(path, command.argv, shell->env);
 }

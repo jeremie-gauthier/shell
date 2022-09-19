@@ -17,7 +17,7 @@ typedef struct s_cache
 
 typedef struct s_shell
 {
-	char **env;
+	char *const *env;
 	t_cache cache;
 	enum e_shell_status status;
 } t_shell;

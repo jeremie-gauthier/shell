@@ -11,22 +11,19 @@
  * Create a new process with fork() and run the command
  * inside the child process.
  */
-bool run_process(t_shell *const shell, const t_cmd command)
+bool run_process(const char *const path, char *const *argv, char *const *env)
 {
 	pid_t pid;
 	int status = 0;
 
-	const char *path = find_command(shell, command);
 	if ((pid = fork()) < 0)
 		return false;
 	if (pid == CHILD_PROCESS)
 	{
-		if (execve(path, command.argv, shell->env) < 0)
+		if (execve(path, (char *const *)argv, (char *const *)env) < 0)
 			return false;
 	}
 	else
 		wait(&status);
-	// print_table(shell->cache.cmd);
-
 	return true;
 }

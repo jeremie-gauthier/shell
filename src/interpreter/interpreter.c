@@ -13,7 +13,7 @@ static bool visit(t_shell *const shell, t_ast *node)
 	if (node->token.type == Word)
 	{
 		const t_cmd cmd = word_visitor(node);
-		ret = run_process(shell, cmd);
+		ret = run_command(shell, cmd);
 		ft_memdel((void **)&cmd.argv);
 		return ret;
 	}
