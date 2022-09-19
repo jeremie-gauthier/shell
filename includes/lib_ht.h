@@ -41,7 +41,7 @@ t_ht *ht_create();
 void ht_item_free(t_ht_item *item);
 void ht_free(t_ht *table);
 
-bool ht_set(t_ht *table, char *key, char *value);
+const char *ht_set(t_ht *table, char *key, char *value);
 char *ht_get(t_ht *table, char *key);
 bool ht_delete(t_ht *table, char *key);
 
