@@ -18,7 +18,7 @@ typedef struct s_cmd
 } t_cmd;
 
 t_cmd create_command(const char *path, char *const *argv, const size_t argc, enum e_token_type type);
-char *find_command(t_shell *shell, const t_cmd command);
+const char *find_command(t_shell *shell, const t_cmd command);
 
 bool run_process(t_shell *shell, const t_cmd command);
 

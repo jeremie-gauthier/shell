@@ -17,7 +17,7 @@ t_cmd create_command(const char *path, char *const *argv, const size_t argc, enu
 	};
 }
 
-static char *get_cmd_from_path(char *env_path, char *cmd)
+static char *get_cmd_from_path(const char *env_path, char *cmd)
 {
 	char **paths = ft_strsplit(env_path, ':');
 	size_t paths_len = ft_arr_len(paths);
@@ -42,23 +42,23 @@ static char *get_cmd_from_path(char *env_path, char *cmd)
 	return valid_path;
 }
 
-char *find_command(t_shell *shell, const t_cmd command)
+const char *find_command(t_shell *shell, const t_cmd command)
 {
 	// TODO: check command type
 	if (command.type == PathCommand)
 	{
-		char *path = ht_get(shell->cache.cmd, (char *)command.path);
+		const char *path = ht_get(shell->cache.cmd, (char *)command.path);
 		if (!path)
 		{
-			char *env_path = ht_get(shell->cache.global, "PATH");
+			const char *env_path = ht_get(shell->cache.global, "PATH");
 			path = get_cmd_from_path(env_path, (char *)command.path);
-			ht_set(shell->cache.cmd, (char *)command.path, path);
-			ft_strdel(&path);
-			path = ht_get(shell->cache.cmd, (char *)command.path);
+			const char *valid_path = ht_set(shell->cache.cmd, (char *)command.path, path);
+			ft_strdel((char **)&path);
+			return valid_path;
 		}
 		return path;
 	}
 
 	// If cmd is a file
-	return (char *)command.path;
+	return command.path;
 }

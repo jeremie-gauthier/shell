@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-bool ht_delete(t_ht *table, char *key)
+bool ht_delete(t_ht *table, const char *key)
 {
 	const size_t idx = ht_hash(key);
 	t_ht_item *item = table->items[idx];

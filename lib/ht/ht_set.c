@@ -22,7 +22,7 @@ static char *handle_collision(t_ht *table, size_t idx, t_ht_item *item)
 	return item->value;
 }
 
-const char *ht_set(t_ht *table, char *key, char *value)
+const char *ht_set(t_ht *table, const char *key, const char *value)
 {
 	const size_t idx = ht_hash(key);
 
