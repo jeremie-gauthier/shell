@@ -32,15 +32,12 @@ static char *get_cmd_from_path(const char *const env_path, const char *const cmd
 	size_t i = 0;
 	while (paths[i] && !valid_path)
 	{
-		char *pre_path = ft_strjoin(paths[i], "/");
-		char *path = ft_strjoin(pre_path, cmd);
+		char *path = ft_strjoin(paths[i], cmd, "/");
 		if (can_access_file(path))
 		{
 			valid_path = path;
-			ft_strdel(&pre_path);
 			break;
 		}
-		ft_strdel(&pre_path);
 		ft_strdel(&path);
 		i++;
 	}
