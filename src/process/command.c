@@ -42,7 +42,7 @@ static char *get_cmd_from_path(const char *env_path, char *cmd)
 	return valid_path;
 }
 
-const char *find_command(t_shell *shell, const t_cmd command)
+const char *find_command(t_shell *const shell, const t_cmd command)
 {
 	// TODO: check command type
 	if (command.type == PathCommand)

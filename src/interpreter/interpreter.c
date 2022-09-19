@@ -6,7 +6,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-static bool visit(t_shell *shell, t_ast *node)
+static bool visit(t_shell *const shell, t_ast *node)
 {
 	bool ret = true;
 
@@ -20,7 +20,7 @@ static bool visit(t_shell *shell, t_ast *node)
 	return ret;
 }
 
-bool interpreter(t_shell *shell, t_parser *parser)
+bool interpreter(t_shell *const shell, t_parser *parser)
 {
 	bool ret = true;
 

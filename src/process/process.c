@@ -11,7 +11,7 @@
  * Create a new process with fork() and run the command
  * inside the child process.
  */
-bool run_process(t_shell *shell, const t_cmd command)
+bool run_process(t_shell *const shell, const t_cmd command)
 {
 	pid_t pid;
 	int status = 0;

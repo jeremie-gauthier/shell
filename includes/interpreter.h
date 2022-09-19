@@ -7,7 +7,7 @@
 #include "shell.h"
 #include <stdbool.h>
 
-bool interpreter(t_shell *shell, t_parser *parser);
+bool interpreter(t_shell *const shell, t_parser *parser);
 
 /*
  * * VISITORS
