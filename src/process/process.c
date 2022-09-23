@@ -20,7 +20,7 @@ bool run_process(const char *const path, char *const *argv, char *const *env)
 		return false;
 	if (pid == CHILD_PROCESS)
 	{
-		if (execve(path, (char *const *)argv, (char *const *)env) < 0)
+		if (execve(path, argv, env) < 0)
 			return false;
 	}
 	else
