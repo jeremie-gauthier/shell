@@ -15,7 +15,7 @@ typedef struct s_cmd
 {
 	const char *const path;
 	char *const *argv;
-	size_t argc;
+	const size_t argc;
 	enum e_token_type type;
 } t_cmd;
 
