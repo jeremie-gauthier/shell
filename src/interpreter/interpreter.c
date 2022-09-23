@@ -3,6 +3,7 @@
 #include "lib_mem.h"
 #include "parser.h"
 #include "process.h"
+#include "shell.h"
 #include <stdbool.h>
 #include <stdlib.h>
 
