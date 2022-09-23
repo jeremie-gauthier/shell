@@ -29,7 +29,8 @@ LIB_MEM:= $(addprefix mem/, ${LIB_MEM})
 
 LIB_CHAR=	ft_isspace.c\
 			ft_isgraph.c\
-			ft_isalnum.c
+			ft_isalnum.c\
+			ft_isdigit.c
 LIB_CHAR:= $(addprefix char/, ${LIB_CHAR})
 
 LIB_ARR=	ft_print_arr.c\
