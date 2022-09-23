@@ -20,6 +20,7 @@ typedef struct s_shell
 	char *const *env;
 	t_cache cache;
 	enum e_shell_status status;
+	unsigned char last_exit_status;
 } t_shell;
 
 t_shell sh_create(char **env);

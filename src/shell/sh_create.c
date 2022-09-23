@@ -25,5 +25,6 @@ t_shell sh_create(char **env)
 	}
 	shell.status = STOPPED;
 	shell.env = env;
+	shell.last_exit_status = 0;
 	return shell;
 }
