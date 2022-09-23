@@ -19,5 +19,6 @@ char *ft_strncpy(char *const dest, const char *restrict src, size_t n);
 char *ft_strjoin(const char *const restrict s1, const char *const restrict s2, const char *const restrict junction);
 void ft_strclr(char *s);
 char **ft_strsplit(char const *str, char c);
+int ft_strisnum(const char *const str);
 
 #endif

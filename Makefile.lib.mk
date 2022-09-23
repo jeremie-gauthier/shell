@@ -16,7 +16,8 @@ LIB_STR=ft_strchr.c\
 		ft_strcpy.c\
 		ft_strncpy.c\
 		ft_strjoin.c\
-		ft_strsplit.c
+		ft_strsplit.c\
+		ft_strisnum.c
 LIB_STR:= $(addprefix str/, ${LIB_STR})
 
 LIB_MEM=ft_memcpy.c\
