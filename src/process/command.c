@@ -75,7 +75,10 @@ int run_command(t_shell *const shell, const t_cmd command)
 	{
 		if (ft_strcmp(command.path, "exit") == SAME_STR)
 			return builtin_exit(shell, command);
+		if (ft_strcmp(command.path, "echo") == SAME_STR)
+			return builtin_echo(shell, command);
 	}
+
 	const char *const path = find_command(shell, command);
 	if (!path)
 		return false;
