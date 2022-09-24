@@ -1,6 +1,7 @@
 #include "lib_str.h"
 #include "process.h"
 #include "shell.h"
+#include <stdlib.h>
 
 static unsigned char parse_arg(const char *const arg)
 {
@@ -18,11 +19,11 @@ static unsigned char parse_arg(const char *const arg)
 int builtin_exit(t_shell *const shell, const t_cmd command)
 {
 	if (command.argc > 2)
-		return false;
+		return EXIT_FAILURE;
 
 	if (command.argc == 2)
 		shell->last_exit_status = parse_arg(command.argv[1]);
 
 	shell->status = STOPPED;
-	return true;
+	return EXIT_SUCCESS;
 }
