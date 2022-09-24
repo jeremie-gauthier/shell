@@ -54,7 +54,7 @@ void command_finder(t_token *cmd_tok)
 		return;
 	}
 
-	if (ft_strcmp(cmd_tok->value, "exit") == SAME_STR)
+	if (ft_strcmp(cmd_tok->value, "exit") == SAME_STR || ft_strcmp(cmd_tok->value, "echo") == SAME_STR)
 	{
 		cmd_tok->type = BuiltInCommand;
 		return;

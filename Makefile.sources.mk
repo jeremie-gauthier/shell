@@ -49,7 +49,8 @@ INTERPRETER=interpreter.c\
 INTERPRETER:=	$(addprefix interpreter/, $(INTERPRETER))
 
 
-BUILTINS=builtin_exit.c
+BUILTINS=	builtin_exit.c\
+			builtin_echo.c
 BUILTINS:=	$(addprefix builtins/, $(BUILTINS))
 
 BUILTINS_DEBUG:= $(BUILTINS)
