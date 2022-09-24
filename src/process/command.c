@@ -69,7 +69,7 @@ const char *find_command(t_shell *const shell, const t_cmd command)
 	return NULL;
 }
 
-bool run_command(t_shell *const shell, const t_cmd command)
+int run_command(t_shell *const shell, const t_cmd command)
 {
 	const char *const path = find_command(shell, command);
 	if (!path)
