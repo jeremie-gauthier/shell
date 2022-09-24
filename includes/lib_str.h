@@ -9,6 +9,7 @@ char *ft_strchr(const char *str, int c);
 char *ft_strstr(const char *haystack, const char *needle);
 int ft_strcmp(const char *s1, const char *s2);
 int ft_strncmp(const char *s1, const char *s2, size_t n);
+int ft_strncasecmp(const char *s1, const char *s2, size_t n);
 size_t ft_strlen(const char *s);
 char *ft_strnew(const size_t size);
 void ft_strdel(char **const restrict as);
@@ -19,5 +20,8 @@ char *ft_strncpy(char *const dest, const char *restrict src, size_t n);
 char *ft_strjoin(const char *const restrict s1, const char *const restrict s2, const char *const restrict junction);
 void ft_strclr(char *s);
 char **ft_strsplit(char const *str, char c);
+int ft_strisnum(const char *const str);
+long int ft_strtol(const char *nptr, char **endptr, int base);
+int ft_atoi(const char *nptr);
 
 #endif

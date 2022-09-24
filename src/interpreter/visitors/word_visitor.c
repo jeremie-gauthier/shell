@@ -39,6 +39,13 @@ static char **get_command_argv(t_ast *node, size_t *argc)
 	return argv;
 }
 
+/*
+ *	If the command contains no slashes:
+ *		- If the command is a shell function, that function is called.
+ *		- Otherwise, if it corresponds to a built-in command, that command is used.
+ *		- Otherwise, the shell searches $PATH for an executable with that name and executes it if found.
+ *	If the command contains slashes, that named file is executed.
+ */
 void command_finder(t_token *cmd_tok)
 {
 	if (ft_strchr(cmd_tok->value, '/'))
@@ -47,7 +54,11 @@ void command_finder(t_token *cmd_tok)
 		return;
 	}
 
-	// TODO: add built-ins check
+	if (ft_strcmp(cmd_tok->value, "exit") == SAME_STR)
+	{
+		cmd_tok->type = BuiltInCommand;
+		return;
+	}
 
 	cmd_tok->type = PathCommand;
 }

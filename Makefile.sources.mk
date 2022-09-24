@@ -49,15 +49,21 @@ INTERPRETER=interpreter.c\
 INTERPRETER:=	$(addprefix interpreter/, $(INTERPRETER))
 
 
+BUILTINS=builtin_exit.c
+BUILTINS:=	$(addprefix builtins/, $(BUILTINS))
+
+BUILTINS_DEBUG:= $(BUILTINS)
+
+
 PROCESS=process.c\
 			command.c
 
 PROCESS:=	$(addprefix process/, $(PROCESS))
 
 
-SOURCES=	$(addprefix src/, $(ROOT) $(LEXER) $(PARSER) $(_SHELL) $(INTERPRETER) $(AST) $(PROCESS) $(ENV))
+SOURCES=	$(addprefix src/, $(ROOT) $(LEXER) $(PARSER) $(_SHELL) $(INTERPRETER) $(AST) $(PROCESS) $(ENV) $(BUILTINS))
 OBJS=	$(subst .c,.o,$(SOURCES))
 
 
-SOURCES_DEBUG=	$(addprefix src/, $(ROOT) $(LEXER_DEBUG) $(PARSER_DEBUG) $(_SHELL) $(INTERPRETER) $(AST_DEBUG) $(PROCESS) $(ENV))
+SOURCES_DEBUG=	$(addprefix src/, $(ROOT) $(LEXER_DEBUG) $(PARSER_DEBUG) $(_SHELL) $(INTERPRETER) $(AST_DEBUG) $(PROCESS) $(ENV) $(BUILTINS_DEBUG))
 OBJS_DEBUG=	$(subst .c,.o,$(SOURCES_DEBUG))

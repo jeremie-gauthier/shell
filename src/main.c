@@ -16,5 +16,5 @@ int main(int argc, char **argv, char **env)
 
 	sh_run(shell);
 	sh_free(shell);
-	return EXIT_SUCCESS;
+	return shell.last_exit_status;
 }

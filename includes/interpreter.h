@@ -5,9 +5,8 @@
 #include "parser.h"
 #include "process.h"
 #include "shell.h"
-#include <stdbool.h>
 
-bool interpreter(t_shell *const shell, t_parser *parser);
+int interpreter(t_shell *const shell, t_parser *parser);
 
 /*
  * * VISITORS

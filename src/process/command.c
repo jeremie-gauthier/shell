@@ -1,3 +1,4 @@
+#include "builtin.h"
 #include "lib_arr.h"
 #include "lib_ht.h"
 #include "lib_str.h"
@@ -47,7 +48,6 @@ static char *get_cmd_from_path(const char *const env_path, const char *const cmd
 
 const char *find_command(t_shell *const shell, const t_cmd command)
 {
-	// TODO: check command type
 	if (command.type == PathCommand)
 	{
 		const char *path = ht_get(shell->cache.cmd, command.path);
@@ -69,8 +69,13 @@ const char *find_command(t_shell *const shell, const t_cmd command)
 	return NULL;
 }
 
-bool run_command(t_shell *const shell, const t_cmd command)
+int run_command(t_shell *const shell, const t_cmd command)
 {
+	if (command.type == BuiltInCommand)
+	{
+		if (ft_strcmp(command.path, "exit") == SAME_STR)
+			return builtin_exit(shell, command);
+	}
 	const char *const path = find_command(shell, command);
 	if (!path)
 		return false;
