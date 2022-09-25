@@ -3,6 +3,7 @@
 
 #include "ast.h"
 #include "lexer.h"
+#include "shell.h"
 #include "token.h"
 
 /*
@@ -15,14 +16,14 @@ typedef struct s_parser
 	t_token current_token;
 } t_parser;
 
-t_parser parser_create(const t_lexer lexer);
-t_ast *parser_run(t_parser *const restrict parser);
-bool eat(t_parser *const restrict parser, const enum e_token_type token_type);
+t_parser parser_create(const t_shell *const shell, const t_lexer lexer);
+t_ast *parser_run(const t_shell *const shell, t_parser *const restrict parser);
+bool eat(const t_shell *const shell, t_parser *const restrict parser, const enum e_token_type token_type);
 
 /*
  ** RULES
  */
 
-t_ast *parse_cmd(t_parser *const restrict parser);
+t_ast *parse_cmd(const t_shell *const shell, t_parser *const restrict parser);
 
 #endif

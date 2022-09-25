@@ -1,5 +1,6 @@
 #include "lexer.h"
 #include "lib_char.h"
+#include "shell.h"
 #include "token.h"
 #include <stdio.h>
 
@@ -7,7 +8,7 @@
  *	This function is responsible for breaking a sentence
  *	apart into tokens. One token at a time.
  */
-t_token get_next_token(t_lexer *const restrict lexer)
+t_token get_next_token(const t_shell *const shell, t_lexer *const restrict lexer)
 {
 	while (lexer->current_char)
 	{
@@ -17,8 +18,11 @@ t_token get_next_token(t_lexer *const restrict lexer)
 			continue;
 		}
 
+		if (lexer->current_char == '$')
+			return (t_token){.type = Word, .value = expansion_param(shell, lexer)};
+
 		if (ft_isgraph(lexer->current_char))
-			return (t_token){.type = Word, .value = word(lexer)};
+			return (t_token){.type = Word, .value = word(shell, lexer)};
 
 		fprintf(stderr, "Lexer error, token not recognized\n");
 		return (t_token){.type = Unknown, .value = NULL};

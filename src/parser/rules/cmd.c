@@ -1,20 +1,26 @@
 #include "ast.h"
 #include "parser.h"
+#include "shell.h"
 
-// _cmd_ : _arg_<sup> + </ sup>
-t_ast *parse_cmd(t_parser *const restrict parser)
+// PARAM_EXPANSION is just alnum strings if no brackets are provided
+// else, it parses everything between the brackets
+
+// cmd: WORD (PARAM_EXPANSION* cmd*)
+t_ast *parse_cmd(const t_shell *const shell, t_parser *const restrict parser)
 {
-	t_token current_token = parser->current_token;
-	if (current_token.type == Word)
-		eat(parser, Word);
+	const t_token current_token = parser->current_token;
+	if (IS_VALID_TOKEN(current_token.type, Word))
+		eat(shell, parser, Word);
 
 	t_ast *node = AST_CREATE_ONE(current_token);
-
-	while (parser->current_token.type == Word)
+	t_ast *const head = node;
+	while (IS_VALID_TOKEN(parser->current_token.type, Word))
 	{
-		node->right = parse_cmd(parser);
-		eat(parser, Word);
+		node->right = AST_CREATE_ONE(parser->current_token);
+		node = node->right;
+		eat(shell, parser, Word);
 	}
 
+	node = head;
 	return node;
 }
