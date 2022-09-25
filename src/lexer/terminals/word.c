@@ -8,20 +8,51 @@
 
 const char *word(const t_shell *const shell, t_lexer *const restrict lexer)
 {
-	const size_t start_idx = lexer->pos;
+	size_t start_idx = lexer->pos;
+	char *word = NULL;
 
 	while (lexer->current_char && ft_isgraph(lexer->current_char))
 	{
 		if (lexer->current_char == EXP_PARAM_CHAR)
 		{
-			const char *expansion = expansion_param(shell, lexer);
-			// if here, concat expansion with word
-			// do a loop, bc "ok$PATH$PATH" is a valid Word that must be subst'd twice
-			fprintf(stderr, "subst = %s\n", expansion);
+			// if there are a Word before the expansion char
+			if (start_idx != lexer->pos)
+				word = ft_strndup(&lexer->input[start_idx], lexer->pos - start_idx);
+
+			const char *const expansion = expansion_param(shell, lexer);
+			if (!expansion)
+				continue;
+
+			// concat expansion with word
+			if (word)
+			{
+				char *tmp = word;
+				word = ft_strjoin(word, expansion, "");
+				ft_strdel(&tmp);
+				ft_strdel((char **)&expansion);
+				if (!word)
+					return NULL;
+			}
+			else
+				word = (char *)expansion;
+
+			// reset start_idx to the pos after the EXP_PARAM
+			start_idx = lexer->pos;
 		}
 		else
 			advance_lexer(lexer);
 	}
 
-	return ft_strndup(&lexer->input[start_idx], lexer->pos - start_idx);
+	if (start_idx != lexer->pos)
+	{
+		char *tmp = word;
+		char *queue_word = ft_strndup(&lexer->input[start_idx], lexer->pos - start_idx);
+		word = ft_strjoin(word, queue_word, "");
+		ft_strdel(&tmp);
+		ft_strdel(&queue_word);
+	}
+
+	fprintf(stderr, "word = %s\n", word);
+
+	return word;
 }
