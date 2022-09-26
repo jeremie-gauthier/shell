@@ -9,8 +9,50 @@
 // complex subst = ${PATH:...}
 static const char *complex_subst(const t_shell *const shell, t_lexer *const restrict lexer)
 {
-	(void)shell;
 	advance_lexer(lexer);
+
+	size_t start_idx = lexer->pos;
+	while (lexer->current_char && lexer->current_char != CLOSING_BRACE && lexer->current_char != EXP_PARAM_SEPARATOR)
+		advance_lexer(lexer);
+
+	const char *const param = ft_strndup(&lexer->input[start_idx], lexer->pos - start_idx);
+	const char *subst = ht_get(shell->cache.global, param);
+	ft_strdel((char **)&param);
+
+	if (lexer->current_char == EXP_PARAM_SEPARATOR)
+	{
+		advance_lexer(lexer);
+
+		const char test_operator = lexer->current_char;
+		advance_lexer(lexer);
+
+		start_idx = lexer->pos;
+		while (lexer->current_char && lexer->current_char != CLOSING_BRACE)
+			advance_lexer(lexer);
+		const char *const word = ft_strndup(&lexer->input[start_idx], lexer->pos - start_idx);
+
+		if (subst)
+		{
+			if (test_operator == '+')
+			{
+				advance_lexer(lexer);
+				return word;
+			}
+		}
+		else
+		{
+			if (test_operator == '-')
+			{
+				advance_lexer(lexer);
+				return word;
+			}
+		}
+	}
+
+	advance_lexer(lexer);
+
+	if (subst)
+		return ft_strdup(subst);
 	return NULL;
 }
 
@@ -19,7 +61,6 @@ static const char *simple_subst(const t_shell *const shell, t_lexer *const restr
 {
 	const size_t start_idx = lexer->pos;
 
-	advance_lexer(lexer);
 	while (lexer->current_char && (ft_isalnum(lexer->current_char) || lexer->current_char == '_'))
 		advance_lexer(lexer);
 

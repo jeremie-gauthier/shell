@@ -11,6 +11,7 @@
 #define EXP_PARAM_CHAR '$'
 #define OPENING_BRACE '{'
 #define CLOSING_BRACE '}'
+#define EXP_PARAM_SEPARATOR ':'
 
 typedef struct s_lexer
 {
