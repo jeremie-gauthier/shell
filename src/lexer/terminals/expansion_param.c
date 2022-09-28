@@ -11,6 +11,11 @@ static const char *complex_subst(const t_shell *const shell, t_lexer *const rest
 {
 	advance_lexer(lexer);
 
+	// TODO: take until CLOSING_BRACE
+	// TODO: split the result on the ':'
+	// TODO: IF len == 2 THEN word_subst proc ELSE IF len == 3 substr_subst ELSE error
+	// TODO: return subst
+
 	size_t start_idx = lexer->pos;
 	while (lexer->current_char && lexer->current_char != CLOSING_BRACE && lexer->current_char != EXP_PARAM_SEPARATOR)
 		advance_lexer(lexer);
