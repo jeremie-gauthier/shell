@@ -17,7 +17,6 @@ static const char *complex_subst(const t_shell *const shell, t_lexer *const rest
 
 	const char *const param = ft_strndup(&lexer->input[start_idx], lexer->pos - start_idx);
 	const char *subst = ht_get(shell->cache.global, param);
-	ft_strdel((char **)&param);
 
 	if (lexer->current_char == EXP_PARAM_SEPARATOR)
 	{
@@ -36,6 +35,7 @@ static const char *complex_subst(const t_shell *const shell, t_lexer *const rest
 			if (test_operator == '+')
 			{
 				advance_lexer(lexer);
+				ft_strdel((char **)&param);
 				return word;
 			}
 		}
@@ -44,11 +44,20 @@ static const char *complex_subst(const t_shell *const shell, t_lexer *const rest
 			if (test_operator == '-')
 			{
 				advance_lexer(lexer);
+				ft_strdel((char **)&param);
+				return word;
+			}
+			if (test_operator == '=')
+			{
+				advance_lexer(lexer);
+				ht_set(shell->cache.global, param, word);
+				ft_strdel((char **)&param);
 				return word;
 			}
 		}
 	}
 
+	ft_strdel((char **)&param);
 	advance_lexer(lexer);
 
 	if (subst)
