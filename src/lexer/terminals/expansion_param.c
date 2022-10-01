@@ -1,4 +1,5 @@
 #include "lexer.h"
+#include "lib_arr.h"
 #include "lib_char.h"
 #include "lib_ht.h"
 #include "lib_str.h"
@@ -6,68 +7,72 @@
 
 #include <stdio.h>
 
+static const char *param_subst(const t_shell *const shell, const char *const param, const char *const word)
+{
+	const char *value = ht_get(shell->cache.global, param);
+	const char test_operator = word[0];
+
+	if (test_operator == '-')
+		return value ? ft_strdup(value) : ft_strdup(&word[1]);
+	if (test_operator == '=')
+	{
+		if (value)
+			return ft_strdup(value);
+		ht_set(shell->cache.global, param, &word[1]);
+		return ft_strdup(&word[1]);
+	}
+	if (test_operator == '+')
+		return value ? ft_strdup(&word[1]) : NULL;
+	return NULL;
+}
+
+// ! Negative offset are not handled
+static const char *param_substring_subst(const char *const param, const int start, const int len)
+{
+	if (!param || len <= 0 || start < 0)
+		return NULL;
+	return ft_strndup(&param[start], len);
+}
+
 // complex subst = ${PATH:...}
 static const char *complex_subst(const t_shell *const shell, t_lexer *const restrict lexer)
 {
 	advance_lexer(lexer);
 
-	// TODO: take until CLOSING_BRACE
-	// TODO: split the result on the ':'
-	// TODO: IF len == 2 THEN word_subst proc ELSE IF len == 3 substr_subst ELSE error
-	// TODO: return subst
-
 	size_t start_idx = lexer->pos;
-	while (lexer->current_char && lexer->current_char != CLOSING_BRACE && lexer->current_char != EXP_PARAM_SEPARATOR)
+	while (lexer->current_char && lexer->current_char != CLOSING_BRACE)
 		advance_lexer(lexer);
 
-	const char *const param = ft_strndup(&lexer->input[start_idx], lexer->pos - start_idx);
-	const char *subst = ht_get(shell->cache.global, param);
+	const char *const expansion = ft_strndup(&lexer->input[start_idx], lexer->pos - start_idx);
+	const char *const *const expansion_vector = ft_strsplit(expansion, ':');
+	ft_strdel((char **)&expansion);
+	const size_t expansion_counter = ft_arr_len(expansion_vector);
 
-	if (lexer->current_char == EXP_PARAM_SEPARATOR)
+	const char *param = ht_get(shell->cache.global, expansion_vector[0]);
+	char *subst = NULL;
+	if (expansion_counter == 1 && param)
+		subst = ft_strdup(param);
+	else if (expansion_counter == 2)
 	{
-		advance_lexer(lexer);
-
-		const char test_operator = lexer->current_char;
-		advance_lexer(lexer);
-
-		start_idx = lexer->pos;
-		while (lexer->current_char && lexer->current_char != CLOSING_BRACE)
-			advance_lexer(lexer);
-		const char *const word = ft_strndup(&lexer->input[start_idx], lexer->pos - start_idx);
-
-		if (subst)
+		if (ft_strisnum(expansion_vector[1]))
 		{
-			if (test_operator == '+')
-			{
-				advance_lexer(lexer);
-				ft_strdel((char **)&param);
-				return word;
-			}
+			const int start = ft_atoi(expansion_vector[1]);
+			if (param)
+				subst = ft_strdup(&param[start]);
 		}
 		else
-		{
-			if (test_operator == '-')
-			{
-				advance_lexer(lexer);
-				ft_strdel((char **)&param);
-				return word;
-			}
-			if (test_operator == '=')
-			{
-				advance_lexer(lexer);
-				ht_set(shell->cache.global, param, word);
-				ft_strdel((char **)&param);
-				return word;
-			}
-		}
+			subst = (char *)param_subst(shell, expansion_vector[0], expansion_vector[1]);
 	}
-
-	ft_strdel((char **)&param);
+	else if (expansion_counter == 3)
+	{
+		const int start = ft_atoi(expansion_vector[1]);
+		const int len = ft_atoi(expansion_vector[2]);
+		subst = (char *)param_substring_subst(param, start, len);
+	}
+	ft_arr_free((char **)expansion_vector, expansion_counter);
 	advance_lexer(lexer);
 
-	if (subst)
-		return ft_strdup(subst);
-	return NULL;
+	return subst;
 }
 
 // simple subst = $PATH

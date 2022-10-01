@@ -44,7 +44,7 @@ static size_t count_words(char const *str, char c)
 	return words;
 }
 
-char **ft_strsplit(char const *str, char c)
+const char **ft_strsplit(char const *str, char c)
 {
 	if (!str)
 		return NULL;
@@ -69,5 +69,5 @@ char **ft_strsplit(char const *str, char c)
 		i++;
 	}
 	arr[i] = NULL;
-	return arr;
+	return (const char **)arr;
 }
