@@ -32,6 +32,7 @@ LIB_MEM=ft_memcpy.c\
 LIB_MEM:= $(addprefix mem/, ${LIB_MEM})
 
 LIB_CHAR=	ft_isspace.c\
+			ft_isalpha.c\
 			ft_isgraph.c\
 			ft_isalnum.c\
 			ft_isdigit.c\

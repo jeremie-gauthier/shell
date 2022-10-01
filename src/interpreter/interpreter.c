@@ -6,6 +6,8 @@
 #include "shell.h"
 #include <stdlib.h>
 
+#include <stdio.h>
+
 static int visit(t_shell *const shell, t_ast *node)
 {
 	if (node->token.type == Word)
@@ -20,7 +22,7 @@ static int visit(t_shell *const shell, t_ast *node)
 
 int interpreter(t_shell *const shell, t_parser *parser)
 {
-	t_ast *ast = parser_run(parser);
+	t_ast *ast = parser_run(shell, parser);
 	// print_ast(ast);
 
 	const int ret = visit(shell, ast);

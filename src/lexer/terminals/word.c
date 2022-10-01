@@ -1,14 +1,58 @@
 #include "lexer.h"
 #include "lib_char.h"
 #include "lib_str.h"
+#include "shell.h"
 #include "token.h"
 
-const char *word(t_lexer *const restrict lexer)
+#include <stdio.h>
+
+const char *word(const t_shell *const shell, t_lexer *const restrict lexer)
 {
-	const size_t start_idx = lexer->pos;
+	size_t start_idx = lexer->pos;
+	char *word = NULL;
 
 	while (lexer->current_char && ft_isgraph(lexer->current_char))
-		advance_lexer(lexer);
+	{
+		if (lexer->current_char == EXP_PARAM_CHAR)
+		{
+			// if there are a Word before the expansion char
+			if (start_idx != lexer->pos)
+				word = ft_strndup(&lexer->input[start_idx], lexer->pos - start_idx);
 
-	return ft_strndup(&lexer->input[start_idx], lexer->pos - start_idx);
+			const char *const expansion = expansion_param(shell, lexer);
+			if (!expansion)
+				continue;
+
+			// concat expansion with word
+			if (word)
+			{
+				char *tmp = word;
+				word = ft_strjoin(word, expansion, "");
+				ft_strdel(&tmp);
+				ft_strdel((char **)&expansion);
+				if (!word)
+					return NULL;
+			}
+			else
+				word = (char *)expansion;
+
+			// reset start_idx to the pos after the EXP_PARAM
+			start_idx = lexer->pos;
+		}
+		else
+			advance_lexer(lexer);
+	}
+
+	if (start_idx != lexer->pos)
+	{
+		char *tmp = word;
+		char *queue_word = ft_strndup(&lexer->input[start_idx], lexer->pos - start_idx);
+		word = ft_strjoin(word, queue_word, "");
+		ft_strdel(&tmp);
+		ft_strdel(&queue_word);
+	}
+
+	fprintf(stderr, "word = %s\n", word);
+
+	return word;
 }

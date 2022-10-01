@@ -4,7 +4,8 @@ LEXER=	lexer_create.c\
 		lexer_utils.c\
 		terminals/word.c\
 		terminals/unknown.c\
-		terminals/whitespace.c
+		terminals/whitespace.c\
+		terminals/expansion_param.c
 
 LEXER:=	$(addprefix lexer/, $(LEXER))
 
@@ -12,7 +13,8 @@ LEXER_DEBUG:=	$(LEXER) lexer/__debug.c
 
 
 ENV=	env_get.c\
-		env_load.c
+		env_load.c\
+		env_var_name_validate.c
 
 ENV:=	$(addprefix env/, $(ENV))
 

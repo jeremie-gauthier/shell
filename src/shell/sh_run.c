@@ -23,7 +23,7 @@ int sh_run(t_shell shell)
 	{
 		printf("received: %s\n", input);
 		const t_lexer lexer = lexer_create(input);
-		t_parser parser = parser_create(lexer);
+		t_parser parser = parser_create(&shell, lexer);
 		interpreter(&shell, &parser);
 
 		ft_strdel(&input);
