@@ -13,6 +13,11 @@
 #define CLOSING_BRACE '}'
 #define EXP_PARAM_SEPARATOR ':'
 
+#define PARAM(expv) (expv[0])
+#define WORD(expv) (expv[1])
+#define START(expv) (expv[1])
+#define LEN(expv) (expv[2])
+
 typedef struct s_lexer
 {
 	const char *input;
