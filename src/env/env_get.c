@@ -1,7 +1,7 @@
 #include "lib_str.h"
 #include <stddef.h>
 
-char *env_get_value(char **env, char *key)
+char *env_get_value(char **env, const char *const key)
 {
 	size_t len_key = ft_strlen(key);
 	size_t i = 0;
