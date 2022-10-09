@@ -12,22 +12,22 @@ static void display_prompt()
 	fflush(stdout);
 }
 
-int sh_run(t_shell shell)
+int sh_run(t_shell *const shell)
 {
 	char *input = NULL;
 
-	shell.status = RUNNING;
+	shell->status = RUNNING;
 	display_prompt();
 	// signal(SIGINT, &sigint_core);
-	while (shell.status == RUNNING && (input = readline(0)))
+	while (shell->status == RUNNING && (input = readline(0)))
 	{
 		printf("received: %s\n", input);
 		const t_lexer lexer = lexer_create(input);
-		t_parser parser = parser_create(&shell, lexer);
-		interpreter(&shell, &parser);
+		t_parser parser = parser_create(shell, lexer);
+		interpreter(shell, &parser);
 
 		ft_strdel(&input);
-		if (shell.status == RUNNING)
+		if (shell->status == RUNNING)
 			display_prompt();
 	}
 	free_readline_cache();

@@ -17,14 +17,14 @@ typedef struct s_cache
 
 typedef struct s_shell
 {
-	char *const *env;
+	char **env;
 	t_cache cache;
 	enum e_shell_status status;
 	unsigned char last_exit_status;
 } t_shell;
 
 t_shell sh_create(char **env);
-int sh_run(t_shell shell);
+int sh_run(t_shell *const shell);
 void sh_free(t_shell shell);
 
 #endif
