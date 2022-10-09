@@ -54,6 +54,8 @@ const char *find_command(t_shell *const shell, const t_cmd command)
 		if (!path)
 		{
 			const char *env_path = ht_get(shell->cache.global, "PATH");
+			if (!env_path)
+				return NULL;
 			if (!(path = get_cmd_from_path(env_path, command.path)))
 				return NULL;
 			const char *valid_path = ht_set(shell->cache.cmd, command.path, path);
@@ -79,6 +81,8 @@ int run_command(t_shell *const shell, const t_cmd command)
 			return builtin_echo(shell, command);
 		if (ft_strcmp(command.path, "env") == SAME_STR)
 			return builtin_env(shell, command);
+		if (ft_strcmp(command.path, "unsetenv") == SAME_STR)
+			return builtin_unsetenv(shell, command);
 	}
 
 	const char *const path = find_command(shell, command);

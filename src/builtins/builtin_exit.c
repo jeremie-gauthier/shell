@@ -21,9 +21,8 @@ int builtin_exit(t_shell *const shell, const t_cmd command)
 	if (command.argc > 2)
 		return EXIT_FAILURE;
 
-	if (command.argc == 2)
-		shell->last_exit_status = parse_arg(command.argv[0]);
-
 	shell->status = STOPPED;
+	if (command.argc == 2)
+		return parse_arg(command.argv[1]);
 	return EXIT_SUCCESS;
 }

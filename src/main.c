@@ -14,7 +14,7 @@ int main(int argc, char **argv, char **env)
 	// print_search(shell.cache, "PATH");
 	// print_table(shell.cache.global);
 
-	sh_run(shell);
+	sh_run(&shell);
 	sh_free(shell);
 	return shell.last_exit_status;
 }
