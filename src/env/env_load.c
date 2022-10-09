@@ -9,14 +9,14 @@
 
 bool load_env_to_cache(t_ht *cache, char **env)
 {
-	char **kv_pair;
 	size_t i = 0;
 	while (env[i])
 	{
-		if (!(kv_pair = ft_strsplit(env[i], '=')))
+		const char **kv_pair = ft_strsplit(env[i], '=');
+		if (!kv_pair)
 			return false;
 		ht_set(cache, kv_pair[0], kv_pair[1]);
-		ft_arr_free(kv_pair, ft_arr_len(kv_pair));
+		ft_arr_free((char **)kv_pair, ft_arr_len(kv_pair));
 		i++;
 	}
 	return true;
