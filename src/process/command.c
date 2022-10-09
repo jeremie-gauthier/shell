@@ -26,7 +26,7 @@ static int can_access_file(const char *const path)
 
 static char *get_cmd_from_path(const char *const env_path, const char *const cmd)
 {
-	char **paths = ft_strsplit(env_path, ':');
+	const char **paths = ft_strsplit(env_path, ':');
 	size_t paths_len = ft_arr_len(paths);
 
 	char *valid_path = NULL;
@@ -42,7 +42,7 @@ static char *get_cmd_from_path(const char *const env_path, const char *const cmd
 		ft_strdel(&path);
 		i++;
 	}
-	ft_arr_free(paths, paths_len);
+	ft_arr_free((char **)paths, paths_len);
 	return valid_path;
 }
 
@@ -77,6 +77,8 @@ int run_command(t_shell *const shell, const t_cmd command)
 			return builtin_exit(shell, command);
 		if (ft_strcmp(command.path, "echo") == SAME_STR)
 			return builtin_echo(shell, command);
+		if (ft_strcmp(command.path, "env") == SAME_STR)
+			return builtin_env(shell, command);
 	}
 
 	const char *const path = find_command(shell, command);
