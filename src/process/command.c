@@ -54,6 +54,8 @@ const char *find_command(t_shell *const shell, const t_cmd command)
 		if (!path)
 		{
 			const char *env_path = ht_get(shell->cache.global, "PATH");
+			if (!env_path)
+				return NULL;
 			if (!(path = get_cmd_from_path(env_path, command.path)))
 				return NULL;
 			const char *valid_path = ht_set(shell->cache.cmd, command.path, path);
