@@ -1,7 +1,7 @@
 #include "lib_str.h"
 #include <stddef.h>
 
-char *env_get_value(char **env, char *key)
+size_t env_get_idx(char **env, char *key)
 {
 	size_t len_key = ft_strlen(key);
 	size_t i = 0;
@@ -9,8 +9,8 @@ char *env_get_value(char **env, char *key)
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], key, len_key) == SAME_STR && env[i][len_key] == '=')
-			return &env[i][len_key + 1];
+			return i;
 		i++;
 	}
-	return NULL;
+	return i;
 }
