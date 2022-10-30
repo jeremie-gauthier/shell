@@ -3,6 +3,12 @@
 
 #include "lib_ht.h"
 
+#if defined(WIN32) || defined(_WIN32)
+#define PATH_SEPARATOR '\\'
+#else
+#define PATH_SEPARATOR '/'
+#endif
+
 enum e_shell_status
 {
 	STOPPED = 0,
@@ -26,5 +32,6 @@ typedef struct s_shell
 t_shell sh_create(char **env);
 int sh_run(t_shell *const shell);
 void sh_free(t_shell shell);
+char *get_current_dir_name();
 
 #endif
