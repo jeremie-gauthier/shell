@@ -4,12 +4,16 @@
 #include "lib_str.h"
 #include "parser.h"
 #include "shell.h"
+#include <limits.h>
 #include <stdio.h>
+#include <unistd.h>
 
 static void display_prompt()
 {
-	printf("$> ");
+	const char *path = get_current_dir_name();
+	printf("\033[32;1m%s\033[0m ", path);
 	fflush(stdout);
+	ft_strdel((char **)&path);
 }
 
 int sh_run(t_shell *const shell)
