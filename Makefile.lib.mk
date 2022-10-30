@@ -4,6 +4,7 @@ LIB_IO= can_readf.c\
 LIB_IO:= $(addprefix io/, ${LIB_IO})
 
 LIB_STR=ft_strchr.c\
+		ft_strrchr.c\
 		ft_strstr.c\
 		ft_strcmp.c\
 		ft_strncmp.c\
