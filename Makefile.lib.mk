@@ -42,7 +42,8 @@ LIB_CHAR:= $(addprefix char/, ${LIB_CHAR})
 
 LIB_ARR=	ft_print_arr.c\
 			ft_arr_free.c\
-			ft_arr_len.c
+			ft_arr_len.c\
+			ft_arr_append.c
 LIB_ARR:= $(addprefix arr/, ${LIB_ARR})
 
 LIB_HT=	ht_create_item.c\
