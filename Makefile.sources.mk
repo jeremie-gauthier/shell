@@ -58,7 +58,8 @@ BUILTINS=	builtin_exit.c\
 			builtin_echo.c\
 			builtin_env.c\
 			builtin_setenv.c\
-			builtin_unsetenv.c
+			builtin_unsetenv.c\
+			builtin_cd.c
 BUILTINS:=	$(addprefix builtins/, $(BUILTINS))
 
 BUILTINS_DEBUG:= $(BUILTINS)

@@ -85,6 +85,8 @@ int run_command(t_shell *const shell, const t_cmd command)
 			return builtin_unsetenv(shell, command);
 		if (ft_strcmp(command.path, "setenv") == SAME_STR)
 			return builtin_setenv(shell, command);
+		if (ft_strcmp(command.path, "cd") == SAME_STR)
+			return builtin_cd(shell, command);
 	}
 
 	const char *const path = find_command(shell, command);

@@ -59,7 +59,8 @@ void command_finder(t_token *cmd_tok)
 		ft_strcmp(cmd_tok->value, "echo") == SAME_STR ||
 		ft_strcmp(cmd_tok->value, "env") == SAME_STR ||
 		ft_strcmp(cmd_tok->value, "unsetenv") == SAME_STR ||
-		ft_strcmp(cmd_tok->value, "setenv") == SAME_STR)
+		ft_strcmp(cmd_tok->value, "setenv") == SAME_STR ||
+		ft_strcmp(cmd_tok->value, "cd") == SAME_STR)
 	{
 		cmd_tok->type = BuiltInCommand;
 		return;
