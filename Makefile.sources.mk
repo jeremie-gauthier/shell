@@ -55,9 +55,9 @@ INTERPRETER:=	$(addprefix interpreter/, $(INTERPRETER))
 
 BUILTINS=	builtin_exit.c\
 			builtin_echo.c\
-			buitin_env.c\
-			buitin_setenv.c\
-			buitin_unsetenv.c
+			builtin_env.c\
+			builtin_setenv.c\
+			builtin_unsetenv.c
 BUILTINS:=	$(addprefix builtins/, $(BUILTINS))
 
 BUILTINS_DEBUG:= $(BUILTINS)
