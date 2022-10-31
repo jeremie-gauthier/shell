@@ -14,6 +14,7 @@ LEXER_DEBUG:=	$(LEXER) lexer/__debug.c
 
 ENV=	env_get.c\
 		env_get_idx.c\
+		env_set.c\
 		env_load.c\
 		env_var_name_validate.c
 
