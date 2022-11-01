@@ -14,6 +14,7 @@ LEXER_DEBUG:=	$(LEXER) lexer/__debug.c
 
 ENV=	env_get.c\
 		env_get_idx.c\
+		env_set.c\
 		env_load.c\
 		env_var_name_validate.c
 
@@ -55,9 +56,10 @@ INTERPRETER:=	$(addprefix interpreter/, $(INTERPRETER))
 
 BUILTINS=	builtin_exit.c\
 			builtin_echo.c\
-			buitin_env.c\
-			buitin_setenv.c\
-			buitin_unsetenv.c
+			builtin_env.c\
+			builtin_setenv.c\
+			builtin_unsetenv.c\
+			builtin_cd.c
 BUILTINS:=	$(addprefix builtins/, $(BUILTINS))
 
 BUILTINS_DEBUG:= $(BUILTINS)

@@ -1,10 +1,10 @@
 #include "lib_str.h"
 #include <stddef.h>
 
-size_t env_get_idx(char **env, const char *const key)
+int env_get_idx(char **env, const char *const key)
 {
 	size_t len_key = ft_strlen(key);
-	size_t i = 0;
+	int i = 0;
 
 	while (env[i])
 	{
@@ -12,5 +12,5 @@ size_t env_get_idx(char **env, const char *const key)
 			return i;
 		i++;
 	}
-	return i;
+	return -1;
 }

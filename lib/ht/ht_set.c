@@ -13,6 +13,7 @@ static char *handle_collision(t_ht *table, size_t idx, t_ht_item *item)
 		if (!(head = malloc(sizeof(*head))))
 			return NULL;
 		head->item = item;
+		head->next = NULL;
 		table->overflow_buckets[idx] = head;
 		return item->value;
 	}
