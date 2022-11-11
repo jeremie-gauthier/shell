@@ -9,7 +9,7 @@ HEADER_DIR= includes/
 
 # built-in rules
 CC= clang
-CFLAGS= -Wall -Wextra -Werror -I$(HEADER_DIR)
+CFLAGS= -Wall -Wextra -Werror -Wconversion -I$(HEADER_DIR)
 
 RM= rm -rf
 
