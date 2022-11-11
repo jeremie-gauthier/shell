@@ -1,7 +1,7 @@
+#include "env.h"
 #include "lexer.h"
 #include "lib_arr.h"
 #include "lib_char.h"
-#include "lib_ht.h"
 #include "lib_str.h"
 #include "shell.h"
 
@@ -9,7 +9,7 @@
 
 static char *word_expansion(const t_shell *const shell, const char *const param, const char *const word)
 {
-	const char *value = ht_get(shell->cache.global, param);
+	const char *value = env_get(shell->env, param);
 	const char test_operator = word[0];
 
 	if (test_operator == '-')
@@ -18,7 +18,6 @@ static char *word_expansion(const t_shell *const shell, const char *const param,
 	{
 		if (value)
 			return ft_strdup(value);
-		ht_set(shell->cache.global, param, &word[1]);
 		return ft_strdup(&word[1]);
 	}
 	if (test_operator == '+')
@@ -29,7 +28,7 @@ static char *word_expansion(const t_shell *const shell, const char *const param,
 // ! Negative offset are not handled
 static char *substring_expansion(const t_shell *const shell, const char *const param, const char *const start_str, const char *len_str)
 {
-	const char *subst = ht_get(shell->cache.global, param);
+	const char *subst = env_get(shell->env, param);
 	if (!subst)
 		return NULL;
 
@@ -43,7 +42,7 @@ static char *substring_expansion(const t_shell *const shell, const char *const p
 
 static char *param_subst(const t_shell *const shell, const char *const param)
 {
-	const char *subst = ht_get(shell->cache.global, param);
+	const char *subst = env_get(shell->env, param);
 	if (subst)
 		return ft_strdup(subst);
 	return NULL;

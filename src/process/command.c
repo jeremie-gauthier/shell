@@ -1,4 +1,5 @@
 #include "builtin.h"
+#include "env.h"
 #include "lib_arr.h"
 #include "lib_ht.h"
 #include "lib_str.h"
@@ -50,15 +51,15 @@ const char *find_command(t_shell *const shell, const t_cmd command)
 {
 	if (command.type == PathCommand)
 	{
-		const char *path = ht_get(shell->cache.cmd, command.path);
+		const char *path = ht_get(shell->cache.bin, command.path);
 		if (!path)
 		{
-			const char *env_path = ht_get(shell->cache.global, "PATH");
+			const char *env_path = env_get(shell->env, "PATH");
 			if (!env_path)
 				return NULL;
 			if (!(path = get_cmd_from_path(env_path, command.path)))
 				return NULL;
-			const char *valid_path = ht_set(shell->cache.cmd, command.path, path);
+			const char *valid_path = ht_set(shell->cache.bin, command.path, path);
 			ft_strdel((char **)&path);
 			return valid_path;
 		}

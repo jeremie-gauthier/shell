@@ -17,13 +17,11 @@ int builtin_cd(t_shell *const shell, const t_cmd command)
 		return EXIT_FAILURE;
 
 	env_set(shell->env, "OLDPWD", old_working_dir);
-	ht_set(shell->cache.global, "OLDPWD", old_working_dir);
 
 	char new_working_dir[PATH_MAX];
 	if (!getcwd(new_working_dir, PATH_MAX))
 		return EXIT_FAILURE;
 	env_set(shell->env, "PWD", new_working_dir);
-	ht_set(shell->cache.global, "PWD", new_working_dir);
 
 	return EXIT_SUCCESS;
 }

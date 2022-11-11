@@ -1,6 +1,5 @@
 #include "env.h"
 #include "lib_arr.h"
-#include "lib_ht.h"
 #include "lib_mem.h"
 #include "lib_str.h"
 #include "process.h"
@@ -67,11 +66,6 @@ int builtin_setenv(t_shell *const shell, const t_cmd command)
 			return EXIT_FAILURE;
 		}
 	}
-
-	const char *value = "";
-	if (size_kv_pair == 2)
-		value = kv_pair[1];
-	ht_set(shell->cache.global, key, value);
 
 	ft_arr_free((char **)kv_pair, size_kv_pair);
 

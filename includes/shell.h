@@ -17,8 +17,7 @@ enum e_shell_status
 
 typedef struct s_cache
 {
-	t_ht *cmd;
-	t_ht *global;
+	t_ht *bin;
 } t_cache;
 
 typedef struct s_shell
