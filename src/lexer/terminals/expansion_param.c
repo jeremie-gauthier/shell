@@ -33,8 +33,8 @@ static char *substring_expansion(const t_shell *const shell, const char *const p
 	if (!subst)
 		return NULL;
 
-	const int start = ft_atoi(start_str);
-	const int len = len_str ? ft_atoi(len_str) : ft_strlen(subst);
+	const size_t start = (size_t)ft_atoi(start_str);
+	const size_t len = len_str ? (size_t)ft_atoi(len_str) : ft_strlen(subst);
 
 	if (!subst || len <= 0 || start < 0)
 		return NULL;
