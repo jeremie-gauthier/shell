@@ -9,7 +9,7 @@ static void init_cache(t_cache *cache)
 {
 	if (!(cache->global = ht_create()))
 		exit(EXIT_FAILURE);
-	if (!(cache->cmd = ht_create()))
+	if (!(cache->bin = ht_create()))
 	{
 		ht_free(cache->global);
 		exit(EXIT_FAILURE);
