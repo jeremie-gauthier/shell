@@ -10,8 +10,8 @@
 typedef struct s_gnl
 {
 	char *cache;
+	ssize_t len;
 	size_t bytes_alloc;
-	size_t len;
 } t_gnl;
 
 bool can_readf(const int fd);

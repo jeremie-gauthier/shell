@@ -44,7 +44,12 @@ int builtin_setenv(t_shell *const shell, const t_cmd command)
 	const size_t size_kv_pair = ft_arr_len(kv_pair);
 
 	const char *key = kv_pair[0];
-	const size_t idx = env_get_idx(shell->env, key);
+	const int idx = env_get_idx(shell->env, key);
+	if (idx < 0)
+	{
+		ft_arr_free((char **)kv_pair, size_kv_pair);
+		return EXIT_FAILURE;
+	}
 
 	if (shell->env[idx])
 	{

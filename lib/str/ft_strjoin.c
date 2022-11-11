@@ -1,7 +1,7 @@
 #include "lib_str.h"
 #include <stddef.h>
 
-char *ft_strjoin(const char *const restrict s1, const char *const restrict s2, const char *const restrict junction)
+char *ft_strjoin(const char *const s1, const char *const s2, const char *const junction)
 {
 	char *str;
 

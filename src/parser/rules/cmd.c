@@ -6,7 +6,7 @@
 // else, it parses everything between the brackets
 
 // cmd: WORD (PARAM_EXPANSION* cmd*)
-t_ast *parse_cmd(const t_shell *const shell, t_parser *const restrict parser)
+t_ast *parse_cmd(const t_shell *const shell, t_parser *const parser)
 {
 	const t_token current_token = parser->current_token;
 	if (IS_VALID_TOKEN(current_token.type, Word))

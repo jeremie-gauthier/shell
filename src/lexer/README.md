@@ -22,7 +22,7 @@ _expr_: _cmd_ ( _operator_<sup>+</sup> _cmd_<sup>?</sup> )<sup>\*</sup>
 ## Definition
 
 ```c
-t_lexer create_lexer(const char *const restrict str);
+t_lexer create_lexer(const char *const str);
 ```
 
 Where `t_lexer` equals:

@@ -6,7 +6,7 @@
 #include <sys/uio.h>
 #include <unistd.h>
 
-static char *get_line_from_cache(t_gnl *const restrict gnl)
+static char *get_line_from_cache(t_gnl *const gnl)
 {
 	char *nl;
 	char *line;
@@ -14,7 +14,7 @@ static char *get_line_from_cache(t_gnl *const restrict gnl)
 
 	if ((nl = ft_strchr(gnl->cache, '\n')))
 	{
-		line_size = &nl[1] - gnl->cache;
+		line_size = (size_t)(&nl[1] - gnl->cache);
 		line = ft_strndup(gnl->cache, line_size);
 		if (nl[1] == '\0')
 		{
@@ -34,7 +34,7 @@ static char *get_line_from_cache(t_gnl *const restrict gnl)
 	return line;
 }
 
-static void increase_cache_size(t_gnl *const restrict gnl)
+static void increase_cache_size(t_gnl *const gnl)
 {
 	size_t new_size;
 
@@ -44,19 +44,19 @@ static void increase_cache_size(t_gnl *const restrict gnl)
 	gnl->bytes_alloc = new_size;
 }
 
-static bool should_realloc(t_gnl *const restrict gnl)
+static bool should_realloc(t_gnl *const gnl)
 {
 	long int diff;
 
-	diff = gnl->bytes_alloc - gnl->len;
+	diff = (long)(gnl->bytes_alloc - (size_t)gnl->len);
 	if (diff < GNL_BUFFER_SIZE)
 		return true;
 	return false;
 }
 
-static int read_fd(const int fd, t_gnl *const restrict gnl)
+static int read_fd(const int fd, t_gnl *const gnl)
 {
-	int ret;
+	ssize_t ret;
 
 	if (should_realloc(gnl))
 		increase_cache_size(gnl);

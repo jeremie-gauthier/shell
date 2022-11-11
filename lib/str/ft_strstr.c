@@ -1,7 +1,7 @@
 #include "lib_str.h"
 #include <stddef.h>
 
-char *ft_strstr(const char *restrict haystack, const char *const restrict needle)
+char *ft_strstr(const char *haystack, const char *const needle)
 {
 	size_t len_needle;
 	int cmp;

@@ -1,6 +1,6 @@
 #include "lexer.h"
 
-t_lexer lexer_create(const char *const restrict str)
+t_lexer lexer_create(const char *const str)
 {
 	t_lexer lexer = {
 		.input = str,

@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 
-const char *word(const t_shell *const shell, t_lexer *const restrict lexer)
+const char *word(const t_shell *const shell, t_lexer *const lexer)
 {
 	size_t start_idx = lexer->pos;
 	char *word = NULL;
