@@ -66,7 +66,7 @@ BUILTINS_DEBUG:= $(BUILTINS)
 
 
 PROCESS=process.c\
-			command.c
+		command.c
 
 PROCESS:=	$(addprefix process/, $(PROCESS))
 
