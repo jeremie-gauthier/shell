@@ -1,7 +1,7 @@
 #include "lib_mem.h"
 #include <stddef.h>
 
-char *ft_strncpy(char *const dest, const char *restrict src, size_t n)
+char *ft_strncpy(char *const dest, const char *src, size_t n)
 {
 	char *str;
 

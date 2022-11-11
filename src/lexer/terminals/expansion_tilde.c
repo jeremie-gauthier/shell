@@ -4,7 +4,7 @@
 #include "lib_str.h"
 #include "shell.h"
 
-static const char *concat_path(const t_shell *const shell, t_lexer *const restrict lexer, const char *prefix)
+static const char *concat_path(const t_shell *const shell, t_lexer *const lexer, const char *prefix)
 {
 	const char *path = word(shell, lexer);
 	const char *word = ft_strjoin(prefix, path, "");
@@ -16,7 +16,7 @@ static const char *concat_path(const t_shell *const shell, t_lexer *const restri
 // ~/foo => $HOME/foo
 // ~+/foo => $PWD/foo
 // ~-/foo => ${OLDPWD-'~-'}/foo
-const char *expansion_tilde(const t_shell *const shell, t_lexer *const restrict lexer)
+const char *expansion_tilde(const t_shell *const shell, t_lexer *const lexer)
 {
 	advance_lexer(lexer);
 

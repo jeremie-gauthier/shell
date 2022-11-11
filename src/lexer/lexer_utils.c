@@ -8,7 +8,7 @@
  *	This function is responsible for breaking a sentence
  *	apart into tokens. One token at a time.
  */
-t_token get_next_token(const t_shell *const shell, t_lexer *const restrict lexer)
+t_token get_next_token(const t_shell *const shell, t_lexer *const lexer)
 {
 	while (lexer->current_char)
 	{
@@ -37,7 +37,7 @@ t_token get_next_token(const t_shell *const shell, t_lexer *const restrict lexer
 /*
  * Advance the pos pointer and set the current_char variable.
  */
-void advance_lexer(t_lexer *const restrict lexer)
+void advance_lexer(t_lexer *const lexer)
 {
 	lexer->pos += 1;
 	lexer->current_char = lexer->input[lexer->pos];

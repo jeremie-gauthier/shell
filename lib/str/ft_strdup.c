@@ -2,7 +2,7 @@
 #include "lib_str.h"
 #include <stddef.h>
 
-char *ft_strdup(const char *const restrict s)
+char *ft_strdup(const char *const s)
 {
 	char *sdup;
 	size_t len;

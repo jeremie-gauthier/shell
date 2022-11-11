@@ -1,4 +1,4 @@
-char *ft_strcpy(char *const dst, const char *restrict src)
+char *ft_strcpy(char *const dst, const char *src)
 {
 	char *dst_ptr;
 

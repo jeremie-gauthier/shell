@@ -6,7 +6,7 @@
 #include <sys/uio.h>
 #include <unistd.h>
 
-static char *get_line_from_cache(t_gnl *const restrict gnl)
+static char *get_line_from_cache(t_gnl *const gnl)
 {
 	char *nl;
 	char *line;
@@ -34,7 +34,7 @@ static char *get_line_from_cache(t_gnl *const restrict gnl)
 	return line;
 }
 
-static void increase_cache_size(t_gnl *const restrict gnl)
+static void increase_cache_size(t_gnl *const gnl)
 {
 	size_t new_size;
 
@@ -44,7 +44,7 @@ static void increase_cache_size(t_gnl *const restrict gnl)
 	gnl->bytes_alloc = new_size;
 }
 
-static bool should_realloc(t_gnl *const restrict gnl)
+static bool should_realloc(t_gnl *const gnl)
 {
 	long int diff;
 
@@ -54,7 +54,7 @@ static bool should_realloc(t_gnl *const restrict gnl)
 	return false;
 }
 
-static int read_fd(const int fd, t_gnl *const restrict gnl)
+static int read_fd(const int fd, t_gnl *const gnl)
 {
 	int ret;
 

@@ -1,7 +1,7 @@
 #include "lib_str.h"
 #include <stddef.h>
 
-char *ft_strndup(const char *const restrict src, size_t n)
+char *ft_strndup(const char *const src, size_t n)
 {
 	char *src_dup;
 

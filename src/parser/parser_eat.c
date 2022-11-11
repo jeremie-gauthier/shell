@@ -9,7 +9,7 @@
  * type and if they match then "eat" the current token
  * and assign the next token to the self.current_token.
  */
-bool eat(const t_shell *const shell, t_parser *const restrict parser, const enum e_token_type token_type)
+bool eat(const t_shell *const shell, t_parser *const parser, const enum e_token_type token_type)
 {
 	if (parser->current_token.type == token_type)
 	{

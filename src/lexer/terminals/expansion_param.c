@@ -50,7 +50,7 @@ static char *param_subst(const t_shell *const shell, const char *const param)
 }
 
 // complex subst = ${PATH:...}
-static const char *complex_subst(const t_shell *const shell, t_lexer *const restrict lexer)
+static const char *complex_subst(const t_shell *const shell, t_lexer *const lexer)
 {
 	advance_lexer(lexer);
 
@@ -83,7 +83,7 @@ static const char *complex_subst(const t_shell *const shell, t_lexer *const rest
 }
 
 // simple subst = $PATH
-static const char *simple_subst(const t_shell *const shell, t_lexer *const restrict lexer)
+static const char *simple_subst(const t_shell *const shell, t_lexer *const lexer)
 {
 	const size_t start_idx = lexer->pos;
 
@@ -97,7 +97,7 @@ static const char *simple_subst(const t_shell *const shell, t_lexer *const restr
 	return subst;
 }
 
-const char *expansion_param(const t_shell *const shell, t_lexer *const restrict lexer)
+const char *expansion_param(const t_shell *const shell, t_lexer *const lexer)
 {
 	advance_lexer(lexer);
 	if (lexer->current_char == OPENING_BRACE)

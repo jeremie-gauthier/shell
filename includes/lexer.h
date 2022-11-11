@@ -25,9 +25,9 @@ typedef struct s_lexer
 	char current_char;
 } t_lexer;
 
-t_lexer lexer_create(const char *const restrict str);
-t_token get_next_token(const t_shell *const shell, t_lexer *const restrict lexer);
-void advance_lexer(t_lexer *const restrict lexer);
+t_lexer lexer_create(const char *const str);
+t_token get_next_token(const t_shell *const shell, t_lexer *const lexer);
+void advance_lexer(t_lexer *const lexer);
 
 enum e_token_type get_token_type(char c);
 
@@ -35,10 +35,10 @@ enum e_token_type get_token_type(char c);
  ** TERMINALS
  */
 
-void skip_whitespace(t_lexer *const restrict lexer);
-const char *word(const t_shell *const shell, t_lexer *const restrict lexer);
-t_token unknown(t_lexer *const restrict lexer);
-const char *expansion_param(const t_shell *const shell, t_lexer *const restrict lexer);
-const char *expansion_tilde(const t_shell *const shell, t_lexer *const restrict lexer);
+void skip_whitespace(t_lexer *const lexer);
+const char *word(const t_shell *const shell, t_lexer *const lexer);
+t_token unknown(t_lexer *const lexer);
+const char *expansion_param(const t_shell *const shell, t_lexer *const lexer);
+const char *expansion_tilde(const t_shell *const shell, t_lexer *const lexer);
 
 #endif
