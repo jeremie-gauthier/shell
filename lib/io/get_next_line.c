@@ -14,7 +14,7 @@ static char *get_line_from_cache(t_gnl *const gnl)
 
 	if ((nl = ft_strchr(gnl->cache, '\n')))
 	{
-		line_size = &nl[1] - gnl->cache;
+		line_size = (size_t)(&nl[1] - gnl->cache);
 		line = ft_strndup(gnl->cache, line_size);
 		if (nl[1] == '\0')
 		{
@@ -48,7 +48,7 @@ static bool should_realloc(t_gnl *const gnl)
 {
 	long int diff;
 
-	diff = gnl->bytes_alloc - gnl->len;
+	diff = (long)(gnl->bytes_alloc - (size_t)gnl->len);
 	if (diff < GNL_BUFFER_SIZE)
 		return true;
 	return false;
@@ -56,7 +56,7 @@ static bool should_realloc(t_gnl *const gnl)
 
 static int read_fd(const int fd, t_gnl *const gnl)
 {
-	int ret;
+	ssize_t ret;
 
 	if (should_realloc(gnl))
 		increase_cache_size(gnl);
