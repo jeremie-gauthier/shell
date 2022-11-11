@@ -18,6 +18,9 @@ t_token get_next_token(const t_shell *const shell, t_lexer *const restrict lexer
 			continue;
 		}
 
+		if (lexer->current_char == '~')
+			return (t_token){.type = Word, .value = expansion_tilde(shell, lexer)};
+
 		if (lexer->current_char == '$')
 			return (t_token){.type = Word, .value = expansion_param(shell, lexer)};
 

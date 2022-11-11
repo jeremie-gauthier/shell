@@ -39,5 +39,6 @@ void skip_whitespace(t_lexer *const restrict lexer);
 const char *word(const t_shell *const shell, t_lexer *const restrict lexer);
 t_token unknown(t_lexer *const restrict lexer);
 const char *expansion_param(const t_shell *const shell, t_lexer *const restrict lexer);
+const char *expansion_tilde(const t_shell *const shell, t_lexer *const restrict lexer);
 
 #endif
