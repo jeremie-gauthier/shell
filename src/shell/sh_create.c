@@ -7,13 +7,8 @@
 
 static void init_cache(t_cache *cache)
 {
-	if (!(cache->global = ht_create()))
-		exit(EXIT_FAILURE);
 	if (!(cache->bin = ht_create()))
-	{
-		ht_free(cache->global);
 		exit(EXIT_FAILURE);
-	}
 }
 
 static char **init_env(char **env)
@@ -42,11 +37,6 @@ t_shell sh_create(char **env)
 	t_shell shell;
 	init_cache(&shell.cache);
 	if (!(shell.env = init_env(env)))
-	{
-		sh_free(shell);
-		exit(EXIT_FAILURE);
-	}
-	if (!(load_env_to_cache(shell.cache.global, shell.env)))
 	{
 		sh_free(shell);
 		exit(EXIT_FAILURE);

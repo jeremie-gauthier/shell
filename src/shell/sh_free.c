@@ -8,5 +8,4 @@ void sh_free(t_shell shell)
 
 	ft_arr_free(shell.env, env_size);
 	ht_free(shell.cache.bin);
-	ht_free(shell.cache.global);
 }
