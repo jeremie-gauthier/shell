@@ -43,7 +43,8 @@ AST_DEBUG:= $(AST) ast/__debug.c
 _SHELL=	sh_create.c\
 		sh_run.c\
 		sh_free.c\
-		get_current_dir_name.c
+		get_current_dir_name.c\
+		sh_prompt.c
 
 _SHELL:=	$(addprefix shell/, $(_SHELL))
 
