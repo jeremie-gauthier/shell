@@ -32,5 +32,6 @@ t_shell sh_create(char **env);
 int sh_run(t_shell *const shell);
 void sh_free(t_shell shell);
 char *get_current_dir_name();
+void display_prompt();
 
 #endif

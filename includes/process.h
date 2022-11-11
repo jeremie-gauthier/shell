@@ -4,8 +4,15 @@
 #include "shell.h"
 #include "token.h"
 #include <stddef.h>
+#include <unistd.h>
 
 #define CHILD_PROCESS 0
+
+typedef struct s_proc
+{
+	pid_t pid;
+	unsigned char exit_status;
+} t_proc;
 
 /*
  * Store basic informations about the command to run.

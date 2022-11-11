@@ -11,6 +11,7 @@ HEADERS=	token.h\
 			process.h\
 			lib_ht.h\
 			env.h\
-			builtin.h
+			builtin.h\
+			signals.h
 
 HEADERS:=	$(addprefix includes/, $(HEADERS))

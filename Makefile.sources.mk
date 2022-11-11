@@ -21,6 +21,12 @@ ENV=	env_get.c\
 ENV:=	$(addprefix env/, $(ENV))
 
 
+SIGNALS=sig_init.c\
+		sigint.c
+
+SIGNALS:=	$(addprefix signals/, $(SIGNALS))
+
+
 PARSER=	parser_create.c\
 		parser_eat.c\
 		parser_run.c\
@@ -43,7 +49,8 @@ AST_DEBUG:= $(AST) ast/__debug.c
 _SHELL=	sh_create.c\
 		sh_run.c\
 		sh_free.c\
-		get_current_dir_name.c
+		get_current_dir_name.c\
+		sh_prompt.c
 
 _SHELL:=	$(addprefix shell/, $(_SHELL))
 
@@ -66,14 +73,14 @@ BUILTINS_DEBUG:= $(BUILTINS)
 
 
 PROCESS=process.c\
-			command.c
+		command.c
 
 PROCESS:=	$(addprefix process/, $(PROCESS))
 
 
-SOURCES=	$(addprefix src/, $(ROOT) $(LEXER) $(PARSER) $(_SHELL) $(INTERPRETER) $(AST) $(PROCESS) $(ENV) $(BUILTINS))
+SOURCES=	$(addprefix src/, $(ROOT) $(LEXER) $(PARSER) $(_SHELL) $(INTERPRETER) $(AST) $(PROCESS) $(ENV) $(BUILTINS) $(SIGNALS))
 OBJS=	$(subst .c,.o,$(SOURCES))
 
 
-SOURCES_DEBUG=	$(addprefix src/, $(ROOT) $(LEXER_DEBUG) $(PARSER_DEBUG) $(_SHELL) $(INTERPRETER) $(AST_DEBUG) $(PROCESS) $(ENV) $(BUILTINS_DEBUG))
+SOURCES_DEBUG=	$(addprefix src/, $(ROOT) $(LEXER_DEBUG) $(PARSER_DEBUG) $(_SHELL) $(INTERPRETER) $(AST_DEBUG) $(PROCESS) $(ENV) $(BUILTINS_DEBUG) $(SIGNALS))
 OBJS_DEBUG=	$(subst .c,.o,$(SOURCES_DEBUG))
