@@ -2,7 +2,7 @@
 #define TOKEN_H
 
 #define NB_DISTINCT_TOKENS End + 1
-#define IS_VALID_TOKEN(token, valid_token_mask) ((token & valid_token_mask) == 1)
+#define IS_VALID_TOKEN(token, valid_token_mask) ((token & valid_token_mask) == token)
 
 enum e_token_type
 {
