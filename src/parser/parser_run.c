@@ -6,5 +6,5 @@
  */
 t_ast *parser_run(const t_shell *const shell, t_parser *const parser)
 {
-	return parse_cmd(shell, parser);
+	return parse_expr(shell, parser);
 }

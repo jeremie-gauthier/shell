@@ -18,6 +18,9 @@ t_token get_next_token(const t_shell *const shell, t_lexer *const lexer)
 			continue;
 		}
 
+		if (lexer->current_char == COMMAND_SEPARATOR)
+			return (t_token){.type = CommandSeparator, .value = cmd_separator(lexer)};
+
 		if (lexer->current_char == '~')
 			return (t_token){.type = Word, .value = expansion_tilde(shell, lexer)};
 
@@ -28,7 +31,7 @@ t_token get_next_token(const t_shell *const shell, t_lexer *const lexer)
 			return (t_token){.type = Word, .value = word(shell, lexer)};
 
 		fprintf(stderr, "Lexer error, token not recognized\n");
-		return (t_token){.type = Unknown, .value = NULL};
+		return (t_token){.type = Unknown, .value = unknown(lexer)};
 	}
 
 	return (t_token){.type = End, .value = NULL};

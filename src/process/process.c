@@ -22,9 +22,10 @@ int run_process(const char *const path, char *const *argv, char *const *env)
 			return EXIT_FAILURE;
 	}
 	else
+	{
 		wait(&status);
-
-	if (g_sig.signum > 0)
-		return g_sig.current_proc.exit_status;
+		if (g_sig.signum > 0)
+			return g_sig.current_proc.exit_status;
+	}
 	return status;
 }

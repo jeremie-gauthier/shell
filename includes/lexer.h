@@ -7,6 +7,7 @@
 #include <stddef.h>
 
 #define WHITESPACES " \t\n\r\v\f"
+#define COMMAND_SEPARATOR ';'
 #define OPERATORS "<>&|;"
 #define EXP_PARAM_CHAR '$'
 #define OPENING_BRACE '{'
@@ -37,8 +38,9 @@ enum e_token_type get_token_type(char c);
 
 void skip_whitespace(t_lexer *const lexer);
 const char *word(const t_shell *const shell, t_lexer *const lexer);
-t_token unknown(t_lexer *const lexer);
+const char *unknown(t_lexer *const lexer);
 const char *expansion_param(const t_shell *const shell, t_lexer *const lexer);
 const char *expansion_tilde(const t_shell *const shell, t_lexer *const lexer);
+const char *cmd_separator(t_lexer *const lexer);
 
 #endif
