@@ -13,6 +13,7 @@ static const char *TOKEN_TYPE_STR[NB_DISTINCT_TOKENS] = {
 	[PathCommand] = "PathCommand",
 	[File] = "File",
 	[Unknown] = "Unknown",
+	[CommandSeparator] = "CommandSeparator",
 	[End] = "End",
 };
 

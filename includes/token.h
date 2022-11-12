@@ -11,6 +11,7 @@ enum e_token_type
 	BuiltInCommand = 1 << 1,
 	PathCommand = 1 << 2,
 	File = 1 << 3,
+	CommandSeparator = 1 << 4,
 	End = 1 << 5,
 };
 

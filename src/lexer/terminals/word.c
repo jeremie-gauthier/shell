@@ -11,7 +11,7 @@ const char *word(const t_shell *const shell, t_lexer *const lexer)
 	size_t start_idx = lexer->pos;
 	char *word = NULL;
 
-	while (lexer->current_char && ft_isgraph(lexer->current_char))
+	while (lexer->current_char && ft_isgraph(lexer->current_char) && lexer->current_char != COMMAND_SEPARATOR)
 	{
 		if (lexer->current_char == EXP_PARAM_CHAR)
 		{
