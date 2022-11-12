@@ -6,8 +6,6 @@
 #include "shell.h"
 #include <stdlib.h>
 
-#include <stdio.h>
-
 static int visit(t_shell *const shell, t_ast *node)
 {
 	if (!node)
@@ -24,7 +22,7 @@ static int visit(t_shell *const shell, t_ast *node)
 	{
 		visit(shell, node->left);
 		if (shell->status)
-			return visit(shell, node->right);
+			visit(shell, node->right);
 		return shell->last_exit_status;
 	}
 	return EXIT_FAILURE;
