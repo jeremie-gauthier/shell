@@ -25,5 +25,6 @@ bool eat(const t_shell *const shell, t_parser *const parser, const enum e_token_
  */
 
 t_ast *parse_cmd(const t_shell *const shell, t_parser *const parser);
+t_ast *parse_expr(const t_shell *const shell, t_parser *const parser);
 
 #endif
