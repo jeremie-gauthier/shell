@@ -23,7 +23,9 @@ static int visit(t_shell *const shell, t_ast *node)
 	if (node->token.type == CommandSeparator)
 	{
 		visit(shell, node->left);
-		return visit(shell, node->right);
+		if (shell->status)
+			return visit(shell, node->right);
+		return shell->last_exit_status;
 	}
 	return EXIT_FAILURE;
 }
