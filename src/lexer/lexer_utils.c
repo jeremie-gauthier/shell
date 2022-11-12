@@ -28,7 +28,7 @@ t_token get_next_token(const t_shell *const shell, t_lexer *const lexer)
 			return (t_token){.type = Word, .value = word(shell, lexer)};
 
 		fprintf(stderr, "Lexer error, token not recognized\n");
-		return (t_token){.type = Unknown, .value = NULL};
+		return (t_token){.type = Unknown, .value = unknown(lexer)};
 	}
 
 	return (t_token){.type = End, .value = NULL};
