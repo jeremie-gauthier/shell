@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-#define HT_CAPACITY 4096
+#define HT_CAPACITY 3939
 #define NOT_OCCUPIED NULL
 #define HT_HAS(item) ((item) != NULL)
 #define HT_HAS_NOT(item) ((item) == NULL)

@@ -7,8 +7,8 @@ static int char_to_digit(const char c, const int base)
 	if (c >= '0' && c <= '9')
 		return c - '0';
 
-	const char chr = ft_toupper(c);
-	const char max_base_char = 'A' + base - 10;
+	const char chr = (char)ft_toupper(c);
+	const char max_base_char = (char)('A' + base - 10);
 	if (chr >= 'A' && chr <= max_base_char)
 		return chr - 'A' + 10;
 	return -1;
