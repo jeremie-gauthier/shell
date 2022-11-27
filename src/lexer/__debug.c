@@ -14,6 +14,7 @@ static const char *TOKEN_TYPE_STR[NB_DISTINCT_TOKENS] = {
 	[File] = "File",
 	[Unknown] = "Unknown",
 	[CommandSeparator] = "CommandSeparator",
+	[Pipe] = "Pipe",
 	[End] = "End",
 };
 

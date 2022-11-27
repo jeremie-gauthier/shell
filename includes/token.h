@@ -12,7 +12,8 @@ enum e_token_type
 	PathCommand = 1 << 2,
 	File = 1 << 3,
 	CommandSeparator = 1 << 4,
-	End = 1 << 5,
+	Pipe = 1 << 5,
+	End = 1 << 6,
 };
 
 typedef struct s_token
