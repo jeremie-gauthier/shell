@@ -32,7 +32,8 @@ PARSER=	parser_create.c\
 		parser_eat.c\
 		parser_run.c\
 		rules/cmd.c\
-		rules/list.c
+		rules/list.c\
+		rules/pipeline.c
 
 PARSER:=	$(addprefix parser/, $(PARSER))
 
