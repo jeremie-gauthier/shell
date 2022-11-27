@@ -17,7 +17,7 @@ WORD:	string of graphical chars
 
 _arg_: WORD
 _cmd_: _arg_<sup>+</sup>
-_expr_: _cmd_ ( _operator_<sup>+</sup> _cmd_<sup>?</sup> )<sup>\*</sup>
+_list_: _cmd_ ( _operator_<sup>+</sup> _cmd_<sup>?</sup> )<sup>\*</sup>
 
 ## Definition
 

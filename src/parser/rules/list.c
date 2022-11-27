@@ -4,8 +4,8 @@
 
 #include <stdio.h>
 
-// expr: WORD (OPERATOR cmd)*
-t_ast *parse_expr(const t_shell *const shell, t_parser *const parser)
+// list: WORD (OPERATOR cmd)*
+t_ast *parse_list(const t_shell *const shell, t_parser *const parser)
 {
 	t_ast *node = parse_cmd(shell, parser);
 
