@@ -2,17 +2,18 @@
 #define TOKEN_H
 
 #define NB_DISTINCT_TOKENS End + 1
-#define IS_VALID_TOKEN(token, valid_token_mask) ((token & valid_token_mask) == token)
+#define IS_VALID_TOKEN(token_got, token_expected) (token_got == token_expected)
 
 enum e_token_type
 {
 	Unknown = 0,
-	Word = 1 << 0,
-	BuiltInCommand = 1 << 1,
-	PathCommand = 1 << 2,
-	File = 1 << 3,
-	CommandSeparator = 1 << 4,
-	End = 1 << 5,
+	Word,
+	Command,
+	BuiltInCommand,
+	PathCommand,
+	File,
+	CommandSeparator,
+	End,
 };
 
 typedef struct s_token
