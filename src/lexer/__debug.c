@@ -4,7 +4,9 @@
 
 static const char *get_token_value(const t_token token)
 {
-	return token.value;
+	if (token.type == Command)
+		return NULL;
+	return token.data;
 }
 
 static const char *TOKEN_TYPE_STR[NB_DISTINCT_TOKENS] = {

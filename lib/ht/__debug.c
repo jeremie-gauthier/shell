@@ -23,14 +23,14 @@ void print_table(t_ht *table)
 	{
 		if (table->items[i])
 		{
-			printf("Index:%zu, Key:%s, Value:%s", i, table->items[i]->key, table->items[i]->value);
+			printf("Index:%zu, Key:%s, Value:%s", i, table->items[i]->key, table->items[i]->data);
 			if (table->overflow_buckets[i])
 			{
 				printf(" => Overflow Bucket => ");
 				t_ht_lst *head = table->overflow_buckets[i];
 				while (head)
 				{
-					printf("Key:%s, Value:%s ", head->item->key, head->item->value);
+					printf("Key:%s, Value:%s ", head->item->key, head->item->data);
 					head = head->next;
 				}
 			}

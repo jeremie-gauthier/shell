@@ -24,6 +24,12 @@ bool eat(const t_shell *const shell, t_parser *const parser, const enum e_token_
  ** RULES
  */
 
+typedef struct s_cmd
+{
+	const char **argv;
+	int argc;
+} t_cmd;
+
 t_ast *parse_cmd(const t_shell *const shell, t_parser *const parser);
 t_ast *parse_expr(const t_shell *const shell, t_parser *const parser);
 

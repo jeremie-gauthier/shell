@@ -30,7 +30,7 @@ static char **get_command_argv(t_ast *node, size_t *argc)
 	size_t i = 0;
 	while (i < *argc)
 	{
-		argv[i] = (char *)node->token.value;
+		argv[i] = (char *)node->token.data;
 		node = node->right;
 		i++;
 	}
@@ -48,19 +48,19 @@ static char **get_command_argv(t_ast *node, size_t *argc)
  */
 void command_finder(t_token *cmd_tok)
 {
-	if (ft_strchr(cmd_tok->value, '/'))
+	if (ft_strchr((char *)cmd_tok->data, '/'))
 	{
 		cmd_tok->type = File;
 		return;
 	}
 
 	if (
-		ft_strcmp(cmd_tok->value, "exit") == SAME_STR ||
-		ft_strcmp(cmd_tok->value, "echo") == SAME_STR ||
-		ft_strcmp(cmd_tok->value, "env") == SAME_STR ||
-		ft_strcmp(cmd_tok->value, "unsetenv") == SAME_STR ||
-		ft_strcmp(cmd_tok->value, "setenv") == SAME_STR ||
-		ft_strcmp(cmd_tok->value, "cd") == SAME_STR)
+		ft_strcmp((char *)cmd_tok->data, "exit") == SAME_STR ||
+		ft_strcmp((char *)cmd_tok->data, "echo") == SAME_STR ||
+		ft_strcmp((char *)cmd_tok->data, "env") == SAME_STR ||
+		ft_strcmp((char *)cmd_tok->data, "unsetenv") == SAME_STR ||
+		ft_strcmp((char *)cmd_tok->data, "setenv") == SAME_STR ||
+		ft_strcmp((char *)cmd_tok->data, "cd") == SAME_STR)
 	{
 		cmd_tok->type = BuiltInCommand;
 		return;
@@ -72,7 +72,7 @@ void command_finder(t_token *cmd_tok)
 t_cmd word_visitor(t_ast *node)
 {
 	size_t argc;
-	const char *path = node->token.value;
+	const char *path = node->token.data;
 	char *const *argv = get_command_argv(node, &argc);
 	command_finder(&node->token);
 

@@ -107,3 +107,19 @@ const char *expansion_param(const t_shell *const shell, t_lexer *const lexer)
 
 	return ft_strdup("$");
 }
+
+/*
+ ** PARSING ONLY
+ */
+
+// t_expansion_token parse_expansion_param(const t_shell *const shell, t_lexer *const lexer)
+// {
+// 	advance_lexer(lexer);
+// 	if (lexer->current_char == OPENING_BRACE)
+// 		return complex_subst(shell, lexer);
+
+// 	if (ft_isalpha(lexer->current_char) || lexer->current_char == '_')
+// 		return simple_subst(shell, lexer);
+
+// 	return ft_strdup("$");
+// }

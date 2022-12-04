@@ -19,22 +19,22 @@ t_token get_next_token(const t_shell *const shell, t_lexer *const lexer)
 		}
 
 		if (lexer->current_char == COMMAND_SEPARATOR)
-			return (t_token){.type = CommandSeparator, .value = cmd_separator(lexer)};
+			return (t_token){.type = CommandSeparator};
 
-		if (lexer->current_char == '~')
-			return (t_token){.type = Word, .value = expansion_tilde(shell, lexer)};
+		// if (lexer->current_char == '~')
+		// 	return (t_token){.type = Word, .data = expansion_tilde(shell, lexer)};
 
 		if (lexer->current_char == '$')
-			return (t_token){.type = Word, .value = expansion_param(shell, lexer)};
+			return (t_token){.type = Word, .word = expansion_param(shell, lexer)};
 
 		if (ft_isgraph(lexer->current_char))
-			return (t_token){.type = Word, .value = word(shell, lexer)};
+			return (t_token){.type = Word, .word = word(shell, lexer)};
 
 		fprintf(stderr, "Lexer error, token not recognized\n");
-		return (t_token){.type = Unknown, .value = unknown(lexer)};
+		return (t_token){.type = Unknown};
 	}
 
-	return (t_token){.type = End, .value = NULL};
+	return (t_token){.type = End};
 }
 
 /*

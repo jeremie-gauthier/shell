@@ -11,7 +11,7 @@ void ast_free(t_ast *ast)
 
 	ast_free(ast->left);
 	ast_free(ast->right);
-	ft_strdel((char **)&ast->token.value);
+	ft_strdel((char **)&ast->token.data);
 	ft_memdel((void **)&ast);
 	ast = NULL;
 }
