@@ -1,6 +1,8 @@
 #ifndef TOKEN_H
 #define TOKEN_H
 
+#include <stddef.h>
+
 #define NB_DISTINCT_TOKENS End + 1
 #define IS_VALID_TOKEN(token_got, token_expected) (token_got == token_expected)
 
@@ -19,35 +21,35 @@ enum e_token_type
 // locate a substring in a string
 typedef struct s_loc
 {
-	const size_t start;
-	const size_t end;
+	size_t start;
+	size_t end;
 } t_loc;
 
 // token for shell expansion parameters
 typedef struct s_expansion_token
 {
-	const t_loc loc;
-	const char *parameter;
+	t_loc loc;
+	char *parameter;
 } t_expansion_token;
 
 // token for word terminal
 typedef struct s_word_token
 {
-	const char *text;
-	const t_expansion_token *expansion;
+	char *text;
+	t_expansion_token *expansion;
 } t_word_token;
 
 // token for command rule
 typedef struct s_command_token
 {
-	const t_word_token name;
-	const t_word_token *suffix;
+	t_word_token name;
+	t_word_token *suffix;
 } t_command_token;
 
 // token for pipeline rule
 typedef struct s_pipeline_token
 {
-	const t_command_token *commands;
+	t_command_token *commands;
 } t_pipeline_token;
 
 // generic token used in the AST
@@ -66,7 +68,7 @@ typedef struct s_token
 /*
  ** DEBUG
  */
-void print_token(const t_token token);
-const char *token_type_to_str(const enum e_token_type type);
+void print_token(t_token token);
+char *token_type_to_str(enum e_token_type type);
 
 #endif

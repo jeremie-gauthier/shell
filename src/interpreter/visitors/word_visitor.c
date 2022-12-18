@@ -6,38 +6,38 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-/*
- * Transform a sequence of AST nodes into a 2D-array
- */
-static char **get_command_argv(t_ast *node, size_t *argc)
-{
-	t_ast *head = node;
+// /*
+//  * Transform a sequence of AST nodes into a 2D-array
+//  */
+// static char **get_command_argv(t_ast *node, size_t *argc)
+// {
+// 	t_ast *head = node;
 
-	*argc = 0;
-	while (node && node->token.type == Word)
-	{
-		node = node->right;
-		(*argc)++;
-	}
-	if (*argc == 0)
-		return NULL;
+// 	*argc = 0;
+// 	while (node && node->token.type == Word)
+// 	{
+// 		node = node->right;
+// 		(*argc)++;
+// 	}
+// 	if (*argc == 0)
+// 		return NULL;
 
-	char **argv = malloc(sizeof(*argv) * (*argc + 1));
-	if (!argv)
-		return NULL;
+// 	char **argv = malloc(sizeof(*argv) * (*argc + 1));
+// 	if (!argv)
+// 		return NULL;
 
-	node = head;
-	size_t i = 0;
-	while (i < *argc)
-	{
-		argv[i] = (char *)node->token.data;
-		node = node->right;
-		i++;
-	}
-	argv[i] = NULL;
+// 	node = head;
+// 	size_t i = 0;
+// 	while (i < *argc)
+// 	{
+// 		argv[i] = (char *)node->token.data;
+// 		node = node->right;
+// 		i++;
+// 	}
+// 	argv[i] = NULL;
 
-	return argv;
-}
+// 	return argv;
+// }
 
 /*
  *	If the command contains no slashes:
@@ -48,19 +48,19 @@ static char **get_command_argv(t_ast *node, size_t *argc)
  */
 void command_finder(t_token *cmd_tok)
 {
-	if (ft_strchr((char *)cmd_tok->data, '/'))
+	if (ft_strchr(cmd_tok->command.name.text, '/'))
 	{
 		cmd_tok->type = File;
 		return;
 	}
 
 	if (
-		ft_strcmp((char *)cmd_tok->data, "exit") == SAME_STR ||
-		ft_strcmp((char *)cmd_tok->data, "echo") == SAME_STR ||
-		ft_strcmp((char *)cmd_tok->data, "env") == SAME_STR ||
-		ft_strcmp((char *)cmd_tok->data, "unsetenv") == SAME_STR ||
-		ft_strcmp((char *)cmd_tok->data, "setenv") == SAME_STR ||
-		ft_strcmp((char *)cmd_tok->data, "cd") == SAME_STR)
+		ft_strcmp(cmd_tok->command.name.text, "exit") == SAME_STR ||
+		ft_strcmp(cmd_tok->command.name.text, "echo") == SAME_STR ||
+		ft_strcmp(cmd_tok->command.name.text, "env") == SAME_STR ||
+		ft_strcmp(cmd_tok->command.name.text, "unsetenv") == SAME_STR ||
+		ft_strcmp(cmd_tok->command.name.text, "setenv") == SAME_STR ||
+		ft_strcmp(cmd_tok->command.name.text, "cd") == SAME_STR)
 	{
 		cmd_tok->type = BuiltInCommand;
 		return;
@@ -71,10 +71,12 @@ void command_finder(t_token *cmd_tok)
 
 t_cmd word_visitor(t_ast *node)
 {
-	size_t argc;
-	const char *path = node->token.data;
-	char *const *argv = get_command_argv(node, &argc);
+	// size_t argc;
+	const char *path = node->token.command.name.text;
+	// char *const *argv = get_command_argv(node, &argc);
+	// char *const *argv = node->token.command.suffix;
 	command_finder(&node->token);
 
-	return create_command(path, argv, argc, node->token.type);
+	// return create_command(path, argv, argc, node->token.type);
+	return (t_cmd){.argc = 0, .argv = NULL, .path = path, .type = BuiltInCommand};
 }

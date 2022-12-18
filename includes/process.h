@@ -25,7 +25,7 @@ typedef struct s_cmd
 	enum e_token_type type;
 } t_cmd;
 
-t_cmd create_command(const char *path, char *const *argv, const size_t argc, enum e_token_type type);
+// t_cmd create_command(const char *path, char *const *argv, const size_t argc, enum e_token_type type);
 const char *find_command(t_shell *const shell, const t_cmd command);
 int run_command(t_shell *const shell, const t_cmd command);
 

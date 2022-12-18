@@ -3,19 +3,20 @@
 #include "lib_mem.h"
 #include "lib_str.h"
 #include "parser.h"
+#include "process.h"
 #include "shell.h"
 #include <stdlib.h>
 
-const t_cmd *create_cmd(int argc, const char **argv)
-{
-	t_cmd *cmd = malloc(sizeof(*cmd));
-	if (!cmd)
-		return NULL;
+// const t_cmd *create_cmd(int argc, const char **argv)
+// {
+// 	t_cmd *cmd = malloc(sizeof(*cmd));
+// 	if (!cmd)
+// 		return NULL;
 
-	cmd->argc = argc;
-	cmd->argv = argv;
-	return cmd;
-}
+// 	cmd->argc = argc;
+// 	cmd->argv = argv;
+// 	return cmd;
+// }
 
 // It will creates a reduction token called Command Token
 // from all the Word Token it has parsed.

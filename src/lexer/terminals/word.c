@@ -53,6 +53,7 @@ t_word_token word(const t_shell *const shell, t_lexer *const lexer)
 		// ft_strdel(&queue_word);
 	}
 
+	(void)shell;
 	fprintf(stderr, "word = %s\n", word);
 
 	return (t_word_token){.text = word, .expansion = NULL};
