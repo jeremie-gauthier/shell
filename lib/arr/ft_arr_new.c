@@ -1,5 +1,6 @@
 #include "lib_mem.h"
 #include <stddef.h>
+#include <stdlib.h>
 
 char **ft_arr_new(size_t size)
 {
