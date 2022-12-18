@@ -3,6 +3,9 @@
 #include <stddef.h>
 #include <stdlib.h>
 
+/// @brief Create a new vector with desired capacity
+/// @param capacity The memory capacity of this vec
+/// @return A new, empty vector
 t_vec *vec_create(const size_t capacity)
 {
 	t_vec *vec = malloc(sizeof(*vec));
