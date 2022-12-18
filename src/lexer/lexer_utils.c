@@ -8,6 +8,9 @@
  *	This function is responsible for breaking a sentence
  *	apart into tokens. One token at a time.
  */
+/// @brief This function is responsible for breaking a sentence
+/// apart into tokens. One token at a time.
+/// @return A generic lexer token
 t_token get_next_token(const t_shell *const shell, t_lexer *const lexer)
 {
 	while (lexer->current_char)
