@@ -61,8 +61,15 @@ LIB_HT:= $(addprefix ht/, ${LIB_HT})
 
 LIB_HT_DEBUG= $(LIB_HT) ht/__debug.c
 
-LIB_SOURCES= $(addprefix lib/, ${LIB_IO} ${LIB_STR} ${LIB_MEM} ${LIB_CHAR} $(LIB_ARR) $(LIB_HT))
+LIB_VEC=vec_create.c\
+		vec_free.c\
+		vec_push.c\
+		vec_map.c\
+		vec_iter.c
+LIB_VEC:= $(addprefix vec/, ${LIB_VEC})
+
+LIB_SOURCES= $(addprefix lib/, ${LIB_IO} ${LIB_STR} ${LIB_MEM} ${LIB_CHAR} $(LIB_ARR) $(LIB_HT) $(LIB_VEC))
 LIB_OBJS= $(subst .c,.o,$(LIB_SOURCES))
 
-LIB_SOURCES_DEBUG= $(addprefix lib/, ${LIB_IO} ${LIB_STR} ${LIB_MEM} ${LIB_CHAR} $(LIB_ARR) $(LIB_HT_DEBUG))
+LIB_SOURCES_DEBUG= $(addprefix lib/, ${LIB_IO} ${LIB_STR} ${LIB_MEM} ${LIB_CHAR} $(LIB_ARR) $(LIB_HT_DEBUG) $(LIB_VEC))
 LIB_OBJS_DEBUG= $(subst .c,.o,$(LIB_SOURCES_DEBUG))
