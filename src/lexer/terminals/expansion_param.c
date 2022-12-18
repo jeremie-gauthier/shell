@@ -2,8 +2,10 @@
 #include "lexer.h"
 #include "lib_arr.h"
 #include "lib_char.h"
+#include "lib_mem.h"
 #include "lib_str.h"
 #include "shell.h"
+#include <stdlib.h>
 
 #include <stdio.h>
 
@@ -123,3 +125,41 @@ const char *expansion_param(const t_shell *const shell, t_lexer *const lexer)
 
 // 	return ft_strdup("$");
 // }
+
+static bool is_closing_param_exp_char(char c)
+{
+	return c == CLOSING_BRACE ||
+		   c == EXP_PARAM_CHAR;
+}
+
+t_expansion_token *parse_param_expansion(t_lexer *const lexer)
+{
+	t_expansion_token *param_expansion = malloc(sizeof(*param_expansion));
+	if (!param_expansion)
+		return NULL;
+
+	param_expansion->loc.start = lexer->pos;
+
+	advance_lexer(lexer);
+	while (lexer->current_char && ft_isgraph(lexer->current_char) &&
+		   !is_closing_param_exp_char(lexer->current_char))
+		advance_lexer(lexer);
+
+	param_expansion->loc.end = lexer->pos;
+
+	const size_t param_length = param_expansion->loc.end - param_expansion->loc.start;
+	param_expansion->parameter = ft_strndup(&lexer->input[param_expansion->loc.start], param_length);
+	if (!param_expansion->parameter)
+		ft_memdel((void **)&param_expansion);
+
+	return param_expansion;
+}
+
+#ifdef DEBUG
+void print_param_exps_vec(void **item)
+{
+	t_expansion_token *token = *item;
+
+	printf("-> parameter \"%s\" at (%zu;%zu)\n", token->parameter, token->loc.start, token->loc.end);
+}
+#endif

@@ -33,7 +33,7 @@ t_ast *parse_cmd(const t_shell *const shell, t_parser *const parser)
 	{
 		// TODO: build an array of Word Token
 		// cmd.suffix = ft_arr_append(cmd_argv, (char *)parser->current_token.data);
-		ft_memdel((void **)&parser->current_token.word.text);
+		ft_memdel((void **)&parser->current_token.word->text);
 		eat(shell, parser, Word);
 	}
 

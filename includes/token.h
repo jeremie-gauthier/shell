@@ -1,6 +1,8 @@
 #ifndef TOKEN_H
 #define TOKEN_H
 
+#include "lib_vec.h"
+#include "shell.h"
 #include <stddef.h>
 
 #define NB_DISTINCT_TOKENS End + 1
@@ -36,13 +38,13 @@ typedef struct s_expansion_token
 typedef struct s_word_token
 {
 	char *text;
-	t_expansion_token *expansion;
+	t_vec *param_expansions;
 } t_word_token;
 
 // token for command rule
 typedef struct s_command_token
 {
-	t_word_token name;
+	t_word_token *name;
 	t_word_token *suffix;
 } t_command_token;
 
@@ -57,8 +59,8 @@ typedef struct s_token
 {
 	union
 	{
-		t_word_token word;
-		t_expansion_token expansion;
+		t_word_token *word;
+		t_expansion_token *expansion;
 		t_command_token command;
 		t_pipeline_token pipeline;
 	};
@@ -68,7 +70,10 @@ typedef struct s_token
 /*
  ** DEBUG
  */
+#ifdef DEBUG
 void print_token(t_token token);
 char *token_type_to_str(enum e_token_type type);
+void print_param_exps_vec(void **item);
+#endif
 
 #endif

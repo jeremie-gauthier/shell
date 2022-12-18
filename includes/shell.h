@@ -9,6 +9,8 @@
 #define PATH_SEPARATOR '/'
 #endif
 
+#define DEBUG
+
 enum e_shell_status
 {
 	STOPPED = 0,
