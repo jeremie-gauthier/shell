@@ -11,8 +11,8 @@ static void vec_resize(t_vec *vec, size_t size)
 	void **items = malloc(sizeof(*items) * size);
 	if (!items)
 		return;
-	ft_memcpy(items, vec->items, sizeof(*items) * vec->size);
-	ft_memdel(vec->items);
+	ft_memcpy(items, vec->items, sizeof(vec->items) * vec->size);
+	ft_memdel((void **)&vec->items);
 	vec->items = items;
 	vec->capacity = size;
 }
