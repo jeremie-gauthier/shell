@@ -24,10 +24,8 @@ void print_word_vec(t_vec *word_vec)
 }
 #endif
 
-t_word_token *word(const t_shell *const shell, t_lexer *const lexer)
+t_word_token *word(t_lexer *const lexer)
 {
-	(void)shell;
-
 	t_word_token *token = malloc(sizeof(*token));
 	ft_bzero(token, sizeof(*token));
 	if (!token)

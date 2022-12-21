@@ -31,7 +31,7 @@ t_token get_next_token(const t_shell *const shell, t_lexer *const lexer)
 		// 	return (t_token){.type = Word, .word = expansion_param(shell, lexer)};
 
 		if (ft_isgraph(lexer->current_char))
-			return (t_token){.type = Word, .word = word(shell, lexer)};
+			return (t_token){.type = Word, .word = word(lexer)};
 
 		fprintf(stderr, "Lexer error, token not recognized\n");
 		return (t_token){.type = Unknown};
