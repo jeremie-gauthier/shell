@@ -24,5 +24,6 @@ void vec_push(t_vec *vec, void *item)
 {
 	if (vec->size <= vec->capacity)
 		vec_resize(vec, vec->capacity * 2);
-	vec->items[vec->size++] = item;
+	if (vec->capacity > vec->size)
+		vec->items[vec->size++] = item;
 }
