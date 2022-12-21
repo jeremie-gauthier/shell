@@ -76,6 +76,7 @@ typedef struct s_token
 void print_token(t_token token);
 char *token_type_to_str(enum e_token_type type);
 void print_param_exps_vec(void **item);
+void print_word_vec(t_vec *word_vec);
 #endif
 
 #endif

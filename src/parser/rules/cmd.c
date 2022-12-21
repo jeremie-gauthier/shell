@@ -7,16 +7,21 @@
 #include "shell.h"
 #include <stdlib.h>
 
-// const t_cmd *create_cmd(int argc, const char **argv)
-// {
-// 	t_cmd *cmd = malloc(sizeof(*cmd));
-// 	if (!cmd)
-// 		return NULL;
+#ifdef DEBUG
+#include <stdio.h>
+#endif
 
-// 	cmd->argc = argc;
-// 	cmd->argv = argv;
-// 	return cmd;
-// }
+#ifdef DEBUG
+void print_cmd_token(t_command_token *cmd)
+{
+	printf("command: %s\n", cmd->name->text);
+
+	if (cmd->name->param_expansions)
+		vec_iter(cmd->name->param_expansions, print_param_exps_vec);
+	if (cmd->suffix)
+		print_word_vec(cmd->suffix);
+}
+#endif
 
 // It will creates a reduction token called Command Token
 // from all the Word Token it has parsed.
@@ -37,6 +42,10 @@ t_ast *parse_cmd(const t_shell *const shell, t_parser *const parser)
 		vec_push(cmd->suffix, parser->current_token.word);
 		eat(shell, parser, Word);
 	}
+
+#ifdef DEBUG
+	print_cmd_token(cmd);
+#endif
 
 	const t_token cmd_token = {.type = Command, .command = cmd};
 	// ! if AST_CREATE_ONE failed -> free cmd

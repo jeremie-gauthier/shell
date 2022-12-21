@@ -7,7 +7,22 @@
 #include "token.h"
 #include <stdlib.h>
 
+#ifdef DEBUG
 #include <stdio.h>
+#endif
+
+#ifdef DEBUG
+void print_word_vec(t_vec *word_vec)
+{
+	for (size_t i = 0; i < word_vec->size; i++)
+	{
+		const t_word_token *word_tok = word_vec->items[i];
+		printf("-> arg \"%s\"\n", word_tok->text);
+		if (word_tok->param_expansions)
+			vec_iter(word_tok->param_expansions, print_param_exps_vec);
+	}
+}
+#endif
 
 t_word_token *word(const t_shell *const shell, t_lexer *const lexer)
 {
@@ -39,12 +54,6 @@ t_word_token *word(const t_shell *const shell, t_lexer *const lexer)
 
 	if (start_idx != lexer->pos)
 		token->text = ft_strndup(&lexer->input[start_idx], lexer->pos - start_idx);
-
-#ifdef DEBUG
-	fprintf(stderr, "word = %s\n", token->text);
-	if (token->param_expansions)
-		vec_iter(token->param_expansions, print_param_exps_vec);
-#endif
 
 	return token;
 }
