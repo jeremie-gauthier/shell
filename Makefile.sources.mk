@@ -57,6 +57,7 @@ _SHELL:=	$(addprefix shell/, $(_SHELL))
 
 
 INTERPRETER=interpreter.c\
+			subst_exps.c\
 			visitors/command_visitor.c
 
 INTERPRETER:=	$(addprefix interpreter/, $(INTERPRETER))

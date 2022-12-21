@@ -38,8 +38,8 @@ static char **get_argv_from_vec(const char *const arg0, t_vec *vec)
 		for (size_t i = 0; i < vec->size; i++)
 		{
 			t_word_token *word = vec->items[i];
-			// TODO: resolve possible expansions, allocate result in fresh string
-			argv[i + 1] = ft_strdup(word->text);
+			char *command_arg = word->substitution ? word->substitution : word->text;
+			argv[i + 1] = ft_strdup(command_arg);
 		}
 	argv[size + 1] = NULL;
 	return argv;
@@ -79,10 +79,10 @@ const t_cmd *get_command_from_token(t_command_token *token)
 	if (!command)
 		return NULL;
 
-	// TODO: resolve possible expansions, allocate result in fresh string
-	command->path = ft_strdup(token->name->text);
-	command->type = get_command_type(command->path);
-	command->argv = get_argv_from_vec(token->name->text, token->suffix);
+	char *command_path = token->name->substitution ? token->name->substitution : token->name->text;
+	command->path = ft_strdup(command_path);
+	command->type = get_command_type(command_path);
+	command->argv = get_argv_from_vec(command_path, token->suffix);
 	command->argc = 1 + (token->suffix ? token->suffix->size : 0);
 	return command;
 }

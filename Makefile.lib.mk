@@ -45,7 +45,8 @@ LIB_ARR=	ft_print_arr.c\
 			ft_arr_free.c\
 			ft_arr_len.c\
 			ft_arr_append.c\
-			ft_arr_new.c
+			ft_arr_new.c\
+			ft_arr_join.c
 
 LIB_ARR:= $(addprefix arr/, ${LIB_ARR})
 

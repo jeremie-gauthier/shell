@@ -29,12 +29,14 @@ typedef struct s_expansion_token
 {
 	t_loc loc;
 	char *parameter;
+	char *substitution;
 } t_expansion_token;
 
 // token for word terminal
 typedef struct s_word_token
 {
 	char *text;
+	char *substitution;
 	t_vec *param_expansions;
 } t_word_token;
 

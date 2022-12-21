@@ -13,6 +13,8 @@ static int visit(t_shell *const shell, t_ast *node)
 
 	if (node->token.type == Command)
 	{
+		if (!subst_cmd_words(shell, node->token.command))
+			return EXIT_FAILURE;
 		const t_cmd *cmd = get_command_from_token(node->token.command);
 		shell->last_exit_status = (unsigned char)run_command(shell, cmd);
 		free_command(cmd);

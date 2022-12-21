@@ -8,6 +8,7 @@ static void free_expansion(void *expansion)
 {
 	t_expansion_token *token = expansion;
 	ft_strdel(&token->parameter);
+	ft_strdel(&token->substitution);
 	ft_memdel((void **)&token);
 }
 
@@ -15,6 +16,7 @@ static void free_word(void *word)
 {
 	t_word_token *token = word;
 	ft_strdel(&token->text);
+	ft_strdel(&token->substitution);
 	vec_free(token->param_expansions, free_expansion);
 	ft_memdel((void **)&word);
 }
