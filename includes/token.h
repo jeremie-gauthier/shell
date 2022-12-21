@@ -13,9 +13,6 @@ enum e_token_type
 	Unknown = 0,
 	Word,
 	Command,
-	BuiltInCommand,
-	PathCommand,
-	File,
 	CommandSeparator,
 	End,
 };

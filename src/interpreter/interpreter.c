@@ -11,11 +11,11 @@ static int visit(t_shell *const shell, t_ast *node)
 	if (!node)
 		return EXIT_FAILURE;
 
-	if (node->token.type == Word)
+	if (node->token.type == Command)
 	{
-		const t_cmd cmd = word_visitor(node);
+		const t_cmd *cmd = get_command_from_token(node->token.command);
 		shell->last_exit_status = (unsigned char)run_command(shell, cmd);
-		ft_memdel((void **)&cmd.argv);
+		free_command(cmd);
 		return shell->last_exit_status;
 	}
 	if (node->token.type == CommandSeparator)

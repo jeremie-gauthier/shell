@@ -10,11 +10,11 @@
 #include <unistd.h>
 
 #include <stdio.h>
-t_cmd create_command(const char *path, char *const *argv, const size_t argc, enum e_token_type type)
+t_cmd create_command(const char *path, char *const *argv, const size_t argc, enum e_command_type type)
 {
 	return (t_cmd){
-		.path = path,
-		.argv = argv,
+		.path = (char *)path,
+		.argv = (char **)argv,
 		.argc = argc,
 		.type = type,
 	};
@@ -47,46 +47,46 @@ static char *get_cmd_from_path(const char *const env_path, const char *const cmd
 	return valid_path;
 }
 
-const char *find_command(t_shell *const shell, const t_cmd command)
+const char *find_command(t_shell *const shell, const t_cmd *command)
 {
-	if (command.type == PathCommand)
+	if (command->type == Path)
 	{
-		const char *path = ht_get(shell->cache.bin, command.path);
+		const char *path = ht_get(shell->cache.bin, command->path);
 		if (!path)
 		{
 			const char *env_path = env_get(shell->env, "PATH");
 			if (!env_path)
 				return NULL;
-			if (!(path = get_cmd_from_path(env_path, command.path)))
+			if (!(path = get_cmd_from_path(env_path, command->path)))
 				return NULL;
-			const char *valid_path = ht_set(shell->cache.bin, command.path, path);
+			const char *valid_path = ht_set(shell->cache.bin, command->path, path);
 			ft_strdel((char **)&path);
 			return valid_path;
 		}
 		return path;
 	}
 
-	if (command.type == File && can_access_file(command.path))
-		return command.path;
+	if (command->type == File && can_access_file(command->path))
+		return command->path;
 
 	return NULL;
 }
 
-int run_command(t_shell *const shell, const t_cmd command)
+int run_command(t_shell *const shell, const t_cmd *command)
 {
-	if (command.type == BuiltInCommand)
+	if (command->type == BuiltIn)
 	{
-		if (ft_strcmp(command.path, "exit") == SAME_STR)
+		if (ft_strcmp(command->path, "exit") == SAME_STR)
 			return builtin_exit(shell, command);
-		if (ft_strcmp(command.path, "echo") == SAME_STR)
+		if (ft_strcmp(command->path, "echo") == SAME_STR)
 			return builtin_echo(shell, command);
-		if (ft_strcmp(command.path, "env") == SAME_STR)
+		if (ft_strcmp(command->path, "env") == SAME_STR)
 			return builtin_env(shell, command);
-		if (ft_strcmp(command.path, "unsetenv") == SAME_STR)
+		if (ft_strcmp(command->path, "unsetenv") == SAME_STR)
 			return builtin_unsetenv(shell, command);
-		if (ft_strcmp(command.path, "setenv") == SAME_STR)
+		if (ft_strcmp(command->path, "setenv") == SAME_STR)
 			return builtin_setenv(shell, command);
-		if (ft_strcmp(command.path, "cd") == SAME_STR)
+		if (ft_strcmp(command->path, "cd") == SAME_STR)
 			return builtin_cd(shell, command);
 	}
 
@@ -94,5 +94,5 @@ int run_command(t_shell *const shell, const t_cmd command)
 	if (!path)
 		return false;
 
-	return run_process(path, command.argv, shell->env);
+	return run_process(path, command->argv, shell->env);
 }

@@ -16,13 +16,13 @@ static unsigned char parse_arg(const char *const arg)
  * if none is specified, use the exit status from the last command executed.
  * An EOF condition will also cause the shell to exit, unless the IGNORE_EOF option is set.
  */
-int builtin_exit(t_shell *const shell, const t_cmd command)
+int builtin_exit(t_shell *const shell, const t_cmd *command)
 {
-	if (command.argc > 2)
+	if (command->argc > 2)
 		return EXIT_FAILURE;
 
 	shell->status = STOPPED;
-	if (command.argc == 2)
-		return parse_arg(command.argv[1]);
+	if (command->argc == 2)
+		return parse_arg(command->argv[1]);
 	return EXIT_SUCCESS;
 }

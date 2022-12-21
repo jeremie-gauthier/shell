@@ -33,9 +33,9 @@ static bool is_valid_env_var(const char *env_var)
 	return counter == 1;
 }
 
-int builtin_setenv(t_shell *const shell, const t_cmd command)
+int builtin_setenv(t_shell *const shell, const t_cmd *command)
 {
-	const char *env_var = command.argv[1];
+	const char *env_var = command->argv[1];
 	if (!is_valid_env_var(env_var))
 		return EXIT_FAILURE;
 

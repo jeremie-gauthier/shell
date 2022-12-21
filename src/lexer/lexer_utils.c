@@ -9,6 +9,7 @@
 /// @return A generic lexer token
 t_token get_next_token(const t_shell *const shell, t_lexer *const lexer)
 {
+	(void)shell;
 	while (lexer->current_char)
 	{
 		if (ft_isspace(lexer->current_char))

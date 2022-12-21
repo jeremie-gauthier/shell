@@ -12,6 +12,7 @@ int interpreter(t_shell *const shell, t_parser *parser);
  * * VISITORS
  */
 
-t_cmd word_visitor(t_ast *node);
+void free_command(const t_cmd *command);
+const t_cmd *get_command_from_token(t_command_token *token);
 
 #endif
