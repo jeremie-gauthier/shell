@@ -23,8 +23,8 @@
 t_ast *parse_cmd(const t_shell *const shell, t_parser *const parser)
 {
 	const t_token current_token = parser->current_token;
-	if (IS_VALID_TOKEN(current_token.type, Word))
-		eat(shell, parser, Word);
+	if (!(eat(shell, parser, Word)))
+		return NULL;
 
 	t_command_token *cmd = malloc(sizeof *cmd);
 	cmd->name = current_token.word;
