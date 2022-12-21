@@ -31,9 +31,9 @@ t_ast *parse_cmd(const t_shell *const shell, t_parser *const parser)
 
 	while (IS_VALID_TOKEN(parser->current_token.type, Word))
 	{
-		// TODO: build an array of Word Token
-		// cmd.suffix = ft_arr_append(cmd_argv, (char *)parser->current_token.data);
-		ft_memdel((void **)&parser->current_token.word->text);
+		if (cmd->suffix == NULL)
+			cmd->suffix = vec_create(1);
+		vec_push(cmd->suffix, parser->current_token.word);
 		eat(shell, parser, Word);
 	}
 

@@ -45,7 +45,7 @@ typedef struct s_word_token
 typedef struct s_command_token
 {
 	t_word_token *name;
-	t_word_token *suffix;
+	t_vec *suffix;
 } t_command_token;
 
 // token for pipeline rule
