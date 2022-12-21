@@ -23,6 +23,7 @@ bool subst_param_exps(t_shell *const shell, t_word_token *word)
 		expansion->substitution = ft_strdup(substitution);
 	}
 
+	// TODO: optimize this part
 	// build the word substitution
 	char **word_substs = NULL;
 	size_t current_pos = 0;
