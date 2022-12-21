@@ -145,10 +145,10 @@ t_expansion_token *parse_param_expansion(t_lexer *const lexer)
 		   !is_closing_param_exp_char(lexer->current_char))
 		advance_lexer(lexer);
 
-	param_expansion->loc.end = lexer->pos;
+	param_expansion->loc.end = lexer->pos - 1;
 
 	const size_t param_length = param_expansion->loc.end - param_expansion->loc.start;
-	param_expansion->parameter = ft_strndup(&lexer->input[param_expansion->loc.start], param_length);
+	param_expansion->parameter = ft_strndup(&lexer->input[param_expansion->loc.start + 1], param_length);
 	if (!param_expansion->parameter)
 		ft_memdel((void **)&param_expansion);
 
