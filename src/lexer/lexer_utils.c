@@ -4,10 +4,6 @@
 #include "token.h"
 #include <stdio.h>
 
-/*
- *	This function is responsible for breaking a sentence
- *	apart into tokens. One token at a time.
- */
 /// @brief This function is responsible for breaking a sentence
 /// apart into tokens. One token at a time.
 /// @return A generic lexer token
