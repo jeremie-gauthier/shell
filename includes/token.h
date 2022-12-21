@@ -44,7 +44,9 @@ typedef struct s_word_token
 // token for command rule
 typedef struct s_command_token
 {
+	/// @brief This is the name of the cmd to execute
 	t_word_token *name;
+	/// @brief This is the list of args
 	t_vec *suffix;
 } t_command_token;
 
