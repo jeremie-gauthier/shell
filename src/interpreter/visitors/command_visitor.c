@@ -13,7 +13,7 @@ void free_command(const t_cmd *command)
 {
 	ft_strdel((char **)&command->path);
 	if (command->argv)
-		ft_arr_free(command->argv, command->argc - 1);
+		ft_arr_free(command->argv, command->argc);
 	ft_memdel((void **)&command);
 }
 
