@@ -61,8 +61,8 @@ typedef struct s_token
 	{
 		t_word_token *word;
 		t_expansion_token *expansion;
-		t_command_token command;
-		t_pipeline_token pipeline;
+		t_command_token *command;
+		t_pipeline_token *pipeline;
 	};
 	enum e_token_type type;
 } t_token;

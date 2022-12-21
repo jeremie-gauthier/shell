@@ -26,8 +26,9 @@ t_ast *parse_cmd(const t_shell *const shell, t_parser *const parser)
 	if (IS_VALID_TOKEN(current_token.type, Word))
 		eat(shell, parser, Word);
 
-	t_command_token cmd = {.name = current_token.word,
-						   .suffix = NULL};
+	t_command_token *cmd = malloc(sizeof *cmd);
+	cmd->name = current_token.word;
+	cmd->suffix = NULL;
 
 	while (IS_VALID_TOKEN(parser->current_token.type, Word))
 	{
@@ -38,5 +39,6 @@ t_ast *parse_cmd(const t_shell *const shell, t_parser *const parser)
 	}
 
 	const t_token cmd_token = {.type = Command, .command = cmd};
+	// ! if AST_CREATE_ONE failed -> free cmd
 	return AST_CREATE_ONE(cmd_token);
 }

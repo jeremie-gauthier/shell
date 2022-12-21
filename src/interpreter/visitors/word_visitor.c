@@ -48,19 +48,19 @@
  */
 void command_finder(t_token *cmd_tok)
 {
-	if (ft_strchr(cmd_tok->command.name->text, '/'))
+	if (ft_strchr(cmd_tok->command->name->text, '/'))
 	{
 		cmd_tok->type = File;
 		return;
 	}
 
 	if (
-		ft_strcmp(cmd_tok->command.name->text, "exit") == SAME_STR ||
-		ft_strcmp(cmd_tok->command.name->text, "echo") == SAME_STR ||
-		ft_strcmp(cmd_tok->command.name->text, "env") == SAME_STR ||
-		ft_strcmp(cmd_tok->command.name->text, "unsetenv") == SAME_STR ||
-		ft_strcmp(cmd_tok->command.name->text, "setenv") == SAME_STR ||
-		ft_strcmp(cmd_tok->command.name->text, "cd") == SAME_STR)
+		ft_strcmp(cmd_tok->command->name->text, "exit") == SAME_STR ||
+		ft_strcmp(cmd_tok->command->name->text, "echo") == SAME_STR ||
+		ft_strcmp(cmd_tok->command->name->text, "env") == SAME_STR ||
+		ft_strcmp(cmd_tok->command->name->text, "unsetenv") == SAME_STR ||
+		ft_strcmp(cmd_tok->command->name->text, "setenv") == SAME_STR ||
+		ft_strcmp(cmd_tok->command->name->text, "cd") == SAME_STR)
 	{
 		cmd_tok->type = BuiltInCommand;
 		return;
@@ -72,7 +72,7 @@ void command_finder(t_token *cmd_tok)
 t_cmd word_visitor(t_ast *node)
 {
 	// size_t argc;
-	const char *path = node->token.command.name->text;
+	const char *path = node->token.command->name->text;
 	// char *const *argv = get_command_argv(node, &argc);
 	// char *const *argv = node->token.command.suffix;
 	command_finder(&node->token);
