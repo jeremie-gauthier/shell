@@ -5,7 +5,21 @@
 #include "token.h"
 #include <stdbool.h>
 
-#include <stdio.h>
+static size_t count_regular_chars(t_word_token *word)
+{
+	size_t count = 0;
+	size_t current_idx = 0;
+
+	for (size_t i = 0; i < word->param_expansions->size; i++)
+	{
+		const t_expansion_token *exp_param = word->param_expansions->items[i];
+		count += (exp_param->loc.start - current_idx);
+		current_idx = exp_param->loc.end + 1;
+	}
+	if (word->text[current_idx])
+		current_idx += (ft_strlen(word->text) - current_idx);
+	return count;
+}
 
 // TODO: add recursive replacement if nested params exps
 bool subst_param_exps(t_shell *const shell, t_word_token *word)
@@ -13,6 +27,7 @@ bool subst_param_exps(t_shell *const shell, t_word_token *word)
 	if (!word->param_expansions)
 		return true;
 
+	size_t word_subst_len = count_regular_chars(word);
 	// substitute all individual expansion token
 	for (size_t i = 0; i < word->param_expansions->size; i++)
 	{
@@ -21,38 +36,24 @@ bool subst_param_exps(t_shell *const shell, t_word_token *word)
 		if (!substitution)
 			return false;
 		expansion->substitution = ft_strdup(substitution);
+		word_subst_len += ft_strlen(expansion->substitution);
 	}
 
-	// TODO: optimize this part
-	// build the word substitution
-	char **word_substs = NULL;
-	size_t current_pos = 0;
-	size_t arr_size = 0;
+	word->substitution = ft_strnew(word_subst_len);
+	size_t src_str_idx = 0;
+	size_t dst_str_idx = 0;
 	for (size_t i = 0; i < word->param_expansions->size; i++)
 	{
 		t_expansion_token *expansion = word->param_expansions->items[i];
 
-		// copy str before exp subst
-		const size_t slice_non_subst_str = expansion->loc.start - current_pos;
-		if (slice_non_subst_str > 0)
-		{
-			const char *const non_subst_str = ft_strndup(&word->text[current_pos], slice_non_subst_str);
-			word_substs = ft_arr_append(word_substs, non_subst_str);
-			arr_size++;
-		}
-
-		// copy exp subst
-		word_substs = ft_arr_append(word_substs, expansion->substitution);
-		arr_size++;
-		current_pos = expansion->loc.end + 1;
+		size_t copy_length = expansion->loc.start - src_str_idx;
+		ft_strncpy(&word->substitution[dst_str_idx], word->text, copy_length);
+		dst_str_idx += copy_length;
+		ft_strcpy(&word->substitution[dst_str_idx], expansion->substitution);
+		dst_str_idx += ft_strlen(expansion->substitution);
+		src_str_idx += expansion->loc.end + 1;
 	}
-
-	// copy str after last exp subst
-	word_substs = ft_arr_append(word_substs, &word->text[current_pos]);
-	arr_size++;
-
-	word->substitution = ft_arr_join(word_substs);
-	ft_arr_free(word_substs, arr_size);
+	ft_strcpy(&word->substitution[dst_str_idx], &word->text[src_str_idx]);
 
 	return true;
 }
