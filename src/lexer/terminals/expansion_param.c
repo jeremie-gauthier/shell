@@ -126,10 +126,14 @@ const char *expansion_param(const t_shell *const shell, t_lexer *const lexer)
 // 	return ft_strdup("$");
 // }
 
-static bool is_closing_param_exp_char(char c)
+static bool take_until_closing_brace(char c)
 {
-	return c == CLOSING_BRACE ||
-		   c == EXP_PARAM_CHAR;
+	return c != CLOSING_BRACE;
+}
+
+static bool take_until_forbidden_char(char c)
+{
+	return ft_isalnum(c) || c == '_';
 }
 
 t_expansion_token *parse_param_expansion(t_lexer *const lexer)
@@ -141,14 +145,28 @@ t_expansion_token *parse_param_expansion(t_lexer *const lexer)
 	param_expansion->loc.start = lexer->pos;
 
 	advance_lexer(lexer);
-	while (lexer->current_char && ft_isgraph(lexer->current_char) &&
-		   !is_closing_param_exp_char(lexer->current_char))
+
+	bool (*take_until_predicate)(char) = take_until_forbidden_char;
+	const bool has_opening_brace = lexer->current_char == OPENING_BRACE;
+	if (has_opening_brace)
+	{
+		take_until_predicate = take_until_closing_brace;
+		advance_lexer(lexer);
+	}
+
+	while (lexer->current_char && take_until_predicate(lexer->current_char))
+		advance_lexer(lexer);
+
+	if (has_opening_brace)
 		advance_lexer(lexer);
 
 	param_expansion->loc.end = lexer->pos - 1;
+	const size_t parameter_loc_start = param_expansion->loc.start + (has_opening_brace ? 2 : 1);
+	const size_t parameter_loc_end = param_expansion->loc.end - (has_opening_brace ? 1 : 0);
+	// add 1 to loc_end to have the last char included in parameter string
+	const size_t param_length = (parameter_loc_end + 1) - parameter_loc_start;
 
-	const size_t param_length = param_expansion->loc.end - param_expansion->loc.start;
-	param_expansion->parameter = ft_strndup(&lexer->input[param_expansion->loc.start + 1], param_length);
+	param_expansion->parameter = ft_strndup(&lexer->input[parameter_loc_start], param_length);
 	if (!param_expansion->parameter)
 		ft_memdel((void **)&param_expansion);
 
