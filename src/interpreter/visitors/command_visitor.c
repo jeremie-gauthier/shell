@@ -28,6 +28,7 @@ static t_cmd *create_command()
 
 static char **get_argv_from_vec(const char *const arg0, t_vec *vec)
 {
+	// add 1 to have a slot for arg0
 	size_t size = (vec ? vec->size : 0) + 1;
 	char **argv = malloc(sizeof(*argv) * (size + 1));
 	if (!argv)
@@ -41,7 +42,7 @@ static char **get_argv_from_vec(const char *const arg0, t_vec *vec)
 			char *command_arg = word->substitution ? word->substitution : word->text;
 			argv[i + 1] = ft_strdup(command_arg);
 		}
-	argv[size + 1] = NULL;
+	argv[size] = NULL;
 	return argv;
 }
 
