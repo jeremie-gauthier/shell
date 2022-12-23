@@ -19,7 +19,10 @@ t_token get_next_token(const t_shell *const shell, t_lexer *const lexer)
 		}
 
 		if (lexer->current_char == COMMAND_SEPARATOR)
+		{
+			cmd_separator(lexer);
 			return (t_token){.type = CommandSeparator};
+		}
 
 		// if (lexer->current_char == '~')
 		// 	return (t_token){.type = Word, .data = expansion_tilde(shell, lexer)};
