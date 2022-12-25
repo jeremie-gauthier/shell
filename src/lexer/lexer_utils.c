@@ -27,9 +27,6 @@ t_token get_next_token(const t_shell *const shell, t_lexer *const lexer)
 		// if (lexer->current_char == '~')
 		// 	return (t_token){.type = Word, .data = expansion_tilde(shell, lexer)};
 
-		// if (lexer->current_char == '$')
-		// 	return (t_token){.type = Word, .word = expansion_param(shell, lexer)};
-
 		if (ft_isgraph(lexer->current_char))
 			return (t_token){.type = Word, .word = word(lexer)};
 
