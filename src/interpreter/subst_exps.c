@@ -5,7 +5,7 @@
 #include "token.h"
 #include <stdbool.h>
 
-static size_t count_regular_chars(t_word_token *word)
+static size_t count_regular_chars(const t_word_token *const word)
 {
 	size_t count = 0;
 	size_t current_idx = 0;
@@ -21,25 +21,25 @@ static size_t count_regular_chars(t_word_token *word)
 	return count;
 }
 
-// TODO: add recursive replacement if nested params exps
-bool subst_param_exps(t_shell *const shell, t_word_token *word)
+const char *get_param_exp_subst(const t_shell *const shell, const char *const word)
 {
-	if (!word->param_expansions)
-		return true;
+	// just env as of now, but in future, logic will be added
+	return env_get(shell->env, word);
+}
 
+char *get_word_subst(const t_word_token *const word)
+{
 	size_t word_subst_len = count_regular_chars(word);
-	// substitute all individual expansion token
 	for (size_t i = 0; i < word->param_expansions->size; i++)
 	{
 		t_expansion_token *expansion = word->param_expansions->items[i];
-		char *substitution = env_get(shell->env, expansion->parameter);
-		if (!substitution)
-			return false;
-		expansion->substitution = ft_strdup(substitution);
 		word_subst_len += ft_strlen(expansion->substitution);
 	}
 
-	word->substitution = ft_strnew(word_subst_len);
+	char *word_subst = ft_strnew(word_subst_len);
+	if (!word_subst)
+		return NULL;
+
 	size_t src_str_idx = 0;
 	size_t dst_str_idx = 0;
 	for (size_t i = 0; i < word->param_expansions->size; i++)
@@ -47,13 +47,38 @@ bool subst_param_exps(t_shell *const shell, t_word_token *word)
 		t_expansion_token *expansion = word->param_expansions->items[i];
 
 		size_t copy_length = expansion->loc.start - src_str_idx;
-		ft_strncpy(&word->substitution[dst_str_idx], word->text, copy_length);
+		ft_strncpy(&word_subst[dst_str_idx], word->text, copy_length);
 		dst_str_idx += copy_length;
-		ft_strcpy(&word->substitution[dst_str_idx], expansion->substitution);
+
+		ft_strcpy(&word_subst[dst_str_idx], expansion->substitution);
 		dst_str_idx += ft_strlen(expansion->substitution);
 		src_str_idx += expansion->loc.end + 1;
 	}
-	ft_strcpy(&word->substitution[dst_str_idx], &word->text[src_str_idx]);
+	ft_strcpy(&word_subst[dst_str_idx], &word->text[src_str_idx]);
+
+	return word_subst;
+}
+
+// TODO: add recursive replacement if nested params exps
+bool subst_param_exps(t_shell *const shell, t_word_token *word)
+{
+	if (!word->param_expansions)
+		return true;
+
+	// substitute all individual expansion token
+	for (size_t i = 0; i < word->param_expansions->size; i++)
+	{
+		t_expansion_token *expansion = word->param_expansions->items[i];
+		const char *substitution = get_param_exp_subst(shell, expansion->parameter);
+		if (!substitution)
+			return false;
+		// ! handle failure case
+		expansion->substitution = ft_strdup(substitution);
+	}
+
+	word->substitution = get_word_subst(word);
+	if (!word->substitution)
+		return false;
 
 	return true;
 }
