@@ -5,6 +5,7 @@ LEXER=	lexer_create.c\
 		terminals/word.c\
 		terminals/unknown.c\
 		terminals/whitespace.c\
+		terminals/expansion.c\
 		terminals/expansion_param.c\
 		terminals/expansion_tilde.c\
 		terminals/cmd_separator.c

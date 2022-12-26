@@ -17,6 +17,14 @@ enum e_token_type
 	End,
 };
 
+enum e_tilde_exp_type
+{
+	Literal = 0,
+	Home,
+	Pwd,
+	Oldpwd,
+};
+
 // locate a substring in a string
 typedef struct s_loc
 {
@@ -30,6 +38,11 @@ typedef struct s_expansion_token
 	t_loc loc;
 	char *parameter;
 	char *substitution;
+	union
+	{
+		enum e_tilde_exp_type tilde_exp_type;
+		// TODO: add param_exp_type
+	};
 } t_expansion_token;
 
 // token for word terminal

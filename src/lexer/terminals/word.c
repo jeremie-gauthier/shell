@@ -37,7 +37,7 @@ t_word_token *word(t_lexer *const lexer)
 	{
 		if (lexer->current_char == EXP_PARAM_CHAR)
 		{
-			t_expansion_token *exp_param = parse_param_expansion(lexer);
+			t_expansion_token *exp_param = parse_expansion(lexer);
 			// set contextual param position
 			exp_param->loc.start -= start_idx;
 			exp_param->loc.end -= start_idx;
