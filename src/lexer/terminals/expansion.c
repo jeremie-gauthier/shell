@@ -7,7 +7,7 @@ t_expansion_token *parse_expansion(t_lexer *const lexer)
 	{
 	case EXP_PARAM_CHAR:
 		return parse_param_expansion(lexer);
-	case TILDE_PARAM_CHAR:
+	case EXP_TILDE_CHAR:
 		return parse_tilde_expansion(lexer);
 	default:
 		return NULL;

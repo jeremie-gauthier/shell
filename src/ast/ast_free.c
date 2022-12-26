@@ -17,7 +17,7 @@ static void free_word(void *word)
 	t_word_token *token = word;
 	ft_strdel(&token->text);
 	ft_strdel(&token->substitution);
-	vec_free(token->param_expansions, free_expansion);
+	vec_free(token->expansions, free_expansion);
 	ft_memdel((void **)&word);
 }
 

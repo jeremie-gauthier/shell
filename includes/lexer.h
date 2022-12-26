@@ -13,7 +13,7 @@
 #define OPENING_BRACE '{'
 #define CLOSING_BRACE '}'
 #define EXP_PARAM_SEPARATOR ':'
-#define TILDE_PARAM_CHAR '~'
+#define EXP_TILDE_CHAR '~'
 
 #define PARAM(expv) (expv[0])
 #define WORD(expv) (expv[1])

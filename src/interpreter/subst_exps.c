@@ -10,9 +10,9 @@ static size_t count_regular_chars(const t_word_token *const word)
 	size_t count = 0;
 	size_t current_idx = 0;
 
-	for (size_t i = 0; i < word->param_expansions->size; i++)
+	for (size_t i = 0; i < word->expansions->size; i++)
 	{
-		const t_expansion_token *exp_param = word->param_expansions->items[i];
+		const t_expansion_token *exp_param = word->expansions->items[i];
 		count += (exp_param->loc.start - current_idx);
 		current_idx = exp_param->loc.end + 1;
 	}
@@ -21,18 +21,35 @@ static size_t count_regular_chars(const t_word_token *const word)
 	return count;
 }
 
-const char *get_param_exp_subst(const t_shell *const shell, const char *const word)
+const char *get_param_exp_subst(const t_shell *const shell, const t_expansion_token *const expansion)
 {
 	// just env as of now, but in future, logic will be added
-	return env_get(shell->env, word);
+	return env_get(shell->env, expansion->parameter);
+}
+
+const char *get_tilde_exp_subst(const t_shell *const shell, const t_expansion_token *const expansion)
+{
+	switch (expansion->tilde_exp_type)
+	{
+	case Literal:
+		return expansion->parameter;
+	case Home:
+		return env_get(shell->env, "HOME");
+	case Pwd:
+		return env_get(shell->env, "PWD");
+	case Oldpwd:
+		return env_get(shell->env, "OLDPWD");
+	default:
+		return NULL;
+	}
 }
 
 char *get_word_subst(const t_word_token *const word)
 {
 	size_t word_subst_len = count_regular_chars(word);
-	for (size_t i = 0; i < word->param_expansions->size; i++)
+	for (size_t i = 0; i < word->expansions->size; i++)
 	{
-		t_expansion_token *expansion = word->param_expansions->items[i];
+		t_expansion_token *expansion = word->expansions->items[i];
 		word_subst_len += ft_strlen(expansion->substitution);
 	}
 
@@ -42,9 +59,9 @@ char *get_word_subst(const t_word_token *const word)
 
 	size_t src_str_idx = 0;
 	size_t dst_str_idx = 0;
-	for (size_t i = 0; i < word->param_expansions->size; i++)
+	for (size_t i = 0; i < word->expansions->size; i++)
 	{
-		t_expansion_token *expansion = word->param_expansions->items[i];
+		t_expansion_token *expansion = word->expansions->items[i];
 
 		size_t copy_length = expansion->loc.start - src_str_idx;
 		ft_strncpy(&word_subst[dst_str_idx], word->text, copy_length);
@@ -60,16 +77,20 @@ char *get_word_subst(const t_word_token *const word)
 }
 
 // TODO: add recursive replacement if nested params exps
-bool subst_param_exps(t_shell *const shell, t_word_token *word)
+bool subst_exps(t_shell *const shell, t_word_token *word)
 {
-	if (!word->param_expansions)
+	if (!word->expansions)
 		return true;
 
+	const char *(*exp_subst_fn[2])(const t_shell *const shell, const t_expansion_token *const expansion);
+	exp_subst_fn[Parameter] = get_param_exp_subst;
+	exp_subst_fn[Tilde] = get_tilde_exp_subst;
+
 	// substitute all individual expansion token
-	for (size_t i = 0; i < word->param_expansions->size; i++)
+	for (size_t i = 0; i < word->expansions->size; i++)
 	{
-		t_expansion_token *expansion = word->param_expansions->items[i];
-		const char *substitution = get_param_exp_subst(shell, expansion->parameter);
+		t_expansion_token *expansion = word->expansions->items[i];
+		const char *substitution = exp_subst_fn[expansion->type](shell, expansion);
 		if (!substitution)
 			return false;
 		// ! handle failure case
@@ -85,14 +106,14 @@ bool subst_param_exps(t_shell *const shell, t_word_token *word)
 
 bool subst_cmd_words(t_shell *const shell, t_command_token *command)
 {
-	if (!subst_param_exps(shell, command->name))
+	if (!subst_exps(shell, command->name))
 		return false;
 
 	if (command->suffix)
 		for (size_t i = 0; i < command->suffix->size; i++)
 		{
 			t_word_token *word = command->suffix->items[i];
-			if (!subst_param_exps(shell, word))
+			if (!subst_exps(shell, word))
 				return false;
 		}
 

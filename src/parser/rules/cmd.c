@@ -16,8 +16,8 @@ void print_cmd_token(t_command_token *cmd)
 {
 	printf("command: %s\n", cmd->name->text);
 
-	if (cmd->name->param_expansions)
-		vec_iter(cmd->name->param_expansions, print_param_exps_vec);
+	if (cmd->name->expansions)
+		vec_iter(cmd->name->expansions, print_param_exps_vec);
 	if (cmd->suffix)
 		print_word_vec(cmd->suffix);
 }

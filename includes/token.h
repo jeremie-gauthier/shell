@@ -17,6 +17,12 @@ enum e_token_type
 	End,
 };
 
+enum e_expansion_type
+{
+	Parameter = 0,
+	Tilde,
+};
+
 enum e_tilde_exp_type
 {
 	Literal = 0,
@@ -43,6 +49,7 @@ typedef struct s_expansion_token
 		enum e_tilde_exp_type tilde_exp_type;
 		// TODO: add param_exp_type
 	};
+	enum e_expansion_type type;
 } t_expansion_token;
 
 // token for word terminal
@@ -50,7 +57,7 @@ typedef struct s_word_token
 {
 	char *text;
 	char *substitution;
-	t_vec *param_expansions;
+	t_vec *expansions;
 } t_word_token;
 
 // token for command rule

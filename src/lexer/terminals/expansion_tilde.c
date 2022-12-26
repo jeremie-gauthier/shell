@@ -61,6 +61,7 @@ t_expansion_token *parse_tilde_expansion(t_lexer *const lexer)
 	t_expansion_token *tilde_expansion = malloc(sizeof(*tilde_expansion));
 	if (!tilde_expansion)
 		return NULL;
+	tilde_expansion->type = Tilde;
 
 	tilde_expansion->loc.start = lexer->pos;
 	advance_lexer(lexer);
@@ -82,9 +83,8 @@ t_expansion_token *parse_tilde_expansion(t_lexer *const lexer)
 		else
 			tilde_expansion->tilde_exp_type = Literal;
 
-		tilde_expansion->loc.end = lexer->pos;
-		const size_t param_length = (tilde_expansion->loc.end + 1) - tilde_expansion->loc.start;
-		tilde_expansion->parameter = ft_strndup(&lexer->input[tilde_expansion->loc.start], param_length);
+		tilde_expansion->loc.end = tilde_expansion->loc.start;
+		tilde_expansion->parameter = ft_strndup(&lexer->input[tilde_expansion->loc.start], 1);
 		if (!tilde_expansion->parameter)
 			ft_memdel((void **)&tilde_expansion);
 

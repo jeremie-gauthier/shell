@@ -141,6 +141,7 @@ t_expansion_token *parse_param_expansion(t_lexer *const lexer)
 	t_expansion_token *param_expansion = malloc(sizeof(*param_expansion));
 	if (!param_expansion)
 		return NULL;
+	param_expansion->type = Parameter;
 
 	param_expansion->loc.start = lexer->pos;
 

@@ -18,8 +18,8 @@ void print_word_vec(t_vec *word_vec)
 	{
 		const t_word_token *word_tok = word_vec->items[i];
 		printf("-> arg \"%s\"\n", word_tok->text);
-		if (word_tok->param_expansions)
-			vec_iter(word_tok->param_expansions, print_param_exps_vec);
+		if (word_tok->expansions)
+			vec_iter(word_tok->expansions, print_param_exps_vec);
 	}
 }
 #endif
@@ -35,16 +35,16 @@ t_word_token *word(t_lexer *const lexer)
 
 	while (lexer->current_char && ft_isgraph(lexer->current_char) && lexer->current_char != COMMAND_SEPARATOR)
 	{
-		if (lexer->current_char == EXP_PARAM_CHAR)
+		if (lexer->current_char == EXP_PARAM_CHAR || lexer->current_char == EXP_TILDE_CHAR)
 		{
 			t_expansion_token *exp_param = parse_expansion(lexer);
 			// set contextual param position
 			exp_param->loc.start -= start_idx;
 			exp_param->loc.end -= start_idx;
 
-			if (!token->param_expansions)
-				token->param_expansions = vec_create(1);
-			vec_push(token->param_expansions, exp_param);
+			if (!token->expansions)
+				token->expansions = vec_create(1);
+			vec_push(token->expansions, exp_param);
 		}
 		else
 			advance_lexer(lexer);
