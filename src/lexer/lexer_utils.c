@@ -42,3 +42,11 @@ void advance_lexer(t_lexer *const lexer)
 	lexer->pos += 1;
 	lexer->current_char = lexer->input[lexer->pos];
 }
+
+/*
+ * Get next char without advancing the pos
+ */
+char inspect_next_char(const t_lexer *const lexer)
+{
+	return lexer->input[lexer->pos + 1];
+}

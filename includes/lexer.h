@@ -30,6 +30,7 @@ typedef struct s_lexer
 t_lexer lexer_create(const char *const str);
 t_token get_next_token(const t_shell *const shell, t_lexer *const lexer);
 void advance_lexer(t_lexer *const lexer);
+char inspect_next_char(const t_lexer *const lexer);
 
 enum e_token_type get_token_type(char c);
 
