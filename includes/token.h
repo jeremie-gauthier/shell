@@ -23,6 +23,32 @@ enum e_expansion_type
 	Tilde,
 };
 
+enum e_param_exp_type
+{
+	/// @brief $parameter | ${parameter}
+	SimpleSubstitution = 0,
+	/// @brief ${parameter:-word}
+	UseAlternativeValueIfNone,
+	/// @brief ${parameter:+word}
+	UseDefaultValueIfNone,
+	/// @brief ${parameter:=word}
+	SetDefaultValueIfNone,
+	/// @brief ${parameter:?word}
+	ThrowErrorIfNone,
+	/// @brief ${#parameter}
+	SubstitutionStringLength,
+	/// @brief ${parameter#word}
+	ShortestSubstringRemovalFromBeginning,
+	/// @brief ${parameter##word}
+	LongestSubstringRemovalFromBeginning,
+	/// @brief ${parameter%word}
+	ShortestSubstringRemovalFromEnd,
+	/// @brief ${parameter%%word}
+	LongestSubstringRemovalFromEnd,
+	/// @brief unrecognized type
+	UnknownParamExpansion
+};
+
 enum e_tilde_exp_type
 {
 	Literal = 0,
@@ -47,7 +73,7 @@ typedef struct s_expansion_token
 	union
 	{
 		enum e_tilde_exp_type tilde_exp_type;
-		// TODO: add param_exp_type
+		enum e_param_exp_type param_exp_type;
 	};
 	enum e_expansion_type type;
 } t_expansion_token;
@@ -87,6 +113,17 @@ typedef struct s_token
 	};
 	enum e_token_type type;
 } t_token;
+
+const char *simple_subst(const char *const subst, const char *const _);
+const char *param_alt_subst(const char *const subst, const char *const alt);
+const char *param_default_subst(const char *const subst, const char *const alt);
+const char *param_guard_subst(const char *const subst, const char *const alt);
+const char *param_length_subst(const char *const subst);
+const char *param_long_end_removal_subst(const char *const subst, const char *const removal);
+const char *param_long_start_removal_subst(const char *const subst, const char *const removal);
+const char *param_set_default(const char *const subst, const char *const alt);
+const char *param_short_end_removal_subst(const char *const subst, const char *const removal);
+const char *param_short_start_removal_subst(const char *const subst, const char *const removal);
 
 /*
  ** DEBUG

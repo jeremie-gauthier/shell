@@ -23,6 +23,19 @@ ENV=	env_get.c\
 ENV:=	$(addprefix env/, $(ENV))
 
 
+EXPANSIONS=	parameter/param_simple_subst.c\
+			parameter/param_alt_subst.c\
+			parameter/param_default_subst.c\
+			parameter/param_set_default.c\
+			parameter/param_guard_subst.c\
+			parameter/param_length_subst.c\
+			parameter/param_short_start_removal_subst.c\
+			parameter/param_long_start_removal_subst.c\
+			parameter/param_short_end_removal_subst.c\
+			parameter/param_long_end_removal_subst.c
+
+EXPANSIONS:=	$(addprefix expansions/, $(EXPANSIONS))
+
 SIGNALS=sig_init.c\
 		sigint.c
 
@@ -81,9 +94,9 @@ PROCESS=process.c\
 PROCESS:=	$(addprefix process/, $(PROCESS))
 
 
-SOURCES=	$(addprefix src/, $(ROOT) $(LEXER) $(PARSER) $(_SHELL) $(INTERPRETER) $(AST) $(PROCESS) $(ENV) $(BUILTINS) $(SIGNALS))
+SOURCES=	$(addprefix src/, $(ROOT) $(LEXER) $(PARSER) $(_SHELL) $(INTERPRETER) $(AST) $(PROCESS) $(ENV) $(BUILTINS) $(SIGNALS) $(EXPANSIONS))
 OBJS=	$(subst .c,.o,$(SOURCES))
 
 
-SOURCES_DEBUG=	$(addprefix src/, $(ROOT) $(LEXER_DEBUG) $(PARSER_DEBUG) $(_SHELL) $(INTERPRETER) $(AST_DEBUG) $(PROCESS) $(ENV) $(BUILTINS_DEBUG) $(SIGNALS))
+SOURCES_DEBUG=	$(addprefix src/, $(ROOT) $(LEXER_DEBUG) $(PARSER_DEBUG) $(_SHELL) $(INTERPRETER) $(AST_DEBUG) $(PROCESS) $(ENV) $(BUILTINS_DEBUG) $(SIGNALS) $(EXPANSIONS))
 OBJS_DEBUG=	$(subst .c,.o,$(SOURCES_DEBUG))

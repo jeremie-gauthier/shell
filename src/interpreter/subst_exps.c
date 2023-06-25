@@ -4,6 +4,7 @@
 #include "shell.h"
 #include "token.h"
 #include <stdbool.h>
+#include <stdio.h>
 
 static size_t count_regular_chars(const t_word_token *const word)
 {
@@ -23,8 +24,16 @@ static size_t count_regular_chars(const t_word_token *const word)
 
 const char *get_param_exp_subst(const t_shell *const shell, const t_expansion_token *const expansion)
 {
-	// just env as of now, but in future, logic will be added
-	return env_get(shell->env, expansion->parameter);
+	// ? This is the only kind of substitution supported as of now
+	if (expansion->param_exp_type != SimpleSubstitution)
+		return NULL;
+
+	// ? just env as of now, but in future, logic will be added to expand from variable or smthg else
+	const char *substitution = (const char *)env_get(shell->env, expansion->parameter);
+	if (!substitution)
+		return NULL;
+
+	return ft_strdup(substitution);
 }
 
 const char *get_tilde_exp_subst(const t_shell *const shell, const t_expansion_token *const expansion)
@@ -44,6 +53,7 @@ const char *get_tilde_exp_subst(const t_shell *const shell, const t_expansion_to
 	}
 }
 
+// aggregation of all the expansion subst (as a word can have multiple subst)
 char *get_word_subst(const t_word_token *const word)
 {
 	size_t word_subst_len = count_regular_chars(word);
@@ -90,11 +100,9 @@ bool subst_exps(t_shell *const shell, t_word_token *word)
 	for (size_t i = 0; i < word->expansions->size; i++)
 	{
 		t_expansion_token *expansion = word->expansions->items[i];
-		const char *substitution = exp_subst_fn[expansion->type](shell, expansion);
-		if (!substitution)
+		expansion->substitution = (char *)exp_subst_fn[expansion->type](shell, expansion);
+		if (!expansion->substitution)
 			return false;
-		// ! handle failure case
-		expansion->substitution = ft_strdup(substitution);
 	}
 
 	word->substitution = get_word_subst(word);
