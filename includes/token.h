@@ -10,7 +10,7 @@
 
 enum e_token_type
 {
-	Unknown = 0,
+	UnknownToken = 0,
 	Word,
 	Command,
 	CommandSeparator,

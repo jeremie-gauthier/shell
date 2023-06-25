@@ -52,7 +52,7 @@ Where `e_token_type` equals:
 enum e_token_type
 {
 	Word = 0,
-	Unknown,
+	UnknownToken,
 	End, // <= Terminates by End, as End is used in a #define to know how many types are defined
 };
 ```
