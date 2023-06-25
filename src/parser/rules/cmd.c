@@ -9,9 +9,7 @@
 
 #ifdef DEBUG
 #include <stdio.h>
-#endif
 
-#ifdef DEBUG
 void print_cmd_token(t_command_token *cmd)
 {
 	printf("command: %s\n", cmd->name->text);
