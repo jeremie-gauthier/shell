@@ -47,7 +47,7 @@ static char *get_cmd_from_path(const char *const env_path, const char *const cmd
 	return valid_path;
 }
 
-const char *find_command(t_shell *const shell, const t_cmd *command)
+const char *find_command(t_shell *const shell, t_cmd *command)
 {
 	if (command->type == Path)
 	{
@@ -59,9 +59,12 @@ const char *find_command(t_shell *const shell, const t_cmd *command)
 				return NULL;
 			if (!(path = get_cmd_from_path(env_path, command->path)))
 				return NULL;
+
 			const char *valid_path = ht_set(shell->cache.bin, command->path, path);
-			ft_strdel((char **)&path);
-			return valid_path;
+			ft_strdel(&command->path);
+			command->path = (char *)valid_path;
+
+			return command->path;
 		}
 		return path;
 	}
@@ -90,7 +93,8 @@ int run_command(t_shell *const shell, const t_cmd *command)
 			return builtin_cd(shell, command);
 	}
 
-	const char *const path = find_command(shell, command);
+	const char *const path = find_command(shell, (t_cmd *)command);
+	printf("command path = %s\n", path);
 	if (!path)
 		return false;
 
