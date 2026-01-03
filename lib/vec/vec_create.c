@@ -13,7 +13,10 @@ t_vec *vec_create(const size_t capacity)
 		return NULL;
 
 	if (!(vec->items = malloc(sizeof(*vec->items) * capacity)))
+	{
+		ft_memdel((void **)&vec);
 		return NULL;
+	}
 	ft_bzero(vec->items, sizeof(*vec->items) * capacity);
 
 	vec->capacity = capacity;

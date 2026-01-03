@@ -1,5 +1,8 @@
 # https://stackoverflow.com/questions/2481269/how-to-make-a-simple-c-makefile
 
+# Default target (must be first)
+.DEFAULT_GOAL := all
+
 include Makefile.headers.mk
 include Makefile.tests.mk
 include Makefile.lib.mk
@@ -10,6 +13,8 @@ HEADER_DIR= includes/
 # built-in rules
 CC= clang
 CFLAGS= -Wall -Wextra -Werror -Wconversion -I$(HEADER_DIR) -g -fsanitize=address,undefined
+DEPFLAGS= -MMD -MP
+CFLAGS += $(DEPFLAGS)
 LDFLAGS= -g -fsanitize=address,undefined
 
 RM= rm -rf
@@ -34,6 +39,9 @@ TOTAL_SRCS := $(words $(OBJS) $(LIB_OBJS))
 	@$(CC) $(CFLAGS) -c -o $@ $<
 
 .PHONY: all test production clean fclean re leaks lldb analyze
+
+# Include dependency files
+-include $(OBJS:.o=.d) $(LIB_OBJS:.o=.d)
 
 all: $(NAME)
 
@@ -60,6 +68,7 @@ analyze:
 
 clean:
 	$(RM) $(OBJS) $(LIB_OBJS) $(TESTS_OBJS)
+	$(RM) $(OBJS:.o=.d) $(LIB_OBJS:.o=.d) $(TESTS_OBJS:.o=.d)
 	@find . -name "*.plist" -type f -delete 2>/dev/null || true
 
 fclean: clean

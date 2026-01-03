@@ -17,8 +17,6 @@ static size_t count_regular_chars(const t_word_token *const word)
 		count += (exp_param->loc.start - current_idx);
 		current_idx = exp_param->loc.end + 1;
 	}
-	if (word->text[current_idx])
-		current_idx += (ft_strlen(word->text) - current_idx);
 	return count;
 }
 

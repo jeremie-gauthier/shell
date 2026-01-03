@@ -7,23 +7,6 @@
 #include "token.h"
 #include <stdlib.h>
 
-#ifdef DEBUG
-#include <stdio.h>
-#endif
-
-#ifdef DEBUG
-void print_word_vec(t_vec *word_vec)
-{
-	for (size_t i = 0; i < word_vec->size; i++)
-	{
-		const t_word_token *word_tok = word_vec->items[i];
-		printf("-> arg \"%s\"\n", word_tok->text);
-		if (word_tok->expansions)
-			vec_iter(word_tok->expansions, print_param_exps_vec);
-	}
-}
-#endif
-
 t_word_token *word(t_lexer *const lexer)
 {
 	t_word_token *token = malloc(sizeof(*token));

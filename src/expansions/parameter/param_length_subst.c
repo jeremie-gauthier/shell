@@ -10,6 +10,6 @@ const char *param_length_subst(const char *const subst)
 	if (!buf)
 		return NULL;
 
-	sprintf(buf, "%zu", length);
+	snprintf(buf, 20, "%zu", length);
 	return buf;
 }

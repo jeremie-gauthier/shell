@@ -9,7 +9,7 @@ void *ft_memset(void *str, const int c, size_t n)
 	while (n-- > 0)
 	{
 		// printf("Copying... %zu\n", n);
-		*p++ = c;
+		*p++ = (byte)c;
 	}
 	return str;
 }

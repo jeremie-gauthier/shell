@@ -125,14 +125,4 @@ const char *param_set_default(const char *const subst, const char *const alt);
 const char *param_short_end_removal_subst(const char *const subst, const char *const removal);
 const char *param_short_start_removal_subst(const char *const subst, const char *const removal);
 
-/*
- ** DEBUG
- */
-#ifdef DEBUG
-void print_token(t_token token);
-char *token_type_to_str(enum e_token_type type);
-void print_param_exps_vec(void **item);
-void print_word_vec(t_vec *word_vec);
-#endif
-
 #endif

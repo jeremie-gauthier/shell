@@ -12,8 +12,6 @@ LEXER=	lexer_create.c\
 
 LEXER:=	$(addprefix lexer/, $(LEXER))
 
-LEXER_DEBUG:=	$(LEXER) lexer/__debug.c
-
 
 ENV=	env_get.c\
 		env_get_idx.c\
@@ -50,15 +48,11 @@ PARSER=	parser_create.c\
 
 PARSER:=	$(addprefix parser/, $(PARSER))
 
-PARSER_DEBUG:= $(PARSER)
-
 
 AST=ast_create_node.c\
 	ast_apply_prefix.c\
 	ast_free.c
 AST:=	$(addprefix ast/, $(AST))
-
-AST_DEBUG:= $(AST) ast/__debug.c
 
 
 _SHELL=	sh_create.c\
@@ -85,8 +79,6 @@ BUILTINS=	builtin_exit.c\
 			builtin_cd.c
 BUILTINS:=	$(addprefix builtins/, $(BUILTINS))
 
-BUILTINS_DEBUG:= $(BUILTINS)
-
 
 PROCESS=process.c\
 		command.c
@@ -97,6 +89,3 @@ PROCESS:=	$(addprefix process/, $(PROCESS))
 SOURCES=	$(addprefix src/, $(ROOT) $(LEXER) $(PARSER) $(_SHELL) $(INTERPRETER) $(AST) $(PROCESS) $(ENV) $(BUILTINS) $(SIGNALS) $(EXPANSIONS))
 OBJS=	$(subst .c,.o,$(SOURCES))
 
-
-SOURCES_DEBUG=	$(addprefix src/, $(ROOT) $(LEXER_DEBUG) $(PARSER_DEBUG) $(_SHELL) $(INTERPRETER) $(AST_DEBUG) $(PROCESS) $(ENV) $(BUILTINS_DEBUG) $(SIGNALS) $(EXPANSIONS))
-OBJS_DEBUG=	$(subst .c,.o,$(SOURCES_DEBUG))

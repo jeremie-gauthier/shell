@@ -56,7 +56,7 @@ static bool should_realloc(t_gnl *const gnl)
 
 static int read_fd(const int fd, t_gnl *const gnl)
 {
-	ssize_t ret;
+	ssize_t ret = 0;
 
 	if (should_realloc(gnl))
 		increase_cache_size(gnl);
