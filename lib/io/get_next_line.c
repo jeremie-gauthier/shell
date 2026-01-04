@@ -1,6 +1,7 @@
 #include "lib_io.h"
 #include "lib_mem.h"
 #include "lib_str.h"
+#include <errno.h>
 #include <stdbool.h>
 #include <sys/types.h>
 #include <sys/uio.h>
@@ -54,6 +55,18 @@ static bool should_realloc(t_gnl *const gnl)
 	return false;
 }
 
+static ssize_t read_retry(int fd, void *buf, size_t count)
+{
+	ssize_t ret;
+
+	while ((ret = read(fd, buf, count)) < 0)
+	{
+		if (errno != EINTR)
+			return -1;
+	}
+	return ret;
+}
+
 static int read_fd(const int fd, t_gnl *const gnl)
 {
 	ssize_t ret = 0;
@@ -62,7 +75,9 @@ static int read_fd(const int fd, t_gnl *const gnl)
 		increase_cache_size(gnl);
 	if (!gnl->cache || !ft_strchr(gnl->cache, '\n'))
 	{
-		ret = read(fd, &gnl->cache[gnl->len], GNL_BUFFER_SIZE);
+		ret = read_retry(fd, &gnl->cache[gnl->len], GNL_BUFFER_SIZE);
+		if (ret < 0)
+			return -1;
 		gnl->len += ret;
 		gnl->cache[gnl->len] = '\0';
 		if (ret == 0)
@@ -72,7 +87,9 @@ static int read_fd(const int fd, t_gnl *const gnl)
 	{
 		if (should_realloc(gnl))
 			increase_cache_size(gnl);
-		ret = read(fd, &gnl->cache[gnl->len], GNL_BUFFER_SIZE);
+		ret = read_retry(fd, &gnl->cache[gnl->len], GNL_BUFFER_SIZE);
+		if (ret < 0)
+			return -1;
 		gnl->len += ret;
 		gnl->cache[gnl->len] = '\0';
 		if (ret == 0)

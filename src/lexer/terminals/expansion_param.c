@@ -14,9 +14,9 @@
  ** PARSING ONLY
  */
 
-static bool take_until_closing_brace(char c)
+static bool take_until_closing_brace_or_subst(char c)
 {
-	return c != CLOSING_BRACE;
+	return c != CLOSING_BRACE && c != EXP_PARAM_SEPARATOR;
 }
 
 static bool take_until_forbidden_char(char c)
@@ -52,25 +52,52 @@ t_expansion_token *parse_param_expansion(t_lexer *const lexer)
 
 	bool (*take_until_predicate)(char) = take_until_forbidden_char;
 	const bool has_opening_brace = lexer->current_char == OPENING_BRACE;
+	const size_t parameter_loc_start = param_expansion->loc.start + (has_opening_brace ? 2 : 1);
 	if (has_opening_brace)
 	{
-		take_until_predicate = take_until_closing_brace;
+		take_until_predicate = take_until_closing_brace_or_subst;
 		advance_lexer(lexer);
 	}
 
 	while (lexer->current_char && take_until_predicate(lexer->current_char))
 		advance_lexer(lexer);
 
+	const size_t parameter_length = lexer->pos - parameter_loc_start;
+	param_expansion->parameter = ft_strndup(&lexer->input[parameter_loc_start], parameter_length);
+
+	if (lexer->current_char == EXP_PARAM_SEPARATOR)
+	{
+		advance_lexer(lexer);
+		if (lexer->current_char == '-')
+			param_expansion->param_exp_type = UseAlternativeValueIfNone;
+		else if (lexer->current_char == '+')
+			param_expansion->param_exp_type = UseAlternativeValueIfExists;
+		else if (lexer->current_char == '=')
+			param_expansion->param_exp_type = SetAlternativeValueIfNone;
+		else if (lexer->current_char == '?')
+			param_expansion->param_exp_type = ThrowErrorIfNone;
+
+		advance_lexer(lexer);
+
+		const size_t substitution_loc_start = lexer->pos;
+		while (lexer->current_char && lexer->current_char != CLOSING_BRACE)
+			advance_lexer(lexer);
+		const size_t substitution_loc_end = lexer->pos;
+		const size_t substitution_length = substitution_loc_end - substitution_loc_start;
+		param_expansion->substitution = ft_strndup(&lexer->input[substitution_loc_start], substitution_length);
+
+		// else
+		// {
+		// 	while (lexer->current_char && take_until_predicate(lexer->current_char))
+		// 		advance_lexer(lexer);
+		// }
+	}
+
 	if (has_opening_brace)
 		advance_lexer(lexer);
 
 	param_expansion->loc.end = lexer->pos - 1;
-	const size_t parameter_loc_start = param_expansion->loc.start + (has_opening_brace ? 2 : 1);
-	const size_t parameter_loc_end = param_expansion->loc.end - (has_opening_brace ? 1 : 0);
-	// add 1 to loc_end to have the last char included in parameter string
-	const size_t param_length = (parameter_loc_end + 1) - parameter_loc_start;
 
-	param_expansion->parameter = ft_strndup(&lexer->input[parameter_loc_start], param_length);
 	if (!param_expansion->parameter)
 		ft_memdel((void **)&param_expansion);
 

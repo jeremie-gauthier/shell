@@ -22,15 +22,29 @@ static size_t count_regular_chars(const t_word_token *const word)
 
 const char *get_param_exp_subst(const t_shell *const shell, const t_expansion_token *const expansion)
 {
-	// ? This is the only kind of substitution supported as of now
-	if (expansion->param_exp_type != SimpleSubstitution)
+	// TODO: en ajoutant le systeme de variables du shell, il faudra egalement faire un "var_get" en complement du "env_get"
+	const char *substitution = (const char *)env_get(shell->env, expansion->parameter);
+	if (!substitution && expansion->param_exp_type == SimpleSubstitution)
 		return NULL;
 
-	// ? just env as of now, but in future, logic will be added to expand from variable or smthg else
-	const char *substitution = (const char *)env_get(shell->env, expansion->parameter);
+	if (!substitution && expansion->param_exp_type == UseAlternativeValueIfNone)
+		return expansion->substitution;
+
+	if (substitution && expansion->param_exp_type == UseAlternativeValueIfExists)
+		return expansion->substitution;
+
+	if (!substitution && expansion->param_exp_type == SetAlternativeValueIfNone)
+	{
+		// TODO: 1. setup le systeme de variables du shell
+		// TODO: 2. ajouter cette variable à celles existantes dans le shell
+		// TODO: 3. return expansion->substitution
+		return expansion->substitution;
+	}
+
+	// TODO: add handler for ThrowErrorIfNone
+
 	if (!substitution)
 		return NULL;
-
 	return ft_strdup(substitution);
 }
 

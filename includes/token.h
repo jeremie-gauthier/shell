@@ -30,9 +30,9 @@ enum e_param_exp_type
 	/// @brief ${parameter:-word}
 	UseAlternativeValueIfNone,
 	/// @brief ${parameter:+word}
-	UseDefaultValueIfNone,
+	UseAlternativeValueIfExists,
 	/// @brief ${parameter:=word}
-	SetDefaultValueIfNone,
+	SetAlternativeValueIfNone,
 	/// @brief ${parameter:?word}
 	ThrowErrorIfNone,
 	/// @brief ${#parameter}
