@@ -68,7 +68,7 @@ static int read_fd(const int fd, t_gnl *const gnl)
 		if (ret == 0)
 			return 0;
 	}
-	while (!ft_strchr(&gnl->cache[gnl->len - GNL_BUFFER_SIZE], '\n') && ret == GNL_BUFFER_SIZE)
+	while (gnl->len >= GNL_BUFFER_SIZE && !ft_strchr(&gnl->cache[gnl->len - GNL_BUFFER_SIZE], '\n') && ret == GNL_BUFFER_SIZE)
 	{
 		if (should_realloc(gnl))
 			increase_cache_size(gnl);

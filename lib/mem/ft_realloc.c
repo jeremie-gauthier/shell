@@ -18,8 +18,12 @@ void *ft_realloc(void *src, const size_t size)
 	{
 		mem_size = ft_memsize(src);
 		ft_memcpy(dst, src, mem_size);
-		ft_bzero(&dst[mem_size], size - mem_size);
+		ft_bzero(&dst[mem_size], (size + 1) - mem_size);
 		ft_memdel(&src);
+	}
+	else
+	{
+		ft_bzero(dst, size + 1);
 	}
 	return dst;
 }
