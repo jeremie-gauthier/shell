@@ -76,12 +76,3 @@ t_expansion_token *parse_param_expansion(t_lexer *const lexer)
 
 	return param_expansion;
 }
-
-#ifdef DEBUG
-void print_param_exps_vec(void **item)
-{
-	t_expansion_token *token = *item;
-
-	printf("-> parameter \"%s\" at (%zu;%zu)\n", token->parameter, token->loc.start, token->loc.end);
-}
-#endif
