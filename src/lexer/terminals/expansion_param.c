@@ -85,12 +85,6 @@ t_expansion_token *parse_param_expansion(t_lexer *const lexer)
 		const size_t substitution_loc_end = lexer->pos;
 		const size_t substitution_length = substitution_loc_end - substitution_loc_start;
 		param_expansion->substitution = ft_strndup(&lexer->input[substitution_loc_start], substitution_length);
-
-		// else
-		// {
-		// 	while (lexer->current_char && take_until_predicate(lexer->current_char))
-		// 		advance_lexer(lexer);
-		// }
 	}
 
 	if (has_opening_brace)
