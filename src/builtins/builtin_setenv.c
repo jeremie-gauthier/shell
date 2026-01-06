@@ -33,9 +33,9 @@ static bool is_valid_env_var(const char *env_var)
 	return counter == 1;
 }
 
-int builtin_setenv(t_shell *const shell, const t_cmd command)
+int builtin_setenv(t_shell *const shell, const t_cmd *command)
 {
-	const char *env_var = command.argv[1];
+	const char *env_var = command->argv[1];
 	if (!is_valid_env_var(env_var))
 		return EXIT_FAILURE;
 
@@ -46,13 +46,7 @@ int builtin_setenv(t_shell *const shell, const t_cmd command)
 	const int idx = env_get_idx(shell->env, key);
 	if (idx < 0)
 	{
-		ft_arr_free((char **)kv_pair, size_kv_pair);
-		return EXIT_FAILURE;
-	}
-
-	if (shell->env[idx])
-	{
-		if (replace_existing_env_var(&shell->env[idx], env_var) == EXIT_FAILURE)
+		if (!(shell->env = ft_arr_append(shell->env, env_var)))
 		{
 			ft_arr_free((char **)kv_pair, size_kv_pair);
 			return EXIT_FAILURE;
@@ -60,7 +54,7 @@ int builtin_setenv(t_shell *const shell, const t_cmd command)
 	}
 	else
 	{
-		if (!(shell->env = ft_arr_append(shell->env, env_var)))
+		if (replace_existing_env_var(&shell->env[idx], env_var) == EXIT_FAILURE)
 		{
 			ft_arr_free((char **)kv_pair, size_kv_pair);
 			return EXIT_FAILURE;

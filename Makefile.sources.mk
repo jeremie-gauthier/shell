@@ -5,13 +5,12 @@ LEXER=	lexer_create.c\
 		terminals/word.c\
 		terminals/unknown.c\
 		terminals/whitespace.c\
+		terminals/expansion.c\
 		terminals/expansion_param.c\
 		terminals/expansion_tilde.c\
 		terminals/cmd_separator.c
 
 LEXER:=	$(addprefix lexer/, $(LEXER))
-
-LEXER_DEBUG:=	$(LEXER) lexer/__debug.c
 
 
 ENV=	env_get.c\
@@ -21,6 +20,19 @@ ENV=	env_get.c\
 
 ENV:=	$(addprefix env/, $(ENV))
 
+
+EXPANSIONS=	parameter/param_simple_subst.c\
+			parameter/param_alt_subst.c\
+			parameter/param_default_subst.c\
+			parameter/param_set_default.c\
+			parameter/param_guard_subst.c\
+			parameter/param_length_subst.c\
+			parameter/param_short_start_removal_subst.c\
+			parameter/param_long_start_removal_subst.c\
+			parameter/param_short_end_removal_subst.c\
+			parameter/param_long_end_removal_subst.c
+
+EXPANSIONS:=	$(addprefix expansions/, $(EXPANSIONS))
 
 SIGNALS=sig_init.c\
 		sigint.c
@@ -36,15 +48,11 @@ PARSER=	parser_create.c\
 
 PARSER:=	$(addprefix parser/, $(PARSER))
 
-PARSER_DEBUG:= $(PARSER)
-
 
 AST=ast_create_node.c\
 	ast_apply_prefix.c\
 	ast_free.c
 AST:=	$(addprefix ast/, $(AST))
-
-AST_DEBUG:= $(AST) ast/__debug.c
 
 
 _SHELL=	sh_create.c\
@@ -57,7 +65,8 @@ _SHELL:=	$(addprefix shell/, $(_SHELL))
 
 
 INTERPRETER=interpreter.c\
-			visitors/word_visitor.c
+			subst_exps.c\
+			visitors/command_visitor.c
 
 INTERPRETER:=	$(addprefix interpreter/, $(INTERPRETER))
 
@@ -70,8 +79,6 @@ BUILTINS=	builtin_exit.c\
 			builtin_cd.c
 BUILTINS:=	$(addprefix builtins/, $(BUILTINS))
 
-BUILTINS_DEBUG:= $(BUILTINS)
-
 
 PROCESS=process.c\
 		command.c
@@ -79,9 +86,6 @@ PROCESS=process.c\
 PROCESS:=	$(addprefix process/, $(PROCESS))
 
 
-SOURCES=	$(addprefix src/, $(ROOT) $(LEXER) $(PARSER) $(_SHELL) $(INTERPRETER) $(AST) $(PROCESS) $(ENV) $(BUILTINS) $(SIGNALS))
+SOURCES=	$(addprefix src/, $(ROOT) $(LEXER) $(PARSER) $(_SHELL) $(INTERPRETER) $(AST) $(PROCESS) $(ENV) $(BUILTINS) $(SIGNALS) $(EXPANSIONS))
 OBJS=	$(subst .c,.o,$(SOURCES))
 
-
-SOURCES_DEBUG=	$(addprefix src/, $(ROOT) $(LEXER_DEBUG) $(PARSER_DEBUG) $(_SHELL) $(INTERPRETER) $(AST_DEBUG) $(PROCESS) $(ENV) $(BUILTINS_DEBUG) $(SIGNALS))
-OBJS_DEBUG=	$(subst .c,.o,$(SOURCES_DEBUG))

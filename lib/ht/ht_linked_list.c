@@ -35,10 +35,8 @@ t_ht_item *ht_lst_remove(t_ht_lst *list)
 	if (!list || !list->next)
 		return NULL;
 
-	t_ht_lst *node = list->next;
 	t_ht_lst *temp = list;
 	temp->next = NULL;
-	list = node;
 	t_ht_item *it = NULL;
 	ft_memcpy(temp->item, it, sizeof(*it));
 	ht_item_free(temp->item);

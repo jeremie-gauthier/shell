@@ -35,13 +35,14 @@ static char **init_env(char **env)
 t_shell sh_create(char **env)
 {
 	t_shell shell;
+	shell.status = STOPPED;
+	shell.last_exit_status = 0;
+
 	init_cache(&shell.cache);
 	if (!(shell.env = init_env(env)))
 	{
 		sh_free(shell);
 		exit(EXIT_FAILURE);
 	}
-	shell.status = STOPPED;
-	shell.last_exit_status = 0;
 	return shell;
 }

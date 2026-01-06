@@ -4,12 +4,12 @@
 #include "token.h"
 #include <stdio.h>
 
-/*
- *	This function is responsible for breaking a sentence
- *	apart into tokens. One token at a time.
- */
+/// @brief This function is responsible for breaking a sentence
+/// apart into tokens. One token at a time.
+/// @return A generic lexer token
 t_token get_next_token(const t_shell *const shell, t_lexer *const lexer)
 {
+	(void)shell;
 	while (lexer->current_char)
 	{
 		if (ft_isspace(lexer->current_char))
@@ -19,22 +19,19 @@ t_token get_next_token(const t_shell *const shell, t_lexer *const lexer)
 		}
 
 		if (lexer->current_char == COMMAND_SEPARATOR)
-			return (t_token){.type = CommandSeparator, .value = cmd_separator(lexer)};
-
-		if (lexer->current_char == '~')
-			return (t_token){.type = Word, .value = expansion_tilde(shell, lexer)};
-
-		if (lexer->current_char == '$')
-			return (t_token){.type = Word, .value = expansion_param(shell, lexer)};
+		{
+			cmd_separator(lexer);
+			return (t_token){.type = CommandSeparator};
+		}
 
 		if (ft_isgraph(lexer->current_char))
-			return (t_token){.type = Word, .value = word(shell, lexer)};
+			return (t_token){.type = Word, .word = word(lexer)};
 
 		fprintf(stderr, "Lexer error, token not recognized\n");
-		return (t_token){.type = Unknown, .value = unknown(lexer)};
+		return (t_token){.type = UnknownToken};
 	}
 
-	return (t_token){.type = End, .value = NULL};
+	return (t_token){.type = End};
 }
 
 /*
@@ -44,4 +41,12 @@ void advance_lexer(t_lexer *const lexer)
 {
 	lexer->pos += 1;
 	lexer->current_char = lexer->input[lexer->pos];
+}
+
+/*
+ * Get next char without advancing the pos
+ */
+char inspect_next_char(const t_lexer *const lexer)
+{
+	return lexer->input[lexer->pos + 1];
 }

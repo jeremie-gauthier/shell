@@ -49,9 +49,4 @@ t_ht_lst *ht_lst_insert(t_ht_lst *list, t_ht_item *item);
 t_ht_item *ht_lst_remove(t_ht_lst *list);
 void ht_lst_free(t_ht_lst *list);
 
-// DEBUG
-
-void print_search(t_ht *table, char *key);
-void print_table(t_ht *table);
-
 #endif

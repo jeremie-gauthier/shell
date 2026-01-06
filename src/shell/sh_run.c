@@ -21,7 +21,7 @@ int sh_run(t_shell *const shell)
 
 	shell->status = RUNNING;
 	display_prompt();
-	while (shell->status == RUNNING && (input = readline(0)))
+	while (shell->status == RUNNING && (input = readline(STDIN_FILENO)))
 	{
 		// printf("received: %s\n", input);
 		const t_lexer lexer = lexer_create(input);

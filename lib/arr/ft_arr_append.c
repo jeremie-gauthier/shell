@@ -5,15 +5,20 @@
 
 char **ft_arr_append(char **arr, const char *const item)
 {
-	const size_t size = ft_arr_len((char const **)arr);
+	if (!arr)
+	{
+		char **new_arr = ft_arr_new(1);
+		new_arr[0] = ft_strdup(item);
+		return new_arr;
+	}
 
-	char **new_arr = malloc(sizeof(char *) * (size + 1));
+	const size_t size = ft_arr_len((char const **)arr);
+	char **new_arr = ft_arr_new(size + 1);
 	if (!new_arr)
 		return NULL;
 
-	ft_memcpy(new_arr, arr, sizeof(char *) * size);
+	ft_memcpy(new_arr, arr, sizeof(*arr) * size);
 	new_arr[size] = ft_strdup(item);
-	new_arr[size + 1] = NULL;
 
 	ft_memdel((void **)&arr);
 

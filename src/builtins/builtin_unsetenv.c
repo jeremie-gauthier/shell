@@ -8,9 +8,9 @@
 
 #include <stdio.h>
 
-int builtin_unsetenv(t_shell *const shell, const t_cmd command)
+int builtin_unsetenv(t_shell *const shell, const t_cmd *command)
 {
-	const char *env_var = command.argv[1];
+	const char *env_var = command->argv[1];
 	const int idx = env_get_idx(shell->env, env_var);
 	if (idx < 0)
 		return EXIT_SUCCESS;

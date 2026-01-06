@@ -6,13 +6,13 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-int builtin_cd(t_shell *const shell, const t_cmd command)
+int builtin_cd(t_shell *const shell, const t_cmd *command)
 {
 	char old_working_dir[PATH_MAX];
 	if (!getcwd(old_working_dir, PATH_MAX))
 		return EXIT_FAILURE;
 
-	const char *path = command.argv[1];
+	const char *path = command->argv[1];
 	if (chdir(path) < 0)
 		return EXIT_FAILURE;
 

@@ -57,3 +57,4 @@ dkms.conf
 42sh
 42sh_test
 .editorconfig
+*.plist

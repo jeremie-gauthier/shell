@@ -12,6 +12,7 @@ HEADERS=	token.h\
 			lib_ht.h\
 			env.h\
 			builtin.h\
-			signals.h
+			signals.h\
+			lib_vec.h
 
 HEADERS:=	$(addprefix includes/, $(HEADERS))

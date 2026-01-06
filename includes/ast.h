@@ -16,10 +16,4 @@ t_ast *ast_create_node(t_token token, const t_ast *left, const t_ast *right);
 void ast_apply_prefix(t_ast *ast, void (*fn)(t_token));
 void ast_free(t_ast *ast);
 
-/*
- ** DEBUG
- */
-
-void print_ast(t_ast *root);
-
 #endif

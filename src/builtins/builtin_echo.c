@@ -32,9 +32,9 @@ static const char *join_args(const size_t argc, char *const *argv)
 	return str;
 }
 
-int builtin_echo(t_shell *const shell, const t_cmd command)
+int builtin_echo(t_shell *const shell, const t_cmd *command)
 {
-	const char *str = join_args(command.argc, command.argv);
+	const char *str = join_args(command->argc, command->argv);
 	if (!str)
 		return EXIT_FAILURE;
 
